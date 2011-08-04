@@ -42,10 +42,8 @@
 
 #define LED LED_GREEN
 
-enum CMDS {
-	change_freq,
-	tx_pkt,
-} cmd;
+#define CHANGE_CHAN 0x0000
+#define TRANSMIT_PACKET 0x0001
 
 void maca_rx_callback(volatile packet_t *p) {
 	(void)p;
@@ -57,7 +55,7 @@ void init_dev(void) {
 	/* read from the data register instead of the pad */
 	/* this is needed because the led clamps the voltage low */
 	/* trim the reference osc. to 24MHz */
-	vn cipio_data(0);
+	gpio_data(0);
 	gpio_pad_dir_set( 1ULL << LED );
 	gpio_data_sel( 1ULL << LED);
 	trim_xtal();
@@ -75,12 +73,16 @@ void main(void) {
 	volatile uint8_t chan;
 	int in_cmd;
 
+	printf("here!");
+
 	init_dev();
 
 	// Initialize the power and channel
 	chan = 0;
 	set_power(0x0f); /* 0dbm */
 	set_channel(chan); /* channel 11 */
+
+	printf("Loaded...");
 
 	while(1) {		
 
@@ -99,12 +101,22 @@ void main(void) {
 		if(uart1_can_get()) {
 			in_cmd = (int) uart1_getc();
 
-			
+			// If the command is to change the channel, the very next byte
+			// will be the channel number (0-15)
+			if(in_cmd == CHANGE_CHAN) {
+				int chan;
+				
+				// Wait for the next byte
+				while(!uart1_can_get()) {
+				}
+				chan = (int) uart1_getc();
+				set_channel(chan);
+				printf("Set channel to: %d\n\r", chan);
+			}
 
-			chan++;
-			if(chan >= 16) { chan = 0; }
-			set_channel(chan);
-			printf("channel: %d\n\r", chan);
+			if(in_cmd == TRANSMIT_PACKET) {
+				printf("Got transmit packet cmd\n\r");
+			}
 		}
 
 	}
