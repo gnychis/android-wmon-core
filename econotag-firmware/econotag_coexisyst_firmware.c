@@ -42,41 +42,46 @@
 
 #define LED LED_GREEN
 
+enum CMDS {
+	change_freq,
+	tx_pkt,
+} cmd;
+
 void maca_rx_callback(volatile packet_t *p) {
 	(void)p;
 	gpio_data_set(1ULL<< LED);
 	gpio_data_reset(1ULL<< LED);
 }
 
+void init_dev(void) {
+	/* read from the data register instead of the pad */
+	/* this is needed because the led clamps the voltage low */
+	/* trim the reference osc. to 24MHz */
+	vn cipio_data(0);
+	gpio_pad_dir_set( 1ULL << LED );
+	gpio_data_sel( 1ULL << LED);
+	trim_xtal();
+	uart_init(INC, MOD, SAMP);
+	vreg_init();
+	maca_init();
+
+	/* sets up tx_on, should be a board specific item */
+	//       *GPIO_FUNC_SEL2 = (0x01 << ((44-16*2)*2));
+	gpio_pad_dir_set( 1ULL << 44 );
+}
+
 void main(void) {
 	volatile packet_t *p;
 	volatile uint8_t chan;
+	int in_cmd;
 
-	gpio_data(0);
-	
-	gpio_pad_dir_set( 1ULL << LED );
-        /* read from the data register instead of the pad */
-	/* this is needed because the led clamps the voltage low */
-	gpio_data_sel( 1ULL << LED);
+	init_dev();
 
-	/* trim the reference osc. to 24MHz */
-	trim_xtal();
-
-	uart_init(INC, MOD, SAMP);
-
-	vreg_init();
-
-	maca_init();
-
-        /* sets up tx_on, should be a board specific item */
-	//       *GPIO_FUNC_SEL2 = (0x01 << ((44-16*2)*2));
-	gpio_pad_dir_set( 1ULL << 44 );
-
-	set_power(0x0f); /* 0dbm */
+	// Initialize the power and channel
 	chan = 0;
+	set_power(0x0f); /* 0dbm */
 	set_channel(chan); /* channel 11 */
 
-	print_welcome("rftest-rx");
 	while(1) {		
 
 		/* call check_maca() periodically --- this works around */
@@ -90,8 +95,12 @@ void main(void) {
 			free_packet(p);
 		}
 
+		// Look for an incoming command
 		if(uart1_can_get()) {
-			uart1_getc();
+			in_cmd = (int) uart1_getc();
+
+			
+
 			chan++;
 			if(chan >= 16) { chan = 0; }
 			set_channel(chan);
