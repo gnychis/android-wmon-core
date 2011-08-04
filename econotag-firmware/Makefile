@@ -6,7 +6,7 @@ MC1322X := libmc1322x
 COBJS := tests.o put.o
 
 # all of the target programs to build
-TARGETS := rftest-rx
+TARGETS := econotag_coexisyst_firmware
 #TARGETS := blink-red blink-green blink-blue blink-white blink-allio \
            uart1-loopback \
            u1u2-loopback \
