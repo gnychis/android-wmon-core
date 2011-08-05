@@ -77,8 +77,6 @@ void main(void) {
 	int in_cmd;
 	char tval;
 
-	printf("here!");
-
 	init_dev();
 
 	// Initialize the power and channel
@@ -102,7 +100,7 @@ void main(void) {
 				 uart1_putc((char)(p->rx_time >> i * CHAR_BIT & 0xff));
 			uart1_putc((char)p->length);
 			for(i=0;i<p->length;i++) 
-				uart1_putc(p->data[i]);
+				uart1_putc(p->data[i + p->offset]);
 			free_packet(p);
 		}
 
