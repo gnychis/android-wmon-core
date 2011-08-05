@@ -122,7 +122,7 @@ void main(void) {
 				chan = (int) tval;
 				set_channel(chan);
 
-				uart1_putc(tval);
+				//uart1_putc(tval);  // write back value for testing
 			}
 
 			if(in_cmd == TRANSMIT_PACKET) {
