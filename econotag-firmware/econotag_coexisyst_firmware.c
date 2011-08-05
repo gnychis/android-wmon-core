@@ -36,6 +36,7 @@
 #include <mc1322x.h>
 #include <board.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include "tests.h"
 #include "config.h"
@@ -72,6 +73,7 @@ void main(void) {
 	volatile packet_t *p;
 	volatile uint8_t chan;
 	int in_cmd;
+	char tval;
 
 	printf("here!");
 
@@ -82,8 +84,6 @@ void main(void) {
 	set_power(0x0f); /* 0dbm */
 	set_channel(chan); /* channel 11 */
 
-	printf("Loaded...");
-
 	while(1) {		
 
 		/* call check_maca() periodically --- this works around */
@@ -92,8 +92,8 @@ void main(void) {
 
 		if((p = rx_packet())) {
 			/* print and free the packet */
-			printf("rftest-rx --- ");
-			print_packet(p);
+			//printf("rftest-rx --- ");
+			//print_packet(p);
 			free_packet(p);
 		}
 
@@ -109,15 +109,16 @@ void main(void) {
 				// Wait for the next byte
 				while(!uart1_can_get()) {
 				}
-				chan = (int) uart1_getc();
+				tval = uart1_getc();
+				chan = (int) tval;
 				set_channel(chan);
-				printf("Set channel to: %d\n\r", chan);
+
+				uart1_putc(tval);
 			}
 
 			if(in_cmd == TRANSMIT_PACKET) {
 				printf("Got transmit packet cmd\n\r");
 			}
 		}
-
 	}
 }
