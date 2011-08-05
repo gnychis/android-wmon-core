@@ -37,6 +37,7 @@
 #include <board.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <limits.h>
 
 #include "tests.h"
 #include "config.h"
@@ -45,6 +46,7 @@
 
 #define CHANGE_CHAN 0x0000
 #define TRANSMIT_PACKET 0x0001
+#define RECEIVED_PACKET 0x0002
 
 void maca_rx_callback(volatile packet_t *p) {
 	(void)p;
@@ -90,10 +92,17 @@ void main(void) {
 		/* a few lockup conditions */
 		check_maca();
 
+		// Read the incoming packet and send it over
 		if((p = rx_packet())) {
-			/* print and free the packet */
-			//printf("rftest-rx --- ");
-			//print_packet(p);
+			int i;
+			uart1_putc((char)RECEIVED_PACKET);  
+			// First write the lqi (8-bits) and rx time (32-bits)
+			uart1_putc((char)p->lqi);
+			for(i=0;i<4;i++) 
+				 uart1_putc((char)(p->rx_time >> i * CHAR_BIT & 0xff));
+			uart1_putc((char)p->length);
+			for(i=0;i<p->length;i++) 
+				uart1_putc(p->data[i]);
 			free_packet(p);
 		}
 
