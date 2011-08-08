@@ -74,8 +74,9 @@ void init_dev(void) {
 void main(void) {
 	volatile packet_t *p;
 	volatile uint8_t chan;
-	int in_cmd;
+	int in_cmd,j;
 	char tval;
+	char initialized_sequence[] = {0x67, 0x65, 0x6f, 0x72, 0x67, 0x65, 0x6e, 0x79, 0x63, 0x68, 0x69, 0x73};
 
 	init_dev();
 
@@ -83,6 +84,10 @@ void main(void) {
 	chan = 0;
 	set_power(0x0f); /* 0dbm */
 	set_channel(chan); /* channel 11 */
+
+	// Send an initialized sequence to the receiver
+	for(j=0; j<12; j++)
+		uart1_putc(initialized_sequence[j]);
 
 	while(1) {		
 

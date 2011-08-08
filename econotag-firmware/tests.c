@@ -56,7 +56,7 @@ void print_packet(volatile packet_t *p) {
 					printf("\n\r");
 					return; 
 				} 
-				printf("(%d):%02x ",p->data[j*PER_ROW + i + p->offset],p->data[j*PER_ROW + i + p->offset]);
+				printf("%02x ",p->data[j*PER_ROW + i + p->offset]);
 			}
 		}
 	}
