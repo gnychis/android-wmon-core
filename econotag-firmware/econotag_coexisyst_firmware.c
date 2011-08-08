@@ -38,20 +38,35 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <limits.h>
+#include <string.h>
 
 #include "tests.h"
 #include "config.h"
 
-#define LED LED_RED
+#define LED LED_GREEN
 
 #define DELAY 400000
-
-#define MY_LED_RED (1ULL << LED_RED)
-#define MY_LED_BLUE (1ULL << LED_BLUE)
 
 #define CHANGE_CHAN 0x0000
 #define TRANSMIT_PACKET 0x0001
 #define RECEIVED_PACKET 0x0002
+#define INITIALIZED 0x0003
+#define TRANSMIT_BEACON 0x0004
+
+// Creates a ZigBee beacon which is similar to a probe request in 802.11
+// to get ZigBee devices to announce themselves
+void create_beacon(volatile packet_t *p) {
+  p->length = 8;
+  p->offset = 0;
+  p->data[0] = 0x03;
+  p->data[1] = 0x08;
+  p->data[2] = 0x17;
+  p->data[3] = 0xff;
+  p->data[4] = 0xff;
+  p->data[5] = 0xff;
+  p->data[6] = 0xff;
+  p->data[7] = 0x07;
+}
 
 void maca_rx_callback(volatile packet_t *p) {
 	(void)p;
@@ -72,7 +87,7 @@ void init_dev(void) {
 	maca_init();
 
 	/* sets up tx_on, should be a board specific item */
-	//       *GPIO_FUNC_SEL2 = (0x01 << ((44-16*2)*2));
+	       *GPIO_FUNC_SEL2 = (0x01 << ((44-16*2)*2));
 	gpio_pad_dir_set( 1ULL << 44 );
 }
 
@@ -82,18 +97,19 @@ void main(void) {
 	int in_cmd,j;
 	char tval;
 	char initialized_sequence[] = {0x67, 0x65, 0x6f, 0x72, 0x67, 0x65, 0x6e, 0x79, 0x63, 0x68, 0x69, 0x73};
+	static volatile packet_t pkt;
 
 	init_dev();
 
 	// Initialize the power and channel
 	chan = 1;
-	set_power(0x0f); /* 0dbm */
+	set_power(0x12); /* 0x12 is the highest */
 	set_channel(chan); /* channel 11 */
 
 	// Send an initialized sequence to the receiver
 	for(j=0; j<12; j++)
 		uart1_putc(initialized_sequence[j]);
-
+				
 	while(1) {		
 
 		/* call check_maca() periodically --- this works around */
@@ -134,7 +150,12 @@ void main(void) {
 			}
 
 			if(in_cmd == TRANSMIT_PACKET) {
-				printf("Got transmit packet cmd\n\r");
+			}
+
+			if(in_cmd == TRANSMIT_BEACON) {
+				memset((char *)&pkt, '\0', sizeof(struct packet));
+				create_beacon(&pkt);
+				tx_packet(&pkt);
 			}
 		}
 	}
