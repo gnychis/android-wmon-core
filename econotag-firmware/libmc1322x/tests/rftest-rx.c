@@ -42,10 +42,20 @@
 
 #define LED LED_GREEN
 
+#define DELAY 400000
+
+#define NEWLED (1ULL << LED_GREEN)
+
 void maca_rx_callback(volatile packet_t *p) {
 	(void)p;
-	gpio_data_set(1ULL<< LED);
-	gpio_data_reset(1ULL<< LED);
+	int i;
+		gpio_data(NEWLED);
+		
+		for(i=0; i<DELAY; i++) { continue; }
+
+		gpio_data(0);
+		
+		for(i=0; i<DELAY; i++) { continue; }
 }
 
 void main(void) {
@@ -73,7 +83,7 @@ void main(void) {
 	gpio_pad_dir_set( 1ULL << 44 );
 
 	set_power(0x0f); /* 0dbm */
-	chan = 0;
+	chan = 1;
 	set_channel(chan); /* channel 11 */
 
 	print_welcome("rftest-rx");

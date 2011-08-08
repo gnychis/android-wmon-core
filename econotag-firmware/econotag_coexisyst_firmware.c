@@ -42,7 +42,12 @@
 #include "tests.h"
 #include "config.h"
 
-#define LED LED_GREEN
+#define LED LED_RED
+
+#define DELAY 400000
+
+#define MY_LED_RED (1ULL << LED_RED)
+#define MY_LED_BLUE (1ULL << LED_BLUE)
 
 #define CHANGE_CHAN 0x0000
 #define TRANSMIT_PACKET 0x0001
@@ -81,7 +86,7 @@ void main(void) {
 	init_dev();
 
 	// Initialize the power and channel
-	chan = 0;
+	chan = 1;
 	set_power(0x0f); /* 0dbm */
 	set_channel(chan); /* channel 11 */
 
