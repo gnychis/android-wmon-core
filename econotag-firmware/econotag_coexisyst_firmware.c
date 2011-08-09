@@ -120,6 +120,8 @@ void main(void) {
 		if((p = rx_packet())) {
 			int i;
 			uart1_putc((char)RECEIVED_PACKET);  
+			// Now write the channel it was received on (there is no radiotap otherwise)
+			uart1_putc((char)chan);
 			// First write the lqi (8-bits) and rx time (32-bits)
 			uart1_putc((char)p->lqi);
 			for(i=0;i<4;i++) 
@@ -137,13 +139,11 @@ void main(void) {
 			// If the command is to change the channel, the very next byte
 			// will be the channel number (0-15)
 			if(in_cmd == CHANGE_CHAN) {
-				int chan;
-				
 				// Wait for the next byte
 				while(!uart1_can_get()) {
 				}
 				tval = uart1_getc();
-				chan = (int) tval;
+				chan = (uint8_t) tval;
 				set_channel(chan);
 
 				//uart1_putc(tval);  // write back value for testing
