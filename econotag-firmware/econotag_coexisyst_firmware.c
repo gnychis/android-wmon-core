@@ -100,6 +100,7 @@ int count=0;
 int scan_channel;
 int old_chan;
 static volatile packet_t pkt;
+volatile uint8_t chan;
 
 void tmr0_isr(void) {
 
@@ -108,10 +109,12 @@ void tmr0_isr(void) {
 
 		if(scan_channel!=-1) {
 			if(scan_channel>HIGH_CHANNEL) {
+				chan=old_chan;
 				set_channel(old_chan);
 				scan_channel=-1;
 				uart1_putc((char)SCAN_DONE);
 			} else {
+				chan=scan_channel;
 				set_channel(scan_channel);
 				memset((char *)&pkt, '\0', sizeof(struct packet));
 				create_beacon(&pkt);
@@ -120,6 +123,12 @@ void tmr0_isr(void) {
 			}
 		}
 		count=0;
+	} else if(count==2) {
+		if(scan_channel!=-1 && scan_channel <= HIGH_CHANNEL) {
+				memset((char *)&pkt, '\0', sizeof(struct packet));
+				create_beacon(&pkt);
+				tx_packet(&pkt);
+		}
 	}
 
 	*TMR0_SCTRL = 0;
@@ -129,7 +138,6 @@ void tmr0_isr(void) {
 
 void main(void) {
 	volatile packet_t *p;
-	volatile uint8_t chan;
 	int in_cmd,j;
 	char tval;
 	char initialized_sequence[] = {0x67, 0x65, 0x6f, 0x72, 0x67, 0x65, 0x6e, 0x79, 0x63, 0x68, 0x69, 0x73};
