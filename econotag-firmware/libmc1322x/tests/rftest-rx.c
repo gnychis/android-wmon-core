@@ -80,7 +80,6 @@ void tmr0_isr(void) {
 
 	if(count==10) {
 		toggle_led();
-		printf("trigger\n\r");
 		count=0;
 	}
 	*TMR0_SCTRL = 0;
