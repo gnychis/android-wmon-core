@@ -35,6 +35,7 @@
 
 #include <mc1322x.h>
 #include <board.h>
+#include <stdio.h>
 
 #include "tests.h"
 #include "config.h"
@@ -56,12 +57,16 @@ void toggle_led(void) {
 	}
 }
 
+int count=0;
+
 void tmr0_isr(void) {
 
-	toggle_led();
+	if(count%5==0)
+		toggle_led();
 	*TMR0_SCTRL = 0;
 	*TMR0_CSCTRL = 0x0040; /* clear compare flag */
-	
+	count++;
+	printf("trigger\n");
 }
 
 
@@ -90,6 +95,8 @@ void main(void) {
 	*TMR0_CNTR    = 0;                    /* reset count register */
 	*TMR0_CTRL    = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
 	*TMR_ENBL     = 0xf;                  /* enable all the timers --- why not? */
+
+	print_welcome("blah");
 
 	led_on();
 

@@ -39,6 +39,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
+#include <sys/time.h>
 
 #include "tests.h"
 #include "config.h"
@@ -52,6 +53,10 @@
 #define RECEIVED_PACKET 0x0002
 #define INITIALIZED 0x0003
 #define TRANSMIT_BEACON 0x0004
+#define START_SCAN 0x0005
+#define SCAN_DONE 0x0006
+
+#define HIGH_CHANNEL 15 // the highest channel, 0->15
 
 // Creates a ZigBee beacon which is similar to a probe request in 802.11
 // to get ZigBee devices to announce themselves
@@ -91,6 +96,32 @@ void init_dev(void) {
 	gpio_pad_dir_set( 1ULL << 44 );
 }
 
+int count=0;
+int scan_channel;
+int old_chan;
+
+void tmr0_isr(void) {
+
+	// Every 10 is 1 second
+	if(count==2) {
+
+		if(scan_channel!=-1) {
+			if(scan_channel>HIGH_CHANNEL) {
+				set_channel(old_chan);
+				scan_channel=-1;
+			} else {
+				set_channel(scan_channel);
+				scan_channel++;
+			}
+		}
+		count=0;
+	}
+
+	*TMR0_SCTRL = 0;
+	*TMR0_CSCTRL = 0x0040; /* clear compare flag */
+	count++;
+}
+
 void main(void) {
 	volatile packet_t *p;
 	volatile uint8_t chan;
@@ -100,6 +131,31 @@ void main(void) {
 	static volatile packet_t pkt;
 
 	init_dev();
+
+	scan_channel=-1;
+	
+	/* timer setup */
+	/* CTRL */
+#define COUNT_MODE 1      /* use rising edge of primary source */
+#define PRIME_SRC  0xf    /* Perip. clock with 128 prescale (for 24Mhz = 187500Hz)*/
+#define SEC_SRC    0      /* don't need this */
+#define ONCE       0      /* keep counting */
+#define LEN        1      /* count until compare then reload with value in LOAD */
+#define DIR        0      /* count up */
+#define CO_INIT    0      /* other counters cannot force a re-initialization of this counter */
+#define OUT_MODE   0      /* OFLAG is asserted while counter is active */
+
+	*TMR_ENBL     = 0;                    /* tmrs reset to enabled */
+	*TMR0_SCTRL   = 0;
+	*TMR0_CSCTRL  = 0x0040;
+	*TMR0_LOAD    = 0;                    /* reload to zero */
+	*TMR0_COMP_UP = 18750;                /* trigger a reload at the end */
+	*TMR0_CMPLD1  = 18750;                /* compare 1 triggered reload level, 10HZ maybe? */
+	*TMR0_CNTR    = 0;                    /* reset count register */
+	*TMR0_CTRL    = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
+	*TMR_ENBL     = 0xf;                  /* enable all the timers --- why not? */
+
+	enable_irq(TMR);
 
 	// Initialize the power and channel
 	chan = 1;
@@ -156,6 +212,12 @@ void main(void) {
 				memset((char *)&pkt, '\0', sizeof(struct packet));
 				create_beacon(&pkt);
 				tx_packet(&pkt);
+			}
+
+			// Start a scan, keep the first time, save the old channel
+			if(in_cmd == START_SCAN) {
+				scan_channel=0;
+				old_chan = chan;
 			}
 		}
 	}
