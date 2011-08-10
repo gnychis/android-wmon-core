@@ -103,7 +103,7 @@ int old_chan;
 void tmr0_isr(void) {
 
 	// Every 10 is 1 second
-	if(count==2) {
+	if(count==3) {
 
 		if(scan_channel!=-1) {
 			if(scan_channel>HIGH_CHANNEL) {
