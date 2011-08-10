@@ -99,6 +99,7 @@ void init_dev(void) {
 int count=0;
 int scan_channel;
 int old_chan;
+static volatile packet_t pkt;
 
 void tmr0_isr(void) {
 
@@ -112,6 +113,9 @@ void tmr0_isr(void) {
 				uart1_putc((char)SCAN_DONE);
 			} else {
 				set_channel(scan_channel);
+				memset((char *)&pkt, '\0', sizeof(struct packet));
+				create_beacon(&pkt);
+				tx_packet(&pkt);
 				scan_channel++;
 			}
 		}
@@ -129,7 +133,6 @@ void main(void) {
 	int in_cmd,j;
 	char tval;
 	char initialized_sequence[] = {0x67, 0x65, 0x6f, 0x72, 0x67, 0x65, 0x6e, 0x79, 0x63, 0x68, 0x69, 0x73};
-	static volatile packet_t pkt;
 
 	init_dev();
 
@@ -200,8 +203,12 @@ void main(void) {
 				while(!uart1_can_get()) {
 				}
 				tval = uart1_getc();
-				chan = (uint8_t) tval;
-				set_channel(chan);
+
+				// Only change the channel if we are not scanning
+				if(scan_channel == -1) {
+					chan = (uint8_t) tval;
+					set_channel(chan);
+				}
 
 				//uart1_putc(tval);  // write back value for testing
 			}
