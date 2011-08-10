@@ -109,7 +109,7 @@ void tmr0_isr(void) {
 			if(scan_channel>HIGH_CHANNEL) {
 				set_channel(old_chan);
 				scan_channel=-1;
-				uart1_putc(SCAN_DONE);
+				uart1_putc((char)SCAN_DONE);
 			} else {
 				set_channel(scan_channel);
 				scan_channel++;
