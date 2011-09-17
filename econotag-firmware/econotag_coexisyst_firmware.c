@@ -55,8 +55,11 @@
 #define TRANSMIT_BEACON 0x0004
 #define START_SCAN 0x0005
 #define SCAN_DONE 0x0006
+#define CHANNEL_IS 0x0007
 
 #define HIGH_CHANNEL 15 // the highest channel, 0->15
+
+void my_set_channel(int tchan);
 
 // Creates a ZigBee beacon which is similar to a probe request in 802.11
 // to get ZigBee devices to announce themselves
@@ -109,13 +112,11 @@ void tmr0_isr(void) {
 
 		if(scan_channel!=-1) {
 			if(scan_channel>HIGH_CHANNEL) {
-				chan=old_chan;
-				set_channel(old_chan);
+				my_set_channel(old_chan);
 				scan_channel=-1;
 				uart1_putc((char)SCAN_DONE);
 			} else {
-				chan=scan_channel;
-				set_channel(scan_channel);
+				my_set_channel(scan_channel);
 				memset((char *)&pkt, '\0', sizeof(struct packet));
 				create_beacon(&pkt);
 				tx_packet(&pkt);
@@ -134,6 +135,13 @@ void tmr0_isr(void) {
 	*TMR0_SCTRL = 0;
 	*TMR0_CSCTRL = 0x0040; /* clear compare flag */
 	count++;
+}
+
+void my_set_channel(int tchan) {
+	chan=tchan;
+	set_channel(chan);
+	uart1_putc(CHANNEL_IS);
+	uart1_putc((char)chan);
 }
 
 void main(void) {
@@ -170,9 +178,9 @@ void main(void) {
 	enable_irq(TMR);
 
 	// Initialize the power and channel
-	chan = 1;
+	chan = 0;
 	set_power(0x12); /* 0x12 is the highest */
-	set_channel(chan); /* channel 11 */
+	my_set_channel(chan);
 
 	// Send an initialized sequence to the receiver
 	for(j=0; j<12; j++)
@@ -214,8 +222,7 @@ void main(void) {
 
 				// Only change the channel if we are not scanning
 				if(scan_channel == -1) {
-					chan = (uint8_t) tval;
-					set_channel(chan);
+					my_set_channel((uint8_t) tval);
 				}
 
 				//uart1_putc(tval);  // write back value for testing
