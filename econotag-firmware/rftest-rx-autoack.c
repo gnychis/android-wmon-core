@@ -50,9 +50,7 @@ void maca_rx_callback(volatile packet_t *p) {
 
 void main(void) {
 	volatile packet_t *p;
-	volatile uint8_t t=20;
 	uint8_t chan;
-	char c;
 
 	gpio_data(0);
 	
@@ -92,17 +90,7 @@ void main(void) {
 
 		if((p = rx_packet())) {
 			/* print and free the packet */
-			printf("autoack-rx --- ");
-			print_packet(p);
 			free_packet(p);
-		}
-
-		if(uart1_can_get()) {
-			c = uart1_getc();
-			if(c == 'z') t++;
-			if(c == 'x') t--;
-			*MACA_TXACKDELAY = t;
-			printf("tx ack delay: %d\n\r", t);
 		}
 
 	}

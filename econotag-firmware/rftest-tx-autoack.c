@@ -46,7 +46,7 @@
 /* 2 bytes are the FCS */
 /* therefore 125 is the max payload length */
 #define PAYLOAD_LEN 16
-#define DELAY 100000
+#define DELAY 0
 int next_packet;
 unsigned int cnt;
 
@@ -111,6 +111,7 @@ void main(void) {
 	uint16_t r=30; /* start reception 100us before ack should arrive */
 	uint16_t end=180; /* 750 us receive window*/
 	next_packet=1;
+	int i;
 	cnt=0;
 
 	/* trim the reference osc. to 24MHz */
@@ -143,6 +144,7 @@ void main(void) {
 	print_welcome("rftest-tx");
 
 	while(1) {		
+		for(i=0; i<DELAY; i++) { continue; }
 	    		
 		/* call check_maca() periodically --- this works around */
 		/* a few lockup conditions */
@@ -156,15 +158,12 @@ void main(void) {
 			}
 		}
 
-		if(uart1_can_get()) {
-			uart1_getc();
-
-			if(next_packet==1) {
-				p = get_free_packet();
-				if(p) {
-					fill_packet(p);
-					tx_packet(p);				
-				}
+		if(next_packet==1) {
+			next_packet=0;
+			p = get_free_packet();
+			if(p) {
+				fill_packet(p);
+				tx_packet(p);				
 			}
 		}
 	}

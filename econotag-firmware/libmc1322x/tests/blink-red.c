@@ -49,7 +49,7 @@ void main(void) {
 
 		gpio_data(LED);
 		
-		for(i=0; i<DELAY; i++) { continue; }
+		for(i=0; i<DELAY*4; i++) { continue; }
 
 		gpio_data(0);
 		
