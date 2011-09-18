@@ -48,12 +48,13 @@
 #define PAYLOAD_LEN 16
 #define DELAY 100000
 int next_packet;
+unsigned int cnt;
 
 
 void fill_packet(volatile packet_t *p) {
 	static volatile uint8_t count=0;
 
-	p->length = 16;
+	p->length = 20;
 	p->offset = 0;
 	p->data[0] = 0x71;  /* 0b 10 01 10 000 1 1 0 0 001 data, ack request, short addr */
 	p->data[1] = 0x98;  /* 0b 10 01 10 000 1 1 0 0 001 data, ack request, short addr */
@@ -74,18 +75,29 @@ void fill_packet(volatile packet_t *p) {
 	p->data[14] = 's';
 	p->data[15] = 't';
 
+	p->data[19] = cnt & 0xff;
+	p->data[18] = (cnt >> 8*1) & 0xff;
+	p->data[17] = (cnt >> 8*2) & 0xff;
+	p->data[16] = (cnt >> 8*3) & 0xff;
+	cnt++;
 }
 
 void maca_tx_callback(volatile packet_t *p) {
+	unsigned int val=0;
+	val = val | (p->data[16] << 8*3);
+	val = val | (p->data[17] << 8*2);
+	val = val | (p->data[18] << 8*1);
+	val = val | (p->data[19]);
+	
 	switch(p->status) {
 	case 0:
-		printf("TX OK\n\r");
+		printf("%u TX OK\n\r", val);
 		break;
 	case 3:
-		printf("CRC ERR\n\r");
+		printf("%u CRC ERR\n\r", val);
 		break;
 	case 5:
-		printf("NO ACK\n\r");
+		printf("%u NO ACK\n\r", val);
 		break;
 	default:
 		printf("unknown status: %d\n", (int)p->status);
@@ -99,13 +111,14 @@ void main(void) {
 	uint16_t r=30; /* start reception 100us before ack should arrive */
 	uint16_t end=180; /* 750 us receive window*/
 	next_packet=1;
+	cnt=0;
 
 	/* trim the reference osc. to 24MHz */
 	trim_xtal();
 	uart_init(INC, MOD, SAMP);
 	maca_init();
 
-	set_channel(0); /* channel 11 */
+	set_channel(9); /* channel 11 */
 //	set_power(0x0f); /* 0xf = -1dbm, see 3-22 */
 //	set_power(0x11); /* 0x11 = 3dbm, see 3-22 */
 	set_power(0x12); /* 0x12 is the highest, not documented */
@@ -143,15 +156,15 @@ void main(void) {
 			}
 		}
 
-		if(next_packet==1) {
-			p = get_free_packet();
-			if(p) {
-				fill_packet(p);
-				
-				printf("autoack-tx --- ");
-				print_packet(p);
-				
-				tx_packet(p);				
+		if(uart1_can_get()) {
+			uart1_getc();
+
+			if(next_packet==1) {
+				p = get_free_packet();
+				if(p) {
+					fill_packet(p);
+					tx_packet(p);				
+				}
 			}
 		}
 	}

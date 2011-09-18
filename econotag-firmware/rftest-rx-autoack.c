@@ -75,7 +75,7 @@ void main(void) {
 	gpio_pad_dir_set( 1ULL << 44 );
 
 	set_power(0x0f); /* 0dbm */
-	chan = 0;
+	chan = 9;
 	set_channel(chan); /* channel 11 */
 
 	*MACA_MACPANID = 0xaaaa;
