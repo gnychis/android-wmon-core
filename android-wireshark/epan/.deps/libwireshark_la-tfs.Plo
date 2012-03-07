@@ -1,0 +1,9 @@
+libwireshark_la-tfs.lo: tfs.c \
+ /home/gnychis/Documents/android/os/system/core/include/arch/linux-arm/AndroidConfig.h \
+ ../config.h tfs.h
+
+/home/gnychis/Documents/android/os/system/core/include/arch/linux-arm/AndroidConfig.h:
+
+../config.h:
+
+tfs.h:

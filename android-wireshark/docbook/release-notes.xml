@@ -1,0 +1,407 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
+
+<!-- $Id: release-notes.xml 36634 2011-04-14 02:16:39Z cmaynard $ -->
+
+<!--
+DOCUMENT SECTION
+-Use this section to encode all document information
+-->
+
+<!--
+Wireshark Info
+-->
+  <!ENTITY WiresharkCurrentVersion "1.5.2">
+
+]>
+
+<article>
+  <title>Wireshark &WiresharkCurrentVersion; Release Notes</title>
+
+  <section id="WhatIs"><title>What is Wireshark?</title>
+    <para>
+      Wireshark is the world's most popular network protocol analyzer.  It
+      is used for troubleshooting, analysis, development and education.
+    </para>
+  </section>
+
+  <section id="WhatsNew"><title>What's New</title>
+    <section id="BugFixes"><title>Bug Fixes</title>
+
+    <para>
+
+    The following bugs have been fixed:
+
+      <itemizedlist>
+
+        <listitem><para>
+          Wireshark is unresponsive when capturing from named pipes on Windows.
+          (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=1759">Bug
+          1759</ulink>)
+        </para></listitem>
+
+	<listitem><para>
+	  Ring buffers are no longer turned on by default when using multiple
+	  capture files.
+	</para></listitem>
+
+      </itemizedlist>
+
+    </para>
+
+    </section>
+
+    <section id="NewFeatures"><title>New and Updated Features</title>
+    <para>
+      The following features are new (or have been significantly updated)
+      since version 1.4:
+
+      <itemizedlist>
+
+        <listitem>
+          <para>
+            Wireshark can import text dumps, similar to text2pcap.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            You can now view Wireshark's dissector tables (for example the
+            TCP port to dissector mappings) from the main window.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+           TShark can show a specific occurrence of a field when using '-T fields'.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            Custom columns can show a specific occurrence of a field.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            You can hide columns in the packet list.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            Wireshark can now export SMB objects.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            dftest and randpkt now have manual pages.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            TShark can now display iSCSI, ICMP and ICMPv6 service response times.
+          </para>
+        </listitem>
+
+
+        <listitem>
+          <para>
+            Dumpcap can now save files with a user-specified group id.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            Syntax checking is done for capture filters.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            You can display the compiled BPF code for capture filters in the
+            Capture Options dialog.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            You can now navigate backwards and forwards through TCP and UDP
+            sessions using
+              <keycombo><keycap>Ctrl</keycap><keycap>,</keycap></keycombo>
+            and
+              <keycombo><keycap>Ctrl</keycap><keycap>.</keycap></keycombo>
+            .
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            Packet length is (finally) a default column.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            TCP window size is now avaiable both scaled and unscaled. A TCP
+            window scaling graph is available in the GUI.
+          </para>
+        </listitem>
+
+	<listitem>
+	  <para>
+	    802.1q VLAN tags are now shown by the Ethernet II dissector.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Various dissectors now display some UTF-16 strings as proper Unicode
+	    including the DCE/RPC and SMB dissectors.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    The RTP player now has an option to show the time of day in the
+	    graph in addition to the seconds since beginning of capture.
+	  </para>
+	</listitem>
+
+        <listitem>
+          <para>
+            The RTP player now shows why media interruptions occur.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            Graphs now save as PNG images by default.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+	    TShark can read and write host name information from and to
+	    pcapng-formatted files. Wireshark can read it. TShark can dump host
+	    name information via <cmdsynopsis><arg>-z hosts</arg></cmdsynopsis>.
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            The tshark -z option now uses the <cmdsynopsis><arg>-z
+            &lt;proto&gt;,srt</arg></cmdsynopsis> syntax instead of
+            <cmdsynopsis><arg>-z &lt;proto&gt;,rtt</arg></cmdsynopsis>
+            for all protocols that support service response time
+            statistics.  This syntax now matches Wireshark's syntax
+            for this option.
+          </para>
+        </listitem>
+
+      </itemizedlist>
+
+    </para>
+    </section>
+
+    <section id="NewProtocols"><title>New Protocol Support</title>
+    <para>
+
+ADwin,
+ADwin-Config,
+Apache Etch,
+Aruba PAPI,
+Babel Routing Protocol,
+Constrained Application Protocol (COAP),
+Digium TDMoE,
+Erlang Distribution Protocol,
+Ether-S-I/O,
+FastCGI,
+Fibre Channel over InfiniBand (FCoIB),
+Gopher,
+Gigamon GMHDR,
+IDMP,
+Infiniband Socket Direct Protocol (SDP),
+JSON,
+LISP Data,
+MikroTik MAC-Telnet,
+Mongo Wire Protocol,
+Network Monitor 802.11 radio header,
+OPC UA ExtensionObjects,
+PPI-GEOLOCATION-GPS,
+ReLOAD,
+ReLOAD Framing,
+RSIP,
+SAMETIME,
+SCoP,
+SGSAP,
+Tektronix Teklink,
+WAI authentication,
+Wi-Fi P2P (Wi-Fi Direct)
+
+    </para>
+    </section>
+
+    <section id="UpdatedProtocols"><title>Updated Protocol Support</title> <para>
+
+    </para>
+    </section>
+
+    <section id="NewCapture"><title>New and Updated Capture File Support</title>
+    <para>
+
+Apple PacketLogger,
+Catapult DCT2000,
+Daintree SNA,
+Endace ERF,
+HP OpenVMS TCPTrace,
+IPFIX (the file format, not the protocol),
+Lucent/Ascend debug,
+Microsoft Network Monitor,
+Network Instruments,
+TamoSoft CommView
+
+    </para>
+    </section>
+
+  </section>
+
+  <section id="GettingWireshark"><title>Getting Wireshark</title>
+    <para>
+      Wireshark source code and installation packages are available from
+      <ulink url="http://www.wireshark.org/download.html">http://www.wireshark.org/download.html</ulink>.
+    </para>
+
+    <section id="VendorPackages"><title>Vendor-supplied Packages</title>
+      <para>
+        Most Linux and Unix vendors supply their own Wireshark packages.
+        You can usually install or upgrade Wireshark using the package management
+        system specific to that platform.  A list of third-party packages
+        can be found on the
+        <ulink url="http://www.wireshark.org/download.html#thirdparty">download page</ulink>
+        on the Wireshark web site.
+      </para>
+    </section>
+
+  </section>
+
+  <!-- XXX needs to be written
+  <section id="RemovingWireshark"><title>Removing Wireshark</title>
+    <para>
+    </para>
+  </section>
+  -->
+
+  <section id="FileLocations"><title>File Locations</title>
+    <para>
+      Wireshark and TShark look in several different locations for
+      preference files, plugins, SNMP MIBS, and RADIUS dictionaries.
+      These locations vary from platform to platform.  You can use
+      About→Folders to find the default locations on your system.
+    </para>
+  </section>
+
+  <section id="KnownProblems"><title>Known Problems</title>
+
+    <para>
+      Wireshark might make your system disassociate from a wireless network
+      on OS X 10.4.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=1315">Bug
+      1315</ulink>)
+    </para>
+
+    <para>
+      Dumpcap might not quit if Wireshark or TShark crashes.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=1419">Bug
+      1419</ulink>)
+    </para>
+
+    <para>
+      The BER dissector might infinitely loop.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=1516">Bug
+      1516</ulink>)
+    </para>
+
+    <para>
+      Capture filters aren't applied when capturing from named pipes.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=1814">Bug
+      1814</ulink>)
+    </para>
+
+    <para>
+      Filtering tshark captures with display filters (-R) no longer works.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=2234">Bug
+      2234</ulink>)
+    </para>
+
+    <para>
+      The 64-bit Windows installer does not ship with libsmi.
+      (<ulink url="http://wiki.wireshark.org/Development/Win64">Win64
+      development page</ulink>)
+    </para>
+
+    <para>
+      Application crash when changing real-time option.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=4035">Bug
+      4035</ulink>)
+    </para>
+
+    <para>
+      Hex pane display issue after startup.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=4056">Bug
+      4056</ulink>)
+    </para>
+
+    <para>
+      Crash when sorting column while capturing.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=4273">Bug
+      4273</ulink>)
+    </para>
+
+    <para>
+      Packet list rows are oversized.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=4357">Bug
+      4357</ulink>)
+    </para>
+
+    <para>
+      Summary pane selected frame highlighting not maintained.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=4445">Bug
+      4445</ulink>)
+    </para>
+
+    <para>
+      Character echo pauses in Capture Filter field in Capture Options.
+      (<ulink url="http://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5356">Bug
+      5356</ulink>)
+    </para>
+
+  </section>
+
+  <section id="GettingHelp"><title>Getting Help</title>
+    <para>
+    Community support is available on
+    <ulink url="http://ask.wireshark.org/">Wireshark's Q&amp;A site</ulink>
+    and on the wireshark-users mailing list.
+    Subscription information and archives for all of Wireshark's mailing
+    lists can be found on <ulink url="http://www.wireshark.org/lists/">the
+    web site</ulink>.
+    </para>
+    <para>
+    Training is available from
+    <ulink url="http://www.wiresharktraining.com/">Wireshark University</ulink>.
+    </para>
+  </section>
+
+  <section id="FAQ"><title>Frequently Asked Questions</title>
+    <para>
+    A complete FAQ is available on the
+    <ulink url="http://www.wireshark.org/faq.html">Wireshark web site</ulink>.
+    </para>
+  </section>
+
+</article>
