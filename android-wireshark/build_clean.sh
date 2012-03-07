@@ -15,7 +15,7 @@ find . -name .deps -exec rm -fr {} \;
 cd tools/lemon/
 gcc -D_U_=""   -o lemon lemon.c
 cd ../../
-./configure --disable-wireshark --with-pcap=yes --disable-glibtest --with-gcrypt=no
+./configure --disable-wireshark --with-pcap=yes --disable-glibtest --with-gcrypt=no --disable-warnings-as-errors
 find . -name Makefile -exec sed -i 's/-pthread//g' {} \;
 find . -name Makefile -exec sed -i 's/-lrt/-lgcc -lpcap/g' {} \;
 find . -name Makefile -exec sed -i 's/-g -O2/-g/g' {} \;
