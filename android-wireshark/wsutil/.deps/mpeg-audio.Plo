@@ -1,7 +1,0 @@
-mpeg-audio.lo: mpeg-audio.c \
- /home/gnychis/Documents/android/os/system/core/include/arch/linux-arm/AndroidConfig.h \
- mpeg-audio.h
-
-/home/gnychis/Documents/android/os/system/core/include/arch/linux-arm/AndroidConfig.h:
-
-mpeg-audio.h:

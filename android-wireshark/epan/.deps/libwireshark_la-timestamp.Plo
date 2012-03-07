@@ -1,9 +1,0 @@
-libwireshark_la-timestamp.lo: timestamp.c \
- /home/gnychis/Documents/android/os/system/core/include/arch/linux-arm/AndroidConfig.h \
- ../config.h timestamp.h
-
-/home/gnychis/Documents/android/os/system/core/include/arch/linux-arm/AndroidConfig.h:
-
-../config.h:
-
-timestamp.h:

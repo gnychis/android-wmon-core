@@ -93,7 +93,7 @@ NM="/home/gnychis/Documents/android/os/prebuilt/linux-x86/toolchain/arm-eabi-4.4
 LN_S="ln -s"
 
 # What is the maximum length of a command?
-max_cmd_len=805306365
+max_cmd_len=1572864
 
 # Object file suffix (normally "o").
 objext=o
