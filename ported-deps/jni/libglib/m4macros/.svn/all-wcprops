@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/m4macros
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/m4macros/Makefile.in
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/m4macros/Makefile.am
+END
+glib-2.0.m4
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/m4macros/glib-2.0.m4
+END
+glib-gettext.m4
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/m4macros/glib-gettext.m4
+END

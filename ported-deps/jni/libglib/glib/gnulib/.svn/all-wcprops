@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib
+END
+printf-parse.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/printf-parse.h
+END
+vasnprintf.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/vasnprintf.h
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/Makefile.in
+END
+printf-args.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/printf-args.h
+END
+printf.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/printf.c
+END
+asnprintf.c
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/asnprintf.c
+END
+printf.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/printf.h
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/Makefile.am
+END
+g-gnulib.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/g-gnulib.h
+END
+printf-parse.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/printf-parse.c
+END
+vasnprintf.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/vasnprintf.c
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/README
+END
+printf-args.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/printf-args.c
+END
+makefile.msc
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnulib/makefile.msc
+END

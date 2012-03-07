@@ -1,0 +1,425 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html
+END
+chapter-intro.html
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/chapter-intro.html
+END
+ch01s02.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ch01s02.html
+END
+ix02.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix02.html
+END
+pt02.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/pt02.html
+END
+ix06.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix06.html
+END
+howto-interface-implement.html
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-interface-implement.html
+END
+ch07s02.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ch07s02.html
+END
+gobject-The-Base-Object-Type.html
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-The-Base-Object-Type.html
+END
+glib-mkenums.html
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/glib-mkenums.html
+END
+glib-genmarshal.html
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/glib-genmarshal.html
+END
+GTypeModule.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/GTypeModule.html
+END
+gobject.devhelp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject.devhelp
+END
+GTypePlugin.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/GTypePlugin.html
+END
+gtype-non-instantiable-classed.html
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gtype-non-instantiable-classed.html
+END
+left.png
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/left.png
+END
+gobject-Signals.html
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Signals.html
+END
+gobject-Type-Information.html
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Type-Information.html
+END
+rn01.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/rn01.html
+END
+tools-refdb.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/tools-refdb.html
+END
+pr01.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/pr01.html
+END
+ix03.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix03.html
+END
+howto-gobject-code.html
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-gobject-code.html
+END
+gobject-memory.html
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-memory.html
+END
+pt03.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/pt03.html
+END
+ch06s03.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ch06s03.html
+END
+ix07.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix07.html
+END
+ch07s03.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ch07s03.html
+END
+howto-interface-properties.html
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-interface-properties.html
+END
+right.png
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/right.png
+END
+gobject-GParamSpec.html
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-GParamSpec.html
+END
+chapter-signal.html
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/chapter-signal.html
+END
+howto-gobject-construction.html
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-gobject-construction.html
+END
+tools-gob.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/tools-gob.html
+END
+howto-gobject-methods.html
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-gobject-methods.html
+END
+howto-gobject-destruction.html
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-gobject-destruction.html
+END
+rn02.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/rn02.html
+END
+gobject.devhelp2
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject.devhelp2
+END
+ix04.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix04.html
+END
+gobject-Generic-values.html
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Generic-values.html
+END
+style.css
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/style.css
+END
+gobject-Value-arrays.html
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Value-arrays.html
+END
+ix08.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix08.html
+END
+howto-signals.html
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-signals.html
+END
+howto-gobject-chainup.html
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-gobject-chainup.html
+END
+index.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/index.sgml
+END
+gobject-Standard-Parameter-and-Value-Types.html
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Standard-Parameter-and-Value-Types.html
+END
+glue.png
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/glue.png
+END
+chapter-gtype.html
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/chapter-gtype.html
+END
+signal.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/signal.html
+END
+gobject-Boxed-Types.html
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Boxed-Types.html
+END
+gtype-instantiable-classed.html
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gtype-instantiable-classed.html
+END
+gobject-query.html
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-query.html
+END
+ix01.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix01.html
+END
+gobject-Varargs-Value-Collection.html
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Varargs-Value-Collection.html
+END
+pt01.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/pt01.html
+END
+ix05.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix05.html
+END
+ix09.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/ix09.html
+END
+gtype-non-instantiable.html
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gtype-non-instantiable.html
+END
+gtype-conventions.html
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gtype-conventions.html
+END
+howto-interface.html
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-interface.html
+END
+chapter-gobject.html
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/chapter-gobject.html
+END
+up.png
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/up.png
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/index.html
+END
+gobject-properties.html
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-properties.html
+END
+home.png
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/home.png
+END
+tools-gtkdoc.html
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/tools-gtkdoc.html
+END
+gobject-Enumeration-and-Flag-Types.html
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Enumeration-and-Flag-Types.html
+END
+gobject-Closures.html
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/gobject-Closures.html
+END
+howto-gobject.html
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/howto-gobject.html
+END
+tools-ginspector.html
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/html/tools-ginspector.html
+END

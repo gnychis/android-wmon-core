@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject
+END
+gobject-query.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/gobject-query.xml
+END
+gobject-query.1
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/gobject-query.1
+END
+tut_gsignal.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tut_gsignal.xml
+END
+gobject.types
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/gobject.types
+END
+gobject-sections.txt
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/gobject-sections.txt
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/Makefile.in
+END
+tut_gtype.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tut_gtype.xml
+END
+version.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/version.xml
+END
+tut_intro.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tut_intro.xml
+END
+glib-mkenums.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/glib-mkenums.xml
+END
+glib-mkenums.1
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/glib-mkenums.1
+END
+version.xml.in
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/version.xml.in
+END
+gobject-overrides.txt
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/gobject-overrides.txt
+END
+glib-genmarshal.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/glib-genmarshal.xml
+END
+glib-genmarshal.1
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/glib-genmarshal.1
+END
+tut_howto.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tut_howto.xml
+END
+tut_tools.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tut_tools.xml
+END
+gobject-docs.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/gobject-docs.sgml
+END
+gobject.cI
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/gobject.cI
+END
+tut_gobject.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tut_gobject.xml
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/Makefile.am
+END

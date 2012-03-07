@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl
+END
+gobject-unused.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/gobject-unused.sgml
+END
+gtypemodule.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/gtypemodule.sgml
+END
+param_value_types.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/param_value_types.sgml
+END
+signals.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/signals.sgml
+END
+gparamspec.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/gparamspec.sgml
+END
+gclosure.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/gclosure.sgml
+END
+enumerations_flags.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/enumerations_flags.sgml
+END
+gtypeplugin.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/gtypeplugin.sgml
+END
+value_collection.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/value_collection.sgml
+END
+gboxed.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/gboxed.sgml
+END
+gtype.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/gtype.sgml
+END
+objects.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/objects.sgml
+END
+generic_values.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/generic_values.sgml
+END
+value_arrays.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/tmpl/value_arrays.sgml
+END

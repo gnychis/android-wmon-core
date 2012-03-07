@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8
+END
+glib.vcproj
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8/glib.vcproj
+END
+gobject.vcproj
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8/gobject.vcproj
+END
+gthread.vcproj
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8/gthread.vcproj
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8/Makefile.in
+END
+glib.sln
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8/glib.sln
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8/Makefile.am
+END
+glib-genmarshal.vcproj
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8/glib-genmarshal.vcproj
+END
+gmodule.vcproj
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/win32/vs8/gmodule.vcproj
+END

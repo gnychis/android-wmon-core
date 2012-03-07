@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml
+END
+param_value_types.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/param_value_types.xml
+END
+signals.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/signals.xml
+END
+gparamspec.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/gparamspec.xml
+END
+gclosure.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/gclosure.xml
+END
+enumerations_flags.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/enumerations_flags.xml
+END
+gtypeplugin.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/gtypeplugin.xml
+END
+value_collection.xml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/value_collection.xml
+END
+gboxed.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/gboxed.xml
+END
+gtype.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/gtype.xml
+END
+objects.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/objects.xml
+END
+generic_values.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/generic_values.xml
+END
+value_arrays.xml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/value_arrays.xml
+END
+gtypemodule.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/gobject/xml/gtypemodule.xml
+END

@@ -1,0 +1,887 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/coexisyst/!svn/ver/206/code/trunk/jni/libglib/glib
+END
+gscanner.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gscanner.c
+END
+gscanner.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gscanner.h
+END
+gmarkup.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gmarkup.c
+END
+gutils.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/148/code/trunk/jni/libglib/glib/gutils.c
+END
+glibintl.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/glibintl.h
+END
+gwin32.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gwin32.c
+END
+gmarkup.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gmarkup.h
+END
+gutils.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gutils.h
+END
+makefile.msc
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/makefile.msc
+END
+gmessages.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/206/code/trunk/jni/libglib/glib/gmessages.c
+END
+gwin32.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gwin32.h
+END
+gmessages.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/206/code/trunk/jni/libglib/glib/gmessages.h
+END
+gatomic.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gatomic.c
+END
+pltcheck.sh
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/pltcheck.sh
+END
+gatomic.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gatomic.h
+END
+gmain.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gmain.c
+END
+gerror.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gerror.c
+END
+gmain.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gmain.h
+END
+gerror.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gerror.h
+END
+gfileutils.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gfileutils.c
+END
+gthreadpool.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gthreadpool.c
+END
+gfileutils.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gfileutils.h
+END
+gthreadpool.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gthreadpool.h
+END
+gshell.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gshell.c
+END
+glib.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/glib.h
+END
+gshell.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gshell.h
+END
+glib.symbols
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/glib.symbols
+END
+gdir.c
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gdir.c
+END
+gconvert.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gconvert.c
+END
+grel.c
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/grel.c
+END
+gprintfint.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gprintfint.h
+END
+gdir.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gdir.h
+END
+ghash.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/206/code/trunk/jni/libglib/glib/ghash.c
+END
+gdatasetprivate.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gdatasetprivate.h
+END
+gconvert.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gconvert.h
+END
+grel.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/grel.h
+END
+gen-unicode-tables.pl
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gen-unicode-tables.pl
+END
+ghash.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/148/code/trunk/jni/libglib/glib/ghash.h
+END
+guniprop.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/guniprop.c
+END
+gtree.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gtree.c
+END
+gtree.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gtree.h
+END
+gsequence.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gsequence.c
+END
+gcompletion.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gcompletion.c
+END
+gtypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gtypes.h
+END
+makefile.msc.in
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/makefile.msc.in
+END
+gsequence.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gsequence.h
+END
+gdate.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gdate.c
+END
+gcompletion.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gcompletion.h
+END
+gbacktrace.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gbacktrace.c
+END
+gdate.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gdate.h
+END
+gbacktrace.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gbacktrace.h
+END
+gdataset.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gdataset.c
+END
+gunicodeprivate.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunicodeprivate.h
+END
+glib.rc
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/glib.rc
+END
+gdataset.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gdataset.h
+END
+glib.rc.in
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/glib.rc.in
+END
+gslist.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gslist.c
+END
+Android.mk
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/205/code/trunk/jni/libglib/glib/Android.mk
+END
+gtestutils.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/147/code/trunk/jni/libglib/glib/gtestutils.c
+END
+galloca.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/galloca.h
+END
+gprintf.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gprintf.c
+END
+gcache.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gcache.c
+END
+gslist.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gslist.h
+END
+gtestutils.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/147/code/trunk/jni/libglib/glib/gtestutils.h
+END
+gspawn-win32-helper-console.c
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gspawn-win32-helper-console.c
+END
+gthreadprivate.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gthreadprivate.h
+END
+gprintf.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gprintf.h
+END
+gcache.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gcache.h
+END
+gtimer.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gtimer.c
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/Makefile.am
+END
+gqueue.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gqueue.c
+END
+gtimer.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gtimer.h
+END
+gqueue.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gqueue.h
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/Makefile.in
+END
+gslice.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/145/code/trunk/jni/libglib/glib/gslice.c
+END
+gprimes.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gprimes.c
+END
+ghook.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/ghook.c
+END
+giochannel.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/giochannel.c
+END
+gslice.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gslice.h
+END
+gprimes.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gprimes.h
+END
+ghook.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/ghook.h
+END
+giochannel.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/giochannel.h
+END
+gstrfuncs.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gstrfuncs.c
+END
+goption.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/goption.c
+END
+gstrfuncs.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gstrfuncs.h
+END
+goption.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/goption.h
+END
+garray.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/garray.c
+END
+glib-object.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/glib-object.h
+END
+garray.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/garray.h
+END
+gunidecomp.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunidecomp.c
+END
+grand.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/grand.c
+END
+gnode.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnode.c
+END
+gspawn-win32.c
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gspawn-win32.c
+END
+gkeyfile.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gkeyfile.c
+END
+gunidecomp.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunidecomp.h
+END
+grand.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/grand.h
+END
+gmacros.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/146/code/trunk/jni/libglib/glib/gmacros.h
+END
+gunichartables.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunichartables.h
+END
+gnode.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gnode.h
+END
+gdebug.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gdebug.h
+END
+gunicode.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunicode.h
+END
+gkeyfile.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gkeyfile.h
+END
+gunibreak.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunibreak.c
+END
+gbookmarkfile.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gbookmarkfile.c
+END
+gunibreak.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunibreak.h
+END
+gstring.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gstring.c
+END
+galiasdef.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/galiasdef.c
+END
+gbookmarkfile.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gbookmarkfile.h
+END
+gstring.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gstring.h
+END
+gbsearcharray.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gbsearcharray.h
+END
+gpattern.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gpattern.c
+END
+gpattern.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gpattern.h
+END
+gmirroringtable.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gmirroringtable.h
+END
+gi18n-lib.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gi18n-lib.h
+END
+giowin32.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/giowin32.c
+END
+galias.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/galias.h
+END
+gunicollate.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunicollate.c
+END
+gmappedfile.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gmappedfile.c
+END
+gthread.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gthread.c
+END
+gmappedfile.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gmappedfile.h
+END
+glist.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/glist.c
+END
+gthread.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gthread.h
+END
+gunicomp.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gunicomp.h
+END
+glist.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/glist.h
+END
+gscripttable.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gscripttable.h
+END
+gen-script-table.pl
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gen-script-table.pl
+END
+gasyncqueue.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gasyncqueue.c
+END
+gstdio.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gstdio.c
+END
+gbase64.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gbase64.c
+END
+gi18n.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gi18n.h
+END
+gutf8.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gutf8.c
+END
+gstdio.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gstdio.h
+END
+gasyncqueue.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gasyncqueue.h
+END
+gspawn.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gspawn.c
+END
+gquark.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gquark.h
+END
+gbase64.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gbase64.h
+END
+gspawn.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gspawn.h
+END
+gspawn-win32-helper.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gspawn-win32-helper.c
+END
+gqsort.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gqsort.c
+END
+gregex.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gregex.c
+END
+abicheck.sh
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/abicheck.sh
+END
+giounix.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/giounix.c
+END
+gqsort.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gqsort.h
+END
+gmem.c
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/coexisyst/!svn/ver/146/code/trunk/jni/libglib/glib/gmem.c
+END
+gregex.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/gregex.h
+END
+makegalias.pl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/glib/makegalias.pl
+END
+gmem.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/coexisyst/!svn/ver/146/code/trunk/jni/libglib/glib/gmem.h
+END

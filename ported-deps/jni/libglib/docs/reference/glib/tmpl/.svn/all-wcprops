@@ -1,0 +1,383 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl
+END
+linked_lists_double.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/linked_lists_double.sgml
+END
+atomic_operations.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/atomic_operations.sgml
+END
+version.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/version.sgml
+END
+unicode.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/unicode.sgml
+END
+scanner.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/scanner.sgml
+END
+fileutils.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/fileutils.sgml
+END
+async_queues.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/async_queues.sgml
+END
+sequence.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/sequence.sgml
+END
+option.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/option.sgml
+END
+modules.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/modules.sgml
+END
+memory.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/memory.sgml
+END
+random_numbers.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/random_numbers.sgml
+END
+numerical.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/numerical.sgml
+END
+memory_chunks.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/memory_chunks.sgml
+END
+arrays_byte.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/arrays_byte.sgml
+END
+macros.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/macros.sgml
+END
+strings.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/strings.sgml
+END
+byte_order.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/byte_order.sgml
+END
+macros_misc.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/macros_misc.sgml
+END
+markup.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/markup.sgml
+END
+relations.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/relations.sgml
+END
+arrays_pointer.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/arrays_pointer.sgml
+END
+types.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/types.sgml
+END
+trash_stack.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/trash_stack.sgml
+END
+quarks.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/quarks.sgml
+END
+shell.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/shell.sgml
+END
+completion.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/completion.sgml
+END
+misc_utils.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/misc_utils.sgml
+END
+glib-unused.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/glib-unused.sgml
+END
+i18n.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/i18n.sgml
+END
+string_chunks.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/string_chunks.sgml
+END
+gregex.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/gregex.sgml
+END
+thread_pools.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/thread_pools.sgml
+END
+hooks.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/hooks.sgml
+END
+caches.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/caches.sgml
+END
+warnings.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/warnings.sgml
+END
+spawn.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/spawn.sgml
+END
+keyfile.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/keyfile.sgml
+END
+windows.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/windows.sgml
+END
+threads.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/threads.sgml
+END
+patterns.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/patterns.sgml
+END
+limits.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/limits.sgml
+END
+timers.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/timers.sgml
+END
+allocators.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/allocators.sgml
+END
+trees-binary.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/trees-binary.sgml
+END
+datalist.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/datalist.sgml
+END
+bookmarkfile.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/bookmarkfile.sgml
+END
+hash_tables.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/hash_tables.sgml
+END
+error_reporting.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/error_reporting.sgml
+END
+iochannels.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/iochannels.sgml
+END
+queue.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/queue.sgml
+END
+base64.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/base64.sgml
+END
+main.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/main.sgml
+END
+linked_lists_single.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/linked_lists_single.sgml
+END
+type_conversion.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/type_conversion.sgml
+END
+string_utils.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/string_utils.sgml
+END
+trees-nary.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/trees-nary.sgml
+END
+arrays.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/arrays.sgml
+END
+messages.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/messages.sgml
+END
+datasets.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/datasets.sgml
+END
+conversions.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/conversions.sgml
+END
+memory_slices.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/memory_slices.sgml
+END
+date.sgml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/docs/reference/glib/tmpl/date.sgml
+END

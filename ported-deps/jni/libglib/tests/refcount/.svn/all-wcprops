@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount
+END
+properties2.c
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount/properties2.c
+END
+closures.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount/closures.c
+END
+signals.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount/signals.c
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount/Makefile.in
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount/Makefile.am
+END
+objects.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount/objects.c
+END
+objects2.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount/objects2.c
+END
+properties.c
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/tests/refcount/properties.c
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/Makefile.in
+END
+ChangeLog
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/ChangeLog
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/Makefile.am
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/coexisyst/!svn/ver/130/code/trunk/jni/libglib/build/README
+END
