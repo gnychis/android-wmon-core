@@ -6,7 +6,7 @@ export ARCH=
 export CC=$(pwd)/agcc
 
 # Configure wireshark
-make clean
+#make clean
 cd tools/lemon/
 gcc -D_U_=""   -o lemon lemon.c
 cd ../../
