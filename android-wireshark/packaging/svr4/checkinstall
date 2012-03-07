@@ -11,7 +11,7 @@
 PKG_CONFIG=/usr/bin/pkg-config
 
 gtk_version_needed="2.0"
-expected_platform="i686"
+expected_platform="arm"
 
 platform=`uname -p`
 

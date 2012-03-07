@@ -7,16 +7,19 @@ export CC=$(pwd)/agcc
 
 find . -name Makefile -exec rm -f {} \;
 find . -name .deps -exec rm -fr {} \;
+find . -name .libs -exec rm -fr {} \;
 ./autogen.sh
 
 # Configure wireshark
-cd tools/lemon/
-gcc -D_U_=""   -o lemon lemon.c
-cd ../../
+./configure -host=arm-eabi --disable-wireshark --with-pcap=yes --disable-glibtest --with-gcrypt=no --disable-warnings-as-errors
+make clean
 ./configure -host=arm-eabi --disable-wireshark --with-pcap=yes --disable-glibtest --with-gcrypt=no --disable-warnings-as-errors
 find . -name Makefile -exec sed -i 's/-pthread//g' {} \;
 find . -name Makefile -exec sed -i 's/-lrt/-lgcc -lpcap/g' {} \;
 find . -name Makefile -exec sed -i 's/-g -O2/-g/g' {} \;
+cd tools/lemon/
+gcc -D_U_=""   -o lemon lemon.c
+cd ../../
 make
 NDK="/home/gnychis/Documents/android/android-ndk-r6b/platforms/android-9/arch-arm"
 ALIB="$NDK/usr/lib"
