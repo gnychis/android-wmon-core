@@ -1,7 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 subdirs := $(addprefix $(LOCAL_PATH)/,$(addsuffix /Android.mk, \
-    libglib \
-    libpcap \
-		libnl \
+	libgpg-error \
+	libgcrypt \
 ))
 include $(subdirs)
