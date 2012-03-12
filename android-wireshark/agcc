@@ -180,6 +180,7 @@ if($have_src and $mode ne "-E") { $need_cpp = $need_compile = 1; }
 my @cmd = ("arm-eabi-gcc");
 if($mode ne "DEFAULT") { @cmd = (@cmd, $mode); }
 if(defined $out) { @cmd = (@cmd, "-o", $out); }
+@cmd = (@cmd, @args);
 if($need_cpp) { @cmd = (@cmd, @include_paths, @preprocess_args); }
 if($need_compile){
     @cmd = (@cmd, @compile_args);
@@ -188,7 +189,6 @@ if($need_compile){
 }
 if($need_link) { @cmd = (@cmd, @link_args); }
 if($need_shlink) { @cmd = (@cmd, @shared_args); }
-@cmd = (@cmd, @args);
 
 #print join(" ", @cmd), "\n"; # Spit it out if you're curious
 exec(@cmd);
