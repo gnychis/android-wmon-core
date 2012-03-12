@@ -11,7 +11,7 @@ find . -name .libs -exec rm -fr {} \;
 ./autogen.sh
 
 # Configure wireshark
-CONFIG_OPTIONS="-host=arm-eabi --disable-wireshark --with-pcap=yes --disable-glibtest --disable-warnings-as-errors --with-libsmi=no --with-gnutls=no"
+CONFIG_OPTIONS="-host=arm-eabi --disable-wireshark --with-pcap=../ported-deps/jni/libpcap/ --disable-glibtest --disable-warnings-as-errors --with-libsmi=no --with-gnutls=no"
 ./configure $CONFIG_OPTIONS
 make clean
 ./configure $CONFIG_OPTIONS

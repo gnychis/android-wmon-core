@@ -1,6 +1,4 @@
-#include <stdio.h>
-
+#include <pcap.h>
 int main() {
-  printf("hello\n");
   return 1;
 }

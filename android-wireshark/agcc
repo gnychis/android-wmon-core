@@ -45,6 +45,7 @@ my $TOOLCHAIN = "$DROID/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3";
 
 my @include_paths = (
 		"-I$AINC",
+		"-I$DROID/../ported-deps/jni/libpcap/pcap",
     "-I$DROID/system/core/include",
     "-I$DROID/hardware/libhardware/include",
     "-I$DROID/hardware/ril/include",
