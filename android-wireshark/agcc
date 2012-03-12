@@ -38,7 +38,7 @@ chomp $GCC;
 die "bad arm-eabi-gcc path" if $GCC !~ /(.*)\/prebuilt\//;
 my $DROID = $1;
 
-my $NDK = "/home/gnychis/Documents/android/android-ndk-r6b/platforms/android-9/arch-arm";
+my $NDK = "$DROID/../android-ndk-r6b/platforms/android-9/arch-arm";
 my $ALIB = "$NDK/usr/lib";
 my $AINC = "$NDK/usr/include";
 my $TOOLCHAIN = "$DROID/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3";
