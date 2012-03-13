@@ -38,7 +38,7 @@ chomp $GCC;
 die "bad arm-eabi-gcc path" if $GCC !~ /(.*)\/prebuilt\//;
 my $DROID = $1;
 
-my $NDK = "/home/gnychis/Documents/android-wmon/android-ndk-r6b-linux/platforms/android-9/arch-arm";
+my $NDK = "$DROID/../android-ndk-r7b-linux/platforms/android-9/arch-arm";
 my $ALIB = "$NDK/usr/lib";
 my $AINC = "$NDK/usr/include";
 my $TOOLCHAIN = "$DROID/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3";
@@ -186,9 +186,9 @@ if($need_compile){
     if($warn) { @cmd = (@cmd, @warn_args); }
     if($opt) { @cmd = (@cmd, @optimize_args); }
 }
+@cmd = (@cmd, @args);
 if($need_link) { @cmd = (@cmd, @link_args); }
 if($need_shlink) { @cmd = (@cmd, @shared_args); }
-@cmd = (@cmd, @args);
 
 #print join(" ", @cmd), "\n"; # Spit it out if you're curious
 exec(@cmd);
