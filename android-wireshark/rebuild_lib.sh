@@ -5,23 +5,23 @@ export CROSS_COMPILE=
 export ARCH=
 export CC=$(pwd)/agcc
 
-find . -name Makefile -exec rm -f {} \;
-find . -name .deps -exec rm -fr {} \;
-find . -name .libs -exec rm -fr {} \;
-./autogen.sh
-
-# Configure wireshark
-CONFIG_OPTIONS="-host=arm-eabi --disable-wireshark --with-pcap=yes --disable-glibtest --disable-warnings-as-errors --with-libsmi=no --with-gnutls=no"
-./configure $CONFIG_OPTIONS
-make clean
-./configure $CONFIG_OPTIONS
-find . -name Makefile -exec sed -i 's/-pthread//g' {} \;
-find . -name Makefile -exec sed -i 's/-lrt/-lgcc -lpcap/g' {} \;
-find . -name Makefile -exec sed -i 's/-g -O2/-g/g' {} \;
-cd tools/lemon/
-gcc -D_U_=""   -o lemon lemon.c
-cd ../../
-make
+#find . -name Makefile -exec rm -f {} \;
+#find . -name .deps -exec rm -fr {} \;
+#find . -name .libs -exec rm -fr {} \;
+#./autogen.sh
+#
+## Configure wireshark
+#CONFIG_OPTIONS="-host=arm-eabi --disable-wireshark --with-pcap=yes --disable-glibtest --disable-warnings-as-errors --with-libsmi=no --with-gnutls=no"
+#./configure $CONFIG_OPTIONS
+#make clean
+#./configure $CONFIG_OPTIONS
+#find . -name Makefile -exec sed -i 's/-pthread//g' {} \;
+#find . -name Makefile -exec sed -i 's/-lrt/-lgcc -lpcap/g' {} \;
+#find . -name Makefile -exec sed -i 's/-g -O2/-g/g' {} \;
+#cd tools/lemon/
+#gcc -D_U_=""   -o lemon lemon.c
+#cd ../../
+#make
 NDK="$(pwd)/../android-ndk-r7b-linux/platforms/android-9/arch-arm"
 ALIB="$NDK/usr/lib"
 PLATFORM="$(pwd)/../os"
