@@ -1,0 +1,20 @@
+# Hey Emacs, this is a -*- makefile -*-
+
+CFLAGS += -I$(MC1322X)/lib/include
+
+# By default, link all objects
+LIBOBJS ?= $(patsubst %.c,%.o,$(wildcard $(MC1322X)/lib/*.c))
+
+$(MC1322X)/lib/libmc1322x.a: $(LIBOBJS)
+	$(call pretty,AR,$@)
+	@rm -f $@
+	$Q$(AR) $(ARFLAGS) $@ $^
+
+TARGET_OBJ += $(MC1322X)/lib/libmc1322x.a
+
+ifneq ($(MAKECMDGOALS),clean)
+-include $(wildcard $(MC1322X)/lib/*.d)
+endif
+
+clean::
+	rm -f $(MC1322X)/lib/*.{o,d,a}
