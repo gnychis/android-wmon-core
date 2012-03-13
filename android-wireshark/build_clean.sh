@@ -22,7 +22,7 @@ cd tools/lemon/
 gcc -D_U_=""   -o lemon lemon.c
 cd ../../
 make
-NDK="/home/gnychis/Documents/android/android-ndk-r6b/platforms/android-9/arch-arm"
+NDK="/home/gnychis/Documents/android/android-ndk-r6b-linux/platforms/android-9/arch-arm"
 ALIB="$NDK/usr/lib"
 PLATFORM="/home/gnychis/Documents/android/os"
 TOOLCHAIN="$PLATFORM/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3"
