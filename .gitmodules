@@ -1,0 +1,3 @@
+[submodule "usbhost-kernel"]
+	path = usbhost-kernel
+	url = git@github.com:gnychis/samsung-kernel-herring.git
