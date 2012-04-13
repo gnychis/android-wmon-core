@@ -52,6 +52,9 @@
     <property name="java.source" value="1.5" />
     <property name="java.compilerargs" value="" />
 
+    <!-- instrumentation options -->
+    <property name="emma.filter" value="" />
+
     <!-- Verbosity -->
     <property name="verbose" value="false" />
 
@@ -81,6 +84,10 @@
             classname="com.android.ant.RenderScriptTask"
             classpathref="android.antlibs" />
 
+    <taskdef name="buildconfig"
+            classname="com.android.ant.BuildConfigTask"
+            classpathref="android.antlibs" />
+
     <taskdef name="dex"
             classname="com.android.ant.DexExecTask"
             classpathref="android.antlibs" />
@@ -99,6 +106,10 @@
 
     <taskdef name="if"
             classname="com.android.ant.IfElseTask"
+            classpathref="android.antlibs" />
+
+    <taskdef name="propertybyreplace"
+            classname="com.android.ant.PropertyByReplaceTask"
             classpathref="android.antlibs" />
 
     <!-- Emma configuration -->
@@ -181,6 +192,17 @@
     <!-- properties for packaging -->
     <property name="build.packaging.nocrunch" value="true" />
 
+    <!-- whether we need to fork javac.
+         This is only needed on Windows when running Java < 7 -->
+    <condition else="false" property="need.javac.fork">
+        <and>
+            <matches pattern="1\.[56]" string="${java.specification.version}"/>
+            <not>
+                <os family="unix"/>
+            </not>
+        </and>
+    </condition>
+
     <!-- ******************************************************* -->
     <!-- ************************ Macros *********************** -->
     <!-- ******************************************************* -->
@@ -245,7 +267,7 @@
                 </condition>
                 <else>
                     <path id="out.dex.jar.input.ref">
-                        <path refid="jar.libs.ref" />
+                        <path refid="project.libraries.jars" />
                     </path>
                 </else>
             </if>
@@ -285,7 +307,7 @@
                     buildType="${build.is.packaging.debug}/${build.is.signing.debug}">
                 <dex path="${intermediate.dex.file}"/>
                 <sourcefolder path="${source.absolute.dir}"/>
-                <jarfile refid="jar.libs.ref" />
+                <jarfile refid="project.libraries.jars" />
                 <nativefolder path="${native.libs.absolute.dir}" />
                 <nativefolder refid="project.libraries.libs" />
                 <extra-jars/>
@@ -399,13 +421,14 @@
         <if>
             <condition>
                 <isreference refid="project.libraries" />
+                <not><isset property="dont.do.deps" /></not>
             </condition>
             <then>
                 <subant
                         buildpathref="project.libraries"
                         antfile="build.xml"
                         failonerror="true">
-                    <target name="all" />
+                    <target name="nodeps" />
                     <target name="clean" />
                 </subant>
             </then>
@@ -419,6 +442,12 @@
                 <not><isset property="setup.done" /></not>
             </condition>
             <then>
+                <echo>Creating output directories if needed...</echo>
+                <mkdir dir="${resource.absolute.dir}" />
+                <mkdir dir="${jar.libs.absolute.dir}" />
+                <mkdir dir="${out.absolute.dir}" />
+                <mkdir dir="${out.res.absolute.dir}" />
+
                 <property name="setup.done" value="true" />
                 <echo>Gathering info for ${ant.project.name}...</echo>
                 <!-- load project properties, resolve Android target, library dependencies
@@ -437,6 +466,7 @@
                         projectLibrariesPackageOut="project.libraries.package"
                         projectLibrariesLibsOut="project.libraries.libs"
                         targetApiOut="target.api"
+                        verbose="${verbose}"
                 />
 
                 <!-- sets a few boolean based on android.project.type
@@ -517,33 +547,41 @@
         <xpath input="AndroidManifest.xml" expression="/manifest/application/@android:hasCode"
                     output="manifest.hasCode" default="true"/>
 
-        <!-- create a path with all the jar files, from the main project and the
-             libraries -->
-        <path id="jar.libs.ref">
-            <fileset dir="${jar.libs.absolute.dir}" includes="*.jar" />
-            <path refid="project.libraries.jars" />
-        </path>
-
-        <!-- special case for instrumented: if the previous build was
-             instrumented but not this one, clear out the compiled code -->
+        <!-- If the "debug" build type changed, clear out the compiled code.
+             This is to make sure the new BuildConfig.DEBUG value is picked up
+             as javac can't deal with this type of change in its dependency computation. -->
         <if>
             <condition>
                 <and>
-                    <istrue value="${build.last.is.instrumented}" />
-                    <isfalse value="${build.is.instrumented}" />
+                    <length string="${build.last.is.packaging.debug}" trim="true" when="greater" length="0" />
+                    <not><equals
+                            arg1="${build.is.packaging.debug}"
+                            arg2="${build.last.is.packaging.debug}" /></not>
                 </and>
             </condition>
             <then>
-                <echo>Switching from instrumented to non-instrumented build: Deleting previous compilation output...</echo>
+                <echo>Switching between debug and non debug build: Deleting previous compilation output...</echo>
                 <delete dir="${out.classes.absolute.dir}" verbose="${verbose}" />
             </then>
+            <else>
+                <!-- Else, we may still need to clean the code, for another reason.
+                     special case for instrumented: if the previous build was
+                     instrumented but not this one, clear out the compiled code -->
+                <if>
+                    <condition>
+                        <and>
+                            <istrue value="${build.last.is.instrumented}" />
+                            <isfalse value="${build.is.instrumented}" />
+                        </and>
+                    </condition>
+                    <then>
+                        <echo>Switching from instrumented to non-instrumented build: Deleting previous compilation output...</echo>
+                        <delete dir="${out.classes.absolute.dir}" verbose="${verbose}" />
+                    </then>
+                </if>
+            </else>
         </if>
 
-        <echo>Creating output directories if needed...</echo>
-        <mkdir dir="${resource.absolute.dir}" />
-        <mkdir dir="${jar.libs.absolute.dir}" />
-        <mkdir dir="${out.absolute.dir}" />
-        <mkdir dir="${out.res.absolute.dir}" />
         <do-only-if-manifest-hasCode>
             <mkdir dir="${gen.absolute.dir}" />
             <mkdir dir="${out.classes.absolute.dir}" />
@@ -590,6 +628,17 @@
                 <res path="${out.res.absolute.dir}" />
                 <res path="${resource.absolute.dir}" />
             </aapt>
+
+            <echo>----------</echo>
+            <echo>Handling BuildConfig class...</echo>
+            <xpath input="AndroidManifest.xml" expression="/manifest/@package"
+                    output="manifest.package" />
+            <buildconfig
+                    genFolder="${gen.absolute.dir}"
+                    package="${manifest.package}"
+                    buildType="${build.is.packaging.debug}"
+                    previousBuildType="${build.last.is.packaging.debug}"/>
+
         </do-only-if-manifest-hasCode>
     </target>
 
@@ -619,7 +668,8 @@
                     bootclasspathref="android.target.classpath"
                     verbose="${verbose}"
                     classpath="${extensible.classpath}"
-                    classpathref="jar.libs.ref">
+                    classpathref="project.libraries.jars"
+                    fork="${need.javac.fork}">
                 <src path="${source.absolute.dir}" />
                 <src path="${gen.absolute.dir}" />
                 <classpath>
@@ -640,8 +690,13 @@
                             <echo>Custom jar packaging exclusion: ${android.package.excludes}</echo>
                         </then>
                     </if>
+
+                    <propertybyreplace name="manifest.package.path" input="${manifest.package}" replace="." with="/" />
+
                     <jar destfile="${out.library.jar.file}">
-                        <fileset dir="${out.classes.absolute.dir}" excludes="**/R.class **/R$*.class"/>
+                        <fileset dir="${out.classes.absolute.dir}"
+                                includes="**/*.class"
+                                excludes="${manifest.package.path}/R.class ${manifest.package.path}/R$*.class ${manifest.package.path}/Manifest.class ${manifest.package.path}/Manifest$*.class ${manifest.package.path}/BuildConfig.class"/>
                         <fileset dir="${source.absolute.dir}" excludes="**/*.java ${android.package.excludes}" />
                     </jar>
                 </then>
@@ -657,9 +712,9 @@
                                mode="overwrite"
                                instrpath="${out.absolute.dir}/classes"
                                outdir="${out.absolute.dir}/classes">
+                            <filter excludes="${manifest.package}.R,${manifest.package}.R$$*,${manifest.package}.BuildConfig" />
+                            <filter value="${emma.filter}" />
                         </instr>
-                        <!-- TODO: exclusion filters on R*.class and allowing custom exclusion from
-                             user defined file -->
                     </emma>
                 </then>
             </if>
@@ -715,7 +770,7 @@
                      files. -->
                 <path id="project.jars.ref">
                     <pathelement location="${preobfuscate.jar.file}" />
-                    <path refid="jar.libs.ref" />
+                    <path refid="project.libraries.jars" />
                 </path>
                 <!-- Set the project jar files Path object into a single property. It'll be
                      all the jar files separated by a platform path-separator.
@@ -728,13 +783,24 @@
                     </firstmatchmapper>
                 </pathconvert>
 
+                <!-- Turn the path property ${proguard.config} from an A:B:C property
+                     into a series of includes: -include A -include B -include C
+                     suitable for processing by the ProGuard task. Note - this does
+                     not include the leading '-include "' or the closing '"'; those
+                     are added under the <proguard> call below.
+                -->
+                <path id="proguard.configpath">
+                    <pathelement path="${proguard.config}"/>
+                </path>
+                <pathconvert pathsep='" -include "' property="proguard.configcmd" refid="proguard.configpath"/>
+
                 <mkdir   dir="${obfuscate.absolute.dir}" />
                 <delete file="${preobfuscate.jar.file}"/>
                 <delete file="${obfuscated.jar.file}"/>
                 <jar basedir="${out.classes.absolute.dir}"
                     destfile="${preobfuscate.jar.file}" />
                 <proguard>
-                    @${proguard.config}
+                    -include      "${proguard.configcmd}"
                     -injars       ${project.jars}
                     -outjars      "${obfuscated.jar.file}"
                     -libraryjars  ${android.libraryjars}
@@ -834,6 +900,9 @@
         </do-only-if-not-library>
     </target>
 
+    <target name="-post-package" />
+    <target name="-post-build" />
+
     <target name="-set-mode-check">
         <fail if="build.is.mode.set"
                 message="Cannot run two different modes at the same time. If you are running more than one debug/release/instrument type targets, call them from different Ant calls." />
@@ -871,7 +940,7 @@
     </target>
 
     <!-- Builds debug output package -->
-    <target name="-do-debug" depends="-set-debug-mode, -debug-obfuscation-check, -package">
+    <target name="-do-debug" depends="-set-debug-mode, -debug-obfuscation-check, -package, -post-package">
         <!-- only create apk if *not* a library project -->
         <do-only-if-not-library elseText="Library project: do not create apk..." >
             <sequential>
@@ -879,12 +948,12 @@
                 <echo>Debug Package: ${out.final.file}</echo>
             </sequential>
         </do-only-if-not-library>
+        <record-build-info />
     </target>
 
     <!-- Builds debug output package -->
-    <target name="debug" depends="-set-debug-files, -do-debug"
+    <target name="debug" depends="-set-debug-files, -do-debug, -post-build"
                 description="Builds the application and signs it with a debug key.">
-        <record-build-info />
     </target>
 
 
@@ -968,15 +1037,7 @@
         </if>
     </target>
 
-    <!-- This runs -package-release and -release-nosign first and then runs
-         only if release-sign is true (set in -release-check,
-         called by -release-no-sign)-->
-    <target name="release"
-                depends="-set-release-mode, -release-obfuscation-check, -package, -release-prompt-for-password, -release-nosign"
-                if="has.keystore"
-                description="Builds the application. The generated apk file must be signed before
-                            it is published.">
-
+    <target name="-release-sign" if="has.keystore" >
         <!-- only create apk if *not* a library project -->
         <do-only-if-not-library elseText="Library project: do not create apk..." >
             <sequential>
@@ -994,12 +1055,21 @@
                         verbose="${verbose}" />
 
                 <!-- Zip aligns the APK -->
-                <zipalign-helper in.package="${out.unaligned.file}"
-                                           out.package="${out.final.file}" />
+                <zipalign-helper
+                        in.package="${out.unaligned.file}"
+                        out.package="${out.final.file}" />
                 <echo>Release Package: ${out.final.file}</echo>
             </sequential>
         </do-only-if-not-library>
         <record-build-info />
+    </target>
+
+    <!-- This runs -package-release and -release-nosign first and then runs
+         only if release-sign is true (set in -release-check,
+         called by -release-no-sign)-->
+    <target name="release"
+                depends="-set-release-mode, -release-obfuscation-check, -package, -post-package, -release-prompt-for-password, -release-nosign, -release-sign, -post-build"
+                description="Builds the application in release mode.">
     </target>
 
     <!-- ******************************************************* -->
