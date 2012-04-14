@@ -6,7 +6,7 @@ MC1322X := libmc1322x
 COBJS := tests.o put.o
 
 # all of the target programs to build
-TARGETS := econotag_androidwmon_firmware rftest-tx-nocsma rftest-rx-nocsma rftest-rx-autoack rftest-tx-autoack
+TARGETS := awmon_firmware rftest-tx-nocsma rftest-rx-nocsma rftest-rx-autoack rftest-tx-autoack
 #TARGETS := blink-red blink-green blink-blue blink-white blink-allio \
            uart1-loopback \
            u1u2-loopback \
@@ -21,7 +21,7 @@ TARGETS := econotag_androidwmon_firmware rftest-tx-nocsma rftest-rx-nocsma rftes
 
 # these targets are built with space reserved for variables needed by ROM services
 # this space is initialized with a rom call to rom_data_init
-TARGETS_WITH_ROM_VARS := econotag_androidwmon_firmware rftest-tx-nocsma rftest-rx-nocsma rftest-rx-autoack rftest-tx-autoack
+TARGETS_WITH_ROM_VARS := awmon_firmware rftest-tx-nocsma rftest-rx-nocsma rftest-rx-autoack rftest-tx-autoack
 #TARGETS_WITH_ROM_VARS := nvm-read nvm-write romimg flasher \
                          rftest-rx rftest-tx \
                          autoack-rx autoack-tx \

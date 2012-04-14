@@ -1,2 +1,2 @@
 #!/bin/bash
-./mc1322x-load.pl -f flasher_redbee-econotag.bin -s blink-red_redbee-econotag.bin -t /dev/ttyUSB1
+sudo ./libmc1322x/tools/mc1322x-load.pl -f libmc1322x/tests/flasher_redbee-econotag.bin -s $1 -t /dev/ttyUSB1
