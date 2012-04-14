@@ -1,0 +1,33 @@
+- fix license for printf.c (take from newlib instead of glibc)
+
+- fix license for start.S (find a BSD version)
+
+- openocd flashing
+  use run_algorithm to hook ROM NVM functions
+  see flash/stm32x.c
+
+- add timestamp to received packets 
+
+- add a way to set modes: tx_only, rx_only, txrx. (so you can be lazy
+  and have blocks of code that don't need to handle rx packets)
+
+- beacon sync
+
+- CCA and ED.
+
+- auto-acking and ack managment
+  keep a set of bit fields, one bit per sequence number (DSN), so 32 bytes
+   total.
+  Set them all to 1 initially. When a DSN is sent, clear the bit. Set
+   the bit when the ack is received.
+  Do anything special with sent but unacked packets? Maybe, so you can
+   retransmit them.
+
+  Dosen't look like contiki ever uses 802.15.4 acking: grep ACKFRAME
+
+  not much point to implement it here unless you also plan to use in
+   in contiki (pretty substantial change to core Contiki).
+
+ also you ack the data after checking it's for you. so autoack relies
+ on setting up the hardware addressing.
+
