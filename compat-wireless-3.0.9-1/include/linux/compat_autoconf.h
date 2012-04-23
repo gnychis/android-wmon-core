@@ -2,7 +2,7 @@
 #define COMPAT_AUTOCONF_INCLUDED
 /*
  * Automatically generated C config: don't edit
- * Sun Apr 22 23:14:40 EDT 2012 
+ * Sun Apr 22 23:59:06 EDT 2012 
  * compat-wireless-2.6: compat-wireless-v3.0.9-1
  * linux-2.6: v3.0.9
  */
@@ -11,6 +11,9 @@
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,24))
 #error Compat-wireless requirement: Linux >= 2,6,24
 #endif /* (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,24) */ 
+#ifndef CONFIG_COMPAT_FIRMWARE_CLASS
+#define CONFIG_COMPAT_FIRMWARE_CLASS 1
+#endif /* CONFIG_COMPAT_FIRMWARE_CLASS */ 
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,24))
 #endif /* CONFIG_COMPAT_KERNEL_2_6_24 */
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,27))

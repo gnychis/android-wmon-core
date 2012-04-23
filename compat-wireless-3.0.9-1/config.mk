@@ -3,6 +3,8 @@ export
 ## NOTE
 ## Make sure to have each variable declaration start
 ## in the first column, no whitespace allowed.
+ 
+CONFIG_COMPAT_FIRMWARE_CLASS=m
 
 ifeq ($(wildcard $(KLIB_BUILD)/.config),)
 # These will be ignored by compat autoconf
