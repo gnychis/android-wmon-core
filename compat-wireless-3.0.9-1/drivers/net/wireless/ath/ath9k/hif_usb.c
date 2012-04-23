@@ -1025,8 +1025,8 @@ static int ath9k_hif_usb_dev_init(struct hif_device_usb *hif_dev, u32 drv_info)
 	struct usb_endpoint_descriptor *endp;
 
 	/* Request firmware */
-	ret = request_firmware(&hif_dev->firmware, hif_dev->fw_name,
-			       &hif_dev->udev->dev);
+	ret = _request_firmware(&hif_dev->firmware, hif_dev->fw_name,
+			       &hif_dev->udev->dev,false,false);
 	if (ret) {
 		dev_err(&hif_dev->udev->dev,
 			"ath9k_htc: Firmware - %s not found\n", hif_dev->fw_name);
