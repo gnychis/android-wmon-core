@@ -165,10 +165,10 @@ void main(void) {
 
 		if(uart1_can_get()) {
 			uart1_getc();
-			chan++;
-			if(chan >= 16) { chan = 0; }
-			set_channel(chan);
-			printf("channel: %d\n\r", chan);
+//			chan++;
+//			if(chan >= 16) { chan = 0; }
+//			set_channel(chan);
+			printf("\n");
 		}
 
 	}

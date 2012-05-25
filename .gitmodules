@@ -1,3 +1,6 @@
 [submodule "usbhost-kernel"]
 	path = usbhost-kernel
 	url = git@github.com:gnychis/samsung-kernel-herring.git
+[submodule "sgs2-skyrocket-kernel"]
+	path = sgs2-skyrocket-kernel
+	url = git@github.com:gnychis/sgs2-skyrocket-kernel.git
