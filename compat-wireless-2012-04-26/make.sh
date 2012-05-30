@@ -1,6 +1,6 @@
 #!/bin/bash
 make clean
-./scripts/driver-select ath9k
+./scripts/driver-select rt2x00
 #KERNEL_DIR=$(pwd)/../usbhost-kernel
 #KERNEL_DIR=$(pwd)/../samsung-kernel-galaxysii
 KERNEL_DIR=$(pwd)/../sgs2-skyrocket-kernel
