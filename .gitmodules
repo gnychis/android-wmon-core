@@ -4,6 +4,3 @@
 [submodule "sgs2-skyrocket-kernel"]
 	path = sgs2-skyrocket-kernel
 	url = git@github.com:gnychis/sgs2-skyrocket-kernel.git
-[submodule "sgs2-cm9-kernel"]
-	path = sgs2-cm9-kernel
-	url = git://github.com/CyanogenMod/android_kernel_samsung_msm8660-common.git
