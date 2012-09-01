@@ -1,1 +1,1 @@
-obj-$(CONFIG_ATH_COMMON)	+= ath/
+obj-$(CONFIG_RT2X00)	+= rt2x00/
