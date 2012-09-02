@@ -42,14 +42,22 @@ ifeq ($(BT),)
 obj-$(CONFIG_COMPAT_WIRELESS) += net/wireless/ net/mac80211/
 obj-$(CONFIG_COMPAT_WIRELESS_MODULES) += drivers/net/wireless/
 
+obj-$(CONFIG_COMPAT_NET_USB_MODULES) += drivers/net/usb/
 
+obj-$(CONFIG_COMPAT_NETWORK_MODULES) += drivers/net/ethernet/atheros/
+obj-$(CONFIG_COMPAT_NETWORK_MODULES) += drivers/net/ethernet/broadcom/
 
+obj-$(CONFIG_COMPAT_VAR_MODULES) += drivers/ssb/
+obj-$(CONFIG_COMPAT_VAR_MODULES) += drivers/bcma/
+obj-$(CONFIG_COMPAT_VAR_MODULES) += drivers/misc/eeprom/
 
 ifeq ($(CONFIG_STAGING_EXCLUDE_BUILD),)
 endif
 
 endif
 
+obj-$(CONFIG_COMPAT_BLUETOOTH) += net/bluetooth/
+obj-$(CONFIG_COMPAT_BLUETOOTH_MODULES) += drivers/bluetooth/
 
 else
 
@@ -139,6 +147,7 @@ install: uninstall install-modules install-scripts
 install-modules: modules
 	$(MAKE) -C $(KLIB_BUILD) M=$(PWD) $(KMODDIR_ARG) $(KMODPATH_ARG) \
 		modules_install
+	@./scripts/update-initramfs
 
 install-scripts:
 	@# All the scripts we can use
@@ -209,6 +218,7 @@ uninstall:
 	@rm -rf $(KLIB)/$(KMODDIR)/net/mac80211/
 	@rm -rf $(KLIB)/$(KMODDIR)/net/rfkill/
 	@rm -rf $(KLIB)/$(KMODDIR)/net/wireless/
+	@rm -rf $(KLIB)/$(KMODDIR)/drivers/ssb/
 	@rm -rf $(KLIB)/$(KMODDIR)/drivers/net/usb/
 	@rm -rf $(KLIB)/$(KMODDIR)/drivers/net/wireless/
 	@rm -rf $(KLIB)/$(KMODDIR)/drivers/staging/
@@ -220,6 +230,7 @@ uninstall:
 	@rm -f $(KLIB)/$(KMODDIR)/drivers/misc/eeprom_93cx6.ko*
 	@rm -f $(KLIB)/$(KMODDIR)/drivers/net/b44.ko*
 	@/sbin/depmod -a
+	@./scripts/update-initramfs
 	@echo 
 
 clean:
