@@ -7,3 +7,6 @@
 [submodule "sgs2-cm9-kernel"]
 	path = sgs2-cm9-kernel
 	url = git@github.com:gnychis/android_kernel_samsung_msm8660-common.git
+[submodule "sgs3-cm10-kernel"]
+	path = sgs3-cm10-kernel
+	url = git@github.com:gnychis/android_kernel_samsung_d2.git
