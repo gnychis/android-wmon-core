@@ -540,9 +540,13 @@ struct ieee80211_tx_info {
 	u32 flags;
 	u8 band;
 
-	u8 hw_queue;
+  u8 antenna_sel_tx;
 
+	u8 hw_queue;
 	u16 ack_frame_id;
+
+  /* 2 byte hole */
+  u8 pad[2];
 
 	union {
 		struct {
