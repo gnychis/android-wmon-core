@@ -10,3 +10,6 @@
 [submodule "sgs3-cm10-kernel"]
 	path = sgs3-cm10-kernel
 	url = git@github.com:gnychis/android_kernel_samsung_d2.git
+[submodule "linaro-android-toolchain"]
+	path = linaro-android-toolchain
+	url = git@github.com:gnychis/linaro-android-toolchain.git
