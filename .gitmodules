@@ -13,3 +13,6 @@
 [submodule "linaro-android-toolchain"]
 	path = linaro-android-toolchain
 	url = git@github.com:gnychis/linaro-android-toolchain.git
+[submodule "galaxynexus-cm10-kernel"]
+	path = galaxynexus-cm10-kernel
+	url = git@github.com:gnychis/android_kernel_samsung_tuna.git
