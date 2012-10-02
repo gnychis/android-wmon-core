@@ -38,7 +38,7 @@ chomp $GCC;
 die "bad arm-eabi-gcc path" if $GCC !~ /(.*)\/prebuilt\//;
 my $DROID = $1;
 
-my $NDK = "$DROID/../android-ndk-r7b-linux/platforms/android-9/arch-arm";
+my $NDK = "$DROID/../android-ndk-r8b-linux/platforms/android-14/arch-arm";
 my $ALIB = "$NDK/usr/lib";
 my $AINC = "$NDK/usr/include";
 my $TOOLCHAIN = "$DROID/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3";
@@ -109,7 +109,7 @@ my @optimize_args = (
 
 my @link_args = (
     "-Bdynamic",
-    "-Wl,-T,$DROID/build/core/armelf.x",
+    "-Wl,-T,$TOOLCHAIN/arm-eabi/lib/ldscripts/armelf.x",
     "-Wl,-dynamic-linker,/system/bin/linker",
     "-Wl,--gc-sections",
     "-Wl,-z,nocopyreloc",
