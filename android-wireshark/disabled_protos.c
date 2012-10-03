@@ -137,7 +137,7 @@ read_disabled_protos_list(char **gpath_return, int *gopen_errno_return,
 
   /* Read the user's disabled protocols file, if it exists. */
   *path_return = NULL;
-  if ((ff = ws_fopen("/data/data/com.gnychis.coexisyst/files/disabled_protos", "r")) != NULL) {
+  if ((ff = ws_fopen("/data/data/com.gnychis.awmon/files/disabled_protos", "r")) != NULL) {
     /* We succeeded in opening it; read it. */
     err = read_disabled_protos_list_file(ff_path, ff, &disabled_protos);
     if (err != 0) {
