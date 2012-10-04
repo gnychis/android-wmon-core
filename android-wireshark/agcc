@@ -32,10 +32,10 @@ use strict;
 
 # Dance around to find the actual android toolchain path (it's very
 # deep, so links on $PATH are going to be common.
-my $GCC = `which arm-eabi-gcc`;
+my $GCC = `which arm-linux-androideabi-gcc`;
 $GCC = qx(cd `dirname $GCC`; /bin/pwd);
 chomp $GCC;
-die "bad arm-eabi-gcc path" if $GCC !~ /(.*)\/prebuilts\//;
+die "bad arm-linux-androideabi-gcc path" if $GCC !~ /(.*)\/prebuilts\//;
 my $DROID = $1;
 
 my $NDK = "$DROID/../android-ndk-r8b-linux/platforms/android-14/arch-arm";
@@ -179,7 +179,7 @@ if($mode eq "-shared") { $need_shlink = 1; }
 if($have_src and $mode ne "-E") { $need_cpp = $need_compile = 1; }
 
 # Assemble the command:
-my @cmd = ("arm-eabi-gcc");
+my @cmd = ("arm-linux-androideabi-gcc");
 if($mode ne "DEFAULT") { @cmd = (@cmd, $mode); }
 if(defined $out) { @cmd = (@cmd, "-o", $out); }
 if($need_cpp) { @cmd = (@cmd, @include_paths, @preprocess_args); }
