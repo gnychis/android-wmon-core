@@ -14,7 +14,6 @@ find . -name .libs -exec rm -fr {} \;
 # Configure wireshark
 CONFIG_OPTIONS="-host=arm-linux-androideabi --disable-wireshark --with-pcap=yes --disable-glibtest --disable-warnings-as-errors --with-libsmi=no --with-gnutls=no"
 ./configure $CONFIG_OPTIONS
-exit
 make clean
 ./configure $CONFIG_OPTIONS
 find . -name Makefile -exec sed -i 's/-pthread//g' {} \;
