@@ -35,13 +35,13 @@ use strict;
 my $GCC = `which arm-eabi-gcc`;
 $GCC = qx(cd `dirname $GCC`; /bin/pwd);
 chomp $GCC;
-die "bad arm-eabi-gcc path" if $GCC !~ /(.*)\/prebuilt\//;
+die "bad arm-eabi-gcc path" if $GCC !~ /(.*)\/prebuilts\//;
 my $DROID = $1;
 
 my $NDK = "$DROID/../android-ndk-r8b-linux/platforms/android-14/arch-arm";
 my $ALIB = "$NDK/usr/lib";
 my $AINC = "$NDK/usr/include";
-my $TOOLCHAIN = "$DROID/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3";
+my $TOOLCHAIN = "$DROID/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.6";
 
 my @include_paths = (
 		"-I$AINC",
@@ -109,7 +109,7 @@ my @optimize_args = (
 
 my @link_args = (
     "-Bdynamic",
-    "-Wl,-T,$TOOLCHAIN/arm-eabi/lib/ldscripts/armelf.x",
+#    "-Wl,-T,$TOOLCHAIN/arm-eabi/lib/ldscripts/armelf.x",
     "-Wl,-dynamic-linker,/system/bin/linker",
     "-Wl,--gc-sections",
     "-Wl,-z,nocopyreloc",
@@ -119,14 +119,14 @@ my @link_args = (
     "-nostdlib",
     "$ALIB/crtend_android.o",
     "$ALIB/crtbegin_dynamic.o",
-    "$TOOLCHAIN/lib/gcc/arm-eabi/4.4.3/libgcc.a",
+    "$TOOLCHAIN/lib/gcc/arm-linux-androideabi/4.6.x-google/libgcc.a",
     "-lc",
     "-lm");
     
 # Also need: -Wl,-soname,libXXXX.so
 my @shared_args = (
     "-nostdlib",
-    "-Wl,-T,$DROID/build/core/armelf.xsc",
+#    "-Wl,-T,$DROID/build/core/armelf.xsc",
     "-Wl,--gc-sections",
     "-Wl,-shared,-Bsymbolic",
     "-L$ALIB",
@@ -134,7 +134,7 @@ my @shared_args = (
     "-lc",
     "-lm",
     "-Wl,--no-undefined",
-    "$TOOLCHAIN/lib/gcc/arm-eabi/4.4.3/libgcc.a",
+    "$TOOLCHAIN/lib/gcc/arm-linux-androideabi/4.6.x-google/libgcc.a",
     "-Wl,--whole-archive"); # .a, .o input files go *after* here
 
 # Now implement a quick parser for a gcc-like command line
