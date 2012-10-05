@@ -161,7 +161,7 @@ old_postuninstall_cmds=""
 lock_old_archive_extraction=no
 
 # A C compiler.
-LTCC="/mnt/hgfs/Data/android-wmon/core/android-wireshark/agcc"
+LTCC="/home/owner/android-wmon/core/android-wireshark/agcc"
 
 # LTCC compiler flags.
 LTCFLAGS="-D_U_=\"__attribute__((unused))\" -g -O2 -Wall -W -Wextra -Wdeclaration-after-statement -Wendif-labels -Wpointer-arith -Wno-pointer-sign -Warray-bounds -Wcast-align -Wformat-security -I/usr/local/include -pthread -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include   -I/usr/include"
@@ -302,7 +302,7 @@ reload_cmds="\$LD\$reload_flag -o \$output\$reload_objs"
 old_archive_cmds="\$AR \$AR_FLAGS \$oldlib\$oldobjs~\$RANLIB \$tool_oldlib"
 
 # A language specific compiler.
-CC="/mnt/hgfs/Data/android-wmon/core/android-wireshark/agcc"
+CC="/home/owner/android-wmon/core/android-wireshark/agcc"
 
 # Is the compiler the GNU compiler?
 with_gcc=yes
