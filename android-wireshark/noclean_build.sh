@@ -5,7 +5,7 @@ export CROSS_COMPILE=
 export ARCH=
 export CC=$(pwd)/agcc
 
-make
+make V=1
 #NDK="$(pwd)/../android-ndk-r8b-linux/platforms/android-14/arch-arm"
 #ALIB="$NDK/usr/lib"
 #PLATFORM="$(pwd)/../os"
