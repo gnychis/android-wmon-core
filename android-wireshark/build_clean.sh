@@ -18,6 +18,7 @@ make clean
 find . -name Makefile -exec sed -i 's/-pthread//g' {} \;
 find . -name Makefile -exec sed -i 's/-lrt/-lgcc -lpcap/g' {} \;
 find . -name Makefile -exec sed -i 's/-g -O2/-g/g' {} \;
+cp libtool.good libtool
 cd tools/lemon/
 gcc -D_U_=""   -o lemon lemon.c
 cd ../../

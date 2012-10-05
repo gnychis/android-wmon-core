@@ -109,7 +109,6 @@ my @optimize_args = (
 
 my @link_args = (
     "-Bdynamic",
-#    "-Wl,-T,$TOOLCHAIN/arm-eabi/lib/ldscripts/armelf.x",
     "-Wl,-dynamic-linker,/system/bin/linker",
     "-Wl,--gc-sections",
     "-Wl,-z,nocopyreloc",
@@ -127,7 +126,6 @@ my @link_args = (
 # Also need: -Wl,-soname,libXXXX.so
 my @shared_args = (
     "-nostdlib",
-#    "-Wl,-T,$DROID/build/core/armelf.xsc",
     "-Wl,--gc-sections",
     "-Wl,-shared,-Bsymbolic",
     "-L$ALIB",
