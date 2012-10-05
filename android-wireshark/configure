@@ -1916,7 +1916,6 @@ fi
 # Try to link conftest.$ac_ext, and return whether this succeeded.
 ac_fn_c_try_link ()
 {
-	CFLAGS="${CFLAGS/-pthread/}"
   as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
   rm -f conftest.$ac_objext conftest$ac_exeext
   if { { ac_try="$ac_link"
