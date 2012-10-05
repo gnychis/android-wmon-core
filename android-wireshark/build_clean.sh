@@ -4,7 +4,6 @@
 export CROSS_COMPILE=
 export ARCH=
 export CC=$(pwd)/agcc
-export LD=arm-linux-androideabi-ld
 
 find . -name Makefile -exec rm -f {} \;
 find . -name .deps -exec rm -fr {} \;
