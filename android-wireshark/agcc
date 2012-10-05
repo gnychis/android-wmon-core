@@ -121,6 +121,7 @@ my @link_args = (
     "$ALIB/crtbegin_dynamic.o",
     "$TOOLCHAIN/lib/gcc/arm-linux-androideabi/4.6.x-google/libgcc.a",
     "-lc",
+    "-ldl",
     "-lm");
     
 # Also need: -Wl,-soname,libXXXX.so
@@ -132,6 +133,7 @@ my @shared_args = (
     "-L$ALIB",
     "-Wl,--no-whole-archive",
     "-lc",
+    "-ldl",
     "-lm",
     "-Wl,--no-undefined",
     "$TOOLCHAIN/lib/gcc/arm-linux-androideabi/4.6.x-google/libgcc.a",
