@@ -42,13 +42,14 @@ bin_PROGRAMS = \
 	@mergecap_bin@	\
 	@capinfos_bin@	\
 	@editcap_bin@	\
+  @tshark_bin@ \
 	@randpkt_bin@	\
 	@dftest_bin@	\
 	@dumpcap_bin@	\
 	@rawshark_bin@
 bin_SCRIPTS = @idl2wrs_bin@
 
-EXTRA_PROGRAMS = wireshark capinfos editcap mergecap dftest \
+EXTRA_PROGRAMS = wireshark capinfos editcap tshark mergecap dftest \
 	randpkt text2pcap dumpcap rawshark
 EXTRA_SCRIPTS = idl2wrs
 
@@ -640,6 +641,7 @@ EXTRA_DIST = \
 	doxygen.cfg.in		\
 	dumpcap.c	\
 	editcap.c		\
+  tshark.c \
 	fix/FIX.xml		\
 	fix/FIX40.xml		\
 	fix/FIX41.xml		\
@@ -688,6 +690,7 @@ EXTRA_DIST = \
 	image/clist_descend.xpm	\
 	image/dumpcap.rc.in	\
 	image/editcap.rc.in	\
+  image/tshark.rc.in \
 	image/file_dlg_win32.rc \
 	image/hi16-app-wireshark.png	\
 	image/hi32-app-wireshark.png	\

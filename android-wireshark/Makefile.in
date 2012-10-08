@@ -88,8 +88,9 @@ build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
 EXTRA_PROGRAMS = wireshark$(EXEEXT) capinfos$(EXEEXT) editcap$(EXEEXT) \
-	mergecap$(EXEEXT) dftest$(EXEEXT) randpkt$(EXEEXT) \
-	text2pcap$(EXEEXT) dumpcap$(EXEEXT) rawshark$(EXEEXT)
+	tshark$(EXEEXT) mergecap$(EXEEXT) dftest$(EXEEXT) \
+	randpkt$(EXEEXT) text2pcap$(EXEEXT) dumpcap$(EXEEXT) \
+	rawshark$(EXEEXT)
 DIST_COMMON = README $(am__configure_deps) $(noinst_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.common \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -265,8 +266,51 @@ rawshark_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 am_text2pcap_OBJECTS = text2pcap.$(OBJEXT) text2pcap-scanner.$(OBJEXT)
 text2pcap_OBJECTS = $(am_text2pcap_OBJECTS)
 text2pcap_DEPENDENCIES = wiretap/libwiretap.la wsutil/libwsutil.la
-am__objects_10 = wireshark-capture-pcap-util-unix.$(OBJEXT)
-am__objects_11 = $(am__objects_10) \
+am__objects_10 = tshark-capture-pcap-util-unix.$(OBJEXT)
+am__objects_11 = $(am__objects_10) tshark-capture-pcap-util.$(OBJEXT) \
+	tshark-cfile.$(OBJEXT) tshark-clopts_common.$(OBJEXT) \
+	tshark-disabled_protos.$(OBJEXT) tshark-packet-range.$(OBJEXT) \
+	tshark-print.$(OBJEXT) tshark-ps.$(OBJEXT) \
+	tshark-sync_pipe_write.$(OBJEXT) tshark-timestats.$(OBJEXT) \
+	tshark-util.$(OBJEXT) tshark-tap-megaco-common.$(OBJEXT) \
+	tshark-tap-rtp-common.$(OBJEXT) tshark-version_info.$(OBJEXT)
+am__objects_12 = tshark-capture_errs.$(OBJEXT) \
+	tshark-capture_ifinfo.$(OBJEXT) \
+	tshark-capture_ui_utils.$(OBJEXT)
+am__objects_13 = tshark-tap-afpstat.$(OBJEXT) \
+	tshark-tap-ansi_astat.$(OBJEXT) tshark-tap-bootpstat.$(OBJEXT) \
+	tshark-tap-camelcounter.$(OBJEXT) \
+	tshark-tap-camelsrt.$(OBJEXT) tshark-tap-comparestat.$(OBJEXT) \
+	tshark-tap-dcerpcstat.$(OBJEXT) \
+	tshark-tap-diameter-avp.$(OBJEXT) tshark-tap-funnel.$(OBJEXT) \
+	tshark-tap-gsm_astat.$(OBJEXT) \
+	tshark-tap-h225counter.$(OBJEXT) \
+	tshark-tap-h225rassrt.$(OBJEXT) tshark-tap-hosts.$(OBJEXT) \
+	tshark-tap-httpstat.$(OBJEXT) tshark-tap-icmpstat.$(OBJEXT) \
+	tshark-tap-icmpv6stat.$(OBJEXT) tshark-tap-iostat.$(OBJEXT) \
+	tshark-tap-iousers.$(OBJEXT) tshark-tap-mgcpstat.$(OBJEXT) \
+	tshark-tap-megacostat.$(OBJEXT) \
+	tshark-tap-protocolinfo.$(OBJEXT) \
+	tshark-tap-protohierstat.$(OBJEXT) \
+	tshark-tap-radiusstat.$(OBJEXT) tshark-tap-rpcstat.$(OBJEXT) \
+	tshark-tap-rpcprogs.$(OBJEXT) tshark-tap-rtp.$(OBJEXT) \
+	tshark-tap-scsistat.$(OBJEXT) \
+	tshark-tap-sctpchunkstat.$(OBJEXT) \
+	tshark-tap-sipstat.$(OBJEXT) tshark-tap-smbsids.$(OBJEXT) \
+	tshark-tap-smbstat.$(OBJEXT) tshark-tap-stats_tree.$(OBJEXT) \
+	tshark-tap-sv.$(OBJEXT) tshark-tap-wspstat.$(OBJEXT)
+am_tshark_OBJECTS = $(am__objects_11) $(am__objects_12) \
+	$(am__objects_13) tshark-capture_opts.$(OBJEXT) \
+	tshark-capture_sync.$(OBJEXT) tshark-tempfile.$(OBJEXT) \
+	tshark-tshark-tap-register.$(OBJEXT) tshark-tshark.$(OBJEXT)
+tshark_OBJECTS = $(am_tshark_OBJECTS)
+tshark_DEPENDENCIES = wiretap/libwiretap.la epan/libwireshark.la \
+	wsutil/libwsutil.la $(am__DEPENDENCIES_1)
+tshark_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(tshark_CFLAGS) $(CFLAGS) \
+	$(tshark_LDFLAGS) $(LDFLAGS) -o $@
+am__objects_14 = wireshark-capture-pcap-util-unix.$(OBJEXT)
+am__objects_15 = $(am__objects_14) \
 	wireshark-capture-pcap-util.$(OBJEXT) \
 	wireshark-cfile.$(OBJEXT) wireshark-clopts_common.$(OBJEXT) \
 	wireshark-disabled_protos.$(OBJEXT) \
@@ -276,10 +320,10 @@ am__objects_11 = $(am__objects_10) \
 	wireshark-tap-megaco-common.$(OBJEXT) \
 	wireshark-tap-rtp-common.$(OBJEXT) \
 	wireshark-version_info.$(OBJEXT)
-am__objects_12 = wireshark-capture_errs.$(OBJEXT) \
+am__objects_16 = wireshark-capture_errs.$(OBJEXT) \
 	wireshark-capture_ifinfo.$(OBJEXT) \
 	wireshark-capture_ui_utils.$(OBJEXT)
-am_wireshark_OBJECTS = $(am__objects_11) $(am__objects_12) \
+am_wireshark_OBJECTS = $(am__objects_15) $(am__objects_16) \
 	wireshark-airpcap_loader.$(OBJEXT) \
 	wireshark-alert_box.$(OBJEXT) wireshark-capture.$(OBJEXT) \
 	wireshark-capture_info.$(OBJEXT) \
@@ -335,12 +379,12 @@ am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libtshark_la_SOURCES) $(capinfos_SOURCES) \
 	$(dftest_SOURCES) $(dumpcap_SOURCES) $(editcap_SOURCES) \
 	$(mergecap_SOURCES) $(randpkt_SOURCES) $(rawshark_SOURCES) \
-	$(text2pcap_SOURCES) $(wireshark_SOURCES)
+	$(text2pcap_SOURCES) $(tshark_SOURCES) $(wireshark_SOURCES)
 DIST_SOURCES = $(libtshark_la_SOURCES) $(am__capinfos_SOURCES_DIST) \
 	$(dftest_SOURCES) $(dumpcap_SOURCES) \
 	$(am__editcap_SOURCES_DIST) $(mergecap_SOURCES) \
 	$(randpkt_SOURCES) $(rawshark_SOURCES) $(text2pcap_SOURCES) \
-	$(wireshark_SOURCES)
+	$(tshark_SOURCES) $(wireshark_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -648,6 +692,7 @@ bin_PROGRAMS = \
 	@mergecap_bin@	\
 	@capinfos_bin@	\
 	@editcap_bin@	\
+  @tshark_bin@ \
 	@randpkt_bin@	\
 	@dftest_bin@	\
 	@dumpcap_bin@	\
@@ -1453,6 +1498,7 @@ EXTRA_DIST = \
 	doxygen.cfg.in		\
 	dumpcap.c	\
 	editcap.c		\
+  tshark.c \
 	fix/FIX.xml		\
 	fix/FIX40.xml		\
 	fix/FIX41.xml		\
@@ -1501,6 +1547,7 @@ EXTRA_DIST = \
 	image/clist_descend.xpm	\
 	image/dumpcap.rc.in	\
 	image/editcap.rc.in	\
+  image/tshark.rc.in \
 	image/file_dlg_win32.rc \
 	image/hi16-app-wireshark.png	\
 	image/hi32-app-wireshark.png	\
@@ -1861,6 +1908,9 @@ rawshark$(EXEEXT): $(rawshark_OBJECTS) $(rawshark_DEPENDENCIES) $(EXTRA_rawshark
 text2pcap$(EXEEXT): $(text2pcap_OBJECTS) $(text2pcap_DEPENDENCIES) $(EXTRA_text2pcap_DEPENDENCIES) 
 	@rm -f text2pcap$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(text2pcap_OBJECTS) $(text2pcap_LDADD) $(LIBS)
+tshark$(EXEEXT): $(tshark_OBJECTS) $(tshark_DEPENDENCIES) $(EXTRA_tshark_DEPENDENCIES) 
+	@rm -f tshark$(EXEEXT)
+	$(AM_V_CCLD)$(tshark_LINK) $(tshark_OBJECTS) $(tshark_LDADD) $(LIBS)
 wireshark$(EXEEXT): $(wireshark_OBJECTS) $(wireshark_DEPENDENCIES) $(EXTRA_wireshark_DEPENDENCIES) 
 	@rm -f wireshark$(EXEEXT)
 	$(AM_V_CCLD)$(wireshark_LINK) $(wireshark_OBJECTS) $(wireshark_LDADD) $(LIBS)
@@ -1999,7 +2049,63 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/text2pcap-scanner.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/text2pcap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timestats.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-capture-pcap-util-unix.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-capture-pcap-util.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-capture_errs.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-capture_ifinfo.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-capture_opts.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-capture_sync.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-capture_ui_utils.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-cfile.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-clopts_common.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-disabled_protos.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-packet-range.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-print.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-ps.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-sync_pipe_write.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-afpstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-ansi_astat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-bootpstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-camelcounter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-camelsrt.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-comparestat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-dcerpcstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-diameter-avp.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-funnel.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-gsm_astat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-h225counter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-h225rassrt.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-hosts.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-httpstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-icmpstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-icmpv6stat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-iostat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-iousers.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-megaco-common.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-megacostat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-mgcpstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-protocolinfo.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-protohierstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-radiusstat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-register.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-rpcprogs.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-rpcstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-rtp-common.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-rtp.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-scsistat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-sctpchunkstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-sipstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-smbsids.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-smbstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-stats_tree.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-sv.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tap-wspstat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tempfile.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-timestats.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tshark-tap-register.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-tshark.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-util.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark-version_info.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tshark_lib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/version_info.Plo@am__quote@
@@ -2645,6 +2751,790 @@ rawshark-rawshark.obj: rawshark.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rawshark.c' object='rawshark-rawshark.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(rawshark_CFLAGS) $(CFLAGS) -c -o rawshark-rawshark.obj `if test -f 'rawshark.c'; then $(CYGPATH_W) 'rawshark.c'; else $(CYGPATH_W) '$(srcdir)/rawshark.c'; fi`
+
+tshark-capture-pcap-util-unix.o: capture-pcap-util-unix.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture-pcap-util-unix.o -MD -MP -MF $(DEPDIR)/tshark-capture-pcap-util-unix.Tpo -c -o tshark-capture-pcap-util-unix.o `test -f 'capture-pcap-util-unix.c' || echo '$(srcdir)/'`capture-pcap-util-unix.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture-pcap-util-unix.Tpo $(DEPDIR)/tshark-capture-pcap-util-unix.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture-pcap-util-unix.c' object='tshark-capture-pcap-util-unix.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture-pcap-util-unix.o `test -f 'capture-pcap-util-unix.c' || echo '$(srcdir)/'`capture-pcap-util-unix.c
+
+tshark-capture-pcap-util-unix.obj: capture-pcap-util-unix.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture-pcap-util-unix.obj -MD -MP -MF $(DEPDIR)/tshark-capture-pcap-util-unix.Tpo -c -o tshark-capture-pcap-util-unix.obj `if test -f 'capture-pcap-util-unix.c'; then $(CYGPATH_W) 'capture-pcap-util-unix.c'; else $(CYGPATH_W) '$(srcdir)/capture-pcap-util-unix.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture-pcap-util-unix.Tpo $(DEPDIR)/tshark-capture-pcap-util-unix.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture-pcap-util-unix.c' object='tshark-capture-pcap-util-unix.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture-pcap-util-unix.obj `if test -f 'capture-pcap-util-unix.c'; then $(CYGPATH_W) 'capture-pcap-util-unix.c'; else $(CYGPATH_W) '$(srcdir)/capture-pcap-util-unix.c'; fi`
+
+tshark-capture-pcap-util.o: capture-pcap-util.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture-pcap-util.o -MD -MP -MF $(DEPDIR)/tshark-capture-pcap-util.Tpo -c -o tshark-capture-pcap-util.o `test -f 'capture-pcap-util.c' || echo '$(srcdir)/'`capture-pcap-util.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture-pcap-util.Tpo $(DEPDIR)/tshark-capture-pcap-util.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture-pcap-util.c' object='tshark-capture-pcap-util.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture-pcap-util.o `test -f 'capture-pcap-util.c' || echo '$(srcdir)/'`capture-pcap-util.c
+
+tshark-capture-pcap-util.obj: capture-pcap-util.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture-pcap-util.obj -MD -MP -MF $(DEPDIR)/tshark-capture-pcap-util.Tpo -c -o tshark-capture-pcap-util.obj `if test -f 'capture-pcap-util.c'; then $(CYGPATH_W) 'capture-pcap-util.c'; else $(CYGPATH_W) '$(srcdir)/capture-pcap-util.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture-pcap-util.Tpo $(DEPDIR)/tshark-capture-pcap-util.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture-pcap-util.c' object='tshark-capture-pcap-util.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture-pcap-util.obj `if test -f 'capture-pcap-util.c'; then $(CYGPATH_W) 'capture-pcap-util.c'; else $(CYGPATH_W) '$(srcdir)/capture-pcap-util.c'; fi`
+
+tshark-cfile.o: cfile.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-cfile.o -MD -MP -MF $(DEPDIR)/tshark-cfile.Tpo -c -o tshark-cfile.o `test -f 'cfile.c' || echo '$(srcdir)/'`cfile.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-cfile.Tpo $(DEPDIR)/tshark-cfile.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cfile.c' object='tshark-cfile.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-cfile.o `test -f 'cfile.c' || echo '$(srcdir)/'`cfile.c
+
+tshark-cfile.obj: cfile.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-cfile.obj -MD -MP -MF $(DEPDIR)/tshark-cfile.Tpo -c -o tshark-cfile.obj `if test -f 'cfile.c'; then $(CYGPATH_W) 'cfile.c'; else $(CYGPATH_W) '$(srcdir)/cfile.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-cfile.Tpo $(DEPDIR)/tshark-cfile.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cfile.c' object='tshark-cfile.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-cfile.obj `if test -f 'cfile.c'; then $(CYGPATH_W) 'cfile.c'; else $(CYGPATH_W) '$(srcdir)/cfile.c'; fi`
+
+tshark-clopts_common.o: clopts_common.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-clopts_common.o -MD -MP -MF $(DEPDIR)/tshark-clopts_common.Tpo -c -o tshark-clopts_common.o `test -f 'clopts_common.c' || echo '$(srcdir)/'`clopts_common.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-clopts_common.Tpo $(DEPDIR)/tshark-clopts_common.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='clopts_common.c' object='tshark-clopts_common.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-clopts_common.o `test -f 'clopts_common.c' || echo '$(srcdir)/'`clopts_common.c
+
+tshark-clopts_common.obj: clopts_common.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-clopts_common.obj -MD -MP -MF $(DEPDIR)/tshark-clopts_common.Tpo -c -o tshark-clopts_common.obj `if test -f 'clopts_common.c'; then $(CYGPATH_W) 'clopts_common.c'; else $(CYGPATH_W) '$(srcdir)/clopts_common.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-clopts_common.Tpo $(DEPDIR)/tshark-clopts_common.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='clopts_common.c' object='tshark-clopts_common.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-clopts_common.obj `if test -f 'clopts_common.c'; then $(CYGPATH_W) 'clopts_common.c'; else $(CYGPATH_W) '$(srcdir)/clopts_common.c'; fi`
+
+tshark-disabled_protos.o: disabled_protos.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-disabled_protos.o -MD -MP -MF $(DEPDIR)/tshark-disabled_protos.Tpo -c -o tshark-disabled_protos.o `test -f 'disabled_protos.c' || echo '$(srcdir)/'`disabled_protos.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-disabled_protos.Tpo $(DEPDIR)/tshark-disabled_protos.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='disabled_protos.c' object='tshark-disabled_protos.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-disabled_protos.o `test -f 'disabled_protos.c' || echo '$(srcdir)/'`disabled_protos.c
+
+tshark-disabled_protos.obj: disabled_protos.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-disabled_protos.obj -MD -MP -MF $(DEPDIR)/tshark-disabled_protos.Tpo -c -o tshark-disabled_protos.obj `if test -f 'disabled_protos.c'; then $(CYGPATH_W) 'disabled_protos.c'; else $(CYGPATH_W) '$(srcdir)/disabled_protos.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-disabled_protos.Tpo $(DEPDIR)/tshark-disabled_protos.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='disabled_protos.c' object='tshark-disabled_protos.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-disabled_protos.obj `if test -f 'disabled_protos.c'; then $(CYGPATH_W) 'disabled_protos.c'; else $(CYGPATH_W) '$(srcdir)/disabled_protos.c'; fi`
+
+tshark-packet-range.o: packet-range.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-packet-range.o -MD -MP -MF $(DEPDIR)/tshark-packet-range.Tpo -c -o tshark-packet-range.o `test -f 'packet-range.c' || echo '$(srcdir)/'`packet-range.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-packet-range.Tpo $(DEPDIR)/tshark-packet-range.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='packet-range.c' object='tshark-packet-range.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-packet-range.o `test -f 'packet-range.c' || echo '$(srcdir)/'`packet-range.c
+
+tshark-packet-range.obj: packet-range.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-packet-range.obj -MD -MP -MF $(DEPDIR)/tshark-packet-range.Tpo -c -o tshark-packet-range.obj `if test -f 'packet-range.c'; then $(CYGPATH_W) 'packet-range.c'; else $(CYGPATH_W) '$(srcdir)/packet-range.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-packet-range.Tpo $(DEPDIR)/tshark-packet-range.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='packet-range.c' object='tshark-packet-range.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-packet-range.obj `if test -f 'packet-range.c'; then $(CYGPATH_W) 'packet-range.c'; else $(CYGPATH_W) '$(srcdir)/packet-range.c'; fi`
+
+tshark-print.o: print.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-print.o -MD -MP -MF $(DEPDIR)/tshark-print.Tpo -c -o tshark-print.o `test -f 'print.c' || echo '$(srcdir)/'`print.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-print.Tpo $(DEPDIR)/tshark-print.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='print.c' object='tshark-print.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-print.o `test -f 'print.c' || echo '$(srcdir)/'`print.c
+
+tshark-print.obj: print.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-print.obj -MD -MP -MF $(DEPDIR)/tshark-print.Tpo -c -o tshark-print.obj `if test -f 'print.c'; then $(CYGPATH_W) 'print.c'; else $(CYGPATH_W) '$(srcdir)/print.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-print.Tpo $(DEPDIR)/tshark-print.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='print.c' object='tshark-print.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-print.obj `if test -f 'print.c'; then $(CYGPATH_W) 'print.c'; else $(CYGPATH_W) '$(srcdir)/print.c'; fi`
+
+tshark-ps.o: ps.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-ps.o -MD -MP -MF $(DEPDIR)/tshark-ps.Tpo -c -o tshark-ps.o `test -f 'ps.c' || echo '$(srcdir)/'`ps.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-ps.Tpo $(DEPDIR)/tshark-ps.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ps.c' object='tshark-ps.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-ps.o `test -f 'ps.c' || echo '$(srcdir)/'`ps.c
+
+tshark-ps.obj: ps.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-ps.obj -MD -MP -MF $(DEPDIR)/tshark-ps.Tpo -c -o tshark-ps.obj `if test -f 'ps.c'; then $(CYGPATH_W) 'ps.c'; else $(CYGPATH_W) '$(srcdir)/ps.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-ps.Tpo $(DEPDIR)/tshark-ps.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ps.c' object='tshark-ps.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-ps.obj `if test -f 'ps.c'; then $(CYGPATH_W) 'ps.c'; else $(CYGPATH_W) '$(srcdir)/ps.c'; fi`
+
+tshark-sync_pipe_write.o: sync_pipe_write.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-sync_pipe_write.o -MD -MP -MF $(DEPDIR)/tshark-sync_pipe_write.Tpo -c -o tshark-sync_pipe_write.o `test -f 'sync_pipe_write.c' || echo '$(srcdir)/'`sync_pipe_write.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-sync_pipe_write.Tpo $(DEPDIR)/tshark-sync_pipe_write.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sync_pipe_write.c' object='tshark-sync_pipe_write.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-sync_pipe_write.o `test -f 'sync_pipe_write.c' || echo '$(srcdir)/'`sync_pipe_write.c
+
+tshark-sync_pipe_write.obj: sync_pipe_write.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-sync_pipe_write.obj -MD -MP -MF $(DEPDIR)/tshark-sync_pipe_write.Tpo -c -o tshark-sync_pipe_write.obj `if test -f 'sync_pipe_write.c'; then $(CYGPATH_W) 'sync_pipe_write.c'; else $(CYGPATH_W) '$(srcdir)/sync_pipe_write.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-sync_pipe_write.Tpo $(DEPDIR)/tshark-sync_pipe_write.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sync_pipe_write.c' object='tshark-sync_pipe_write.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-sync_pipe_write.obj `if test -f 'sync_pipe_write.c'; then $(CYGPATH_W) 'sync_pipe_write.c'; else $(CYGPATH_W) '$(srcdir)/sync_pipe_write.c'; fi`
+
+tshark-timestats.o: timestats.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-timestats.o -MD -MP -MF $(DEPDIR)/tshark-timestats.Tpo -c -o tshark-timestats.o `test -f 'timestats.c' || echo '$(srcdir)/'`timestats.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-timestats.Tpo $(DEPDIR)/tshark-timestats.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='timestats.c' object='tshark-timestats.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-timestats.o `test -f 'timestats.c' || echo '$(srcdir)/'`timestats.c
+
+tshark-timestats.obj: timestats.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-timestats.obj -MD -MP -MF $(DEPDIR)/tshark-timestats.Tpo -c -o tshark-timestats.obj `if test -f 'timestats.c'; then $(CYGPATH_W) 'timestats.c'; else $(CYGPATH_W) '$(srcdir)/timestats.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-timestats.Tpo $(DEPDIR)/tshark-timestats.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='timestats.c' object='tshark-timestats.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-timestats.obj `if test -f 'timestats.c'; then $(CYGPATH_W) 'timestats.c'; else $(CYGPATH_W) '$(srcdir)/timestats.c'; fi`
+
+tshark-util.o: util.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-util.o -MD -MP -MF $(DEPDIR)/tshark-util.Tpo -c -o tshark-util.o `test -f 'util.c' || echo '$(srcdir)/'`util.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-util.Tpo $(DEPDIR)/tshark-util.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='util.c' object='tshark-util.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-util.o `test -f 'util.c' || echo '$(srcdir)/'`util.c
+
+tshark-util.obj: util.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-util.obj -MD -MP -MF $(DEPDIR)/tshark-util.Tpo -c -o tshark-util.obj `if test -f 'util.c'; then $(CYGPATH_W) 'util.c'; else $(CYGPATH_W) '$(srcdir)/util.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-util.Tpo $(DEPDIR)/tshark-util.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='util.c' object='tshark-util.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-util.obj `if test -f 'util.c'; then $(CYGPATH_W) 'util.c'; else $(CYGPATH_W) '$(srcdir)/util.c'; fi`
+
+tshark-tap-megaco-common.o: tap-megaco-common.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-megaco-common.o -MD -MP -MF $(DEPDIR)/tshark-tap-megaco-common.Tpo -c -o tshark-tap-megaco-common.o `test -f 'tap-megaco-common.c' || echo '$(srcdir)/'`tap-megaco-common.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-megaco-common.Tpo $(DEPDIR)/tshark-tap-megaco-common.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-megaco-common.c' object='tshark-tap-megaco-common.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-megaco-common.o `test -f 'tap-megaco-common.c' || echo '$(srcdir)/'`tap-megaco-common.c
+
+tshark-tap-megaco-common.obj: tap-megaco-common.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-megaco-common.obj -MD -MP -MF $(DEPDIR)/tshark-tap-megaco-common.Tpo -c -o tshark-tap-megaco-common.obj `if test -f 'tap-megaco-common.c'; then $(CYGPATH_W) 'tap-megaco-common.c'; else $(CYGPATH_W) '$(srcdir)/tap-megaco-common.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-megaco-common.Tpo $(DEPDIR)/tshark-tap-megaco-common.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-megaco-common.c' object='tshark-tap-megaco-common.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-megaco-common.obj `if test -f 'tap-megaco-common.c'; then $(CYGPATH_W) 'tap-megaco-common.c'; else $(CYGPATH_W) '$(srcdir)/tap-megaco-common.c'; fi`
+
+tshark-tap-rtp-common.o: tap-rtp-common.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-rtp-common.o -MD -MP -MF $(DEPDIR)/tshark-tap-rtp-common.Tpo -c -o tshark-tap-rtp-common.o `test -f 'tap-rtp-common.c' || echo '$(srcdir)/'`tap-rtp-common.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-rtp-common.Tpo $(DEPDIR)/tshark-tap-rtp-common.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-rtp-common.c' object='tshark-tap-rtp-common.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-rtp-common.o `test -f 'tap-rtp-common.c' || echo '$(srcdir)/'`tap-rtp-common.c
+
+tshark-tap-rtp-common.obj: tap-rtp-common.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-rtp-common.obj -MD -MP -MF $(DEPDIR)/tshark-tap-rtp-common.Tpo -c -o tshark-tap-rtp-common.obj `if test -f 'tap-rtp-common.c'; then $(CYGPATH_W) 'tap-rtp-common.c'; else $(CYGPATH_W) '$(srcdir)/tap-rtp-common.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-rtp-common.Tpo $(DEPDIR)/tshark-tap-rtp-common.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-rtp-common.c' object='tshark-tap-rtp-common.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-rtp-common.obj `if test -f 'tap-rtp-common.c'; then $(CYGPATH_W) 'tap-rtp-common.c'; else $(CYGPATH_W) '$(srcdir)/tap-rtp-common.c'; fi`
+
+tshark-version_info.o: version_info.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-version_info.o -MD -MP -MF $(DEPDIR)/tshark-version_info.Tpo -c -o tshark-version_info.o `test -f 'version_info.c' || echo '$(srcdir)/'`version_info.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-version_info.Tpo $(DEPDIR)/tshark-version_info.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='version_info.c' object='tshark-version_info.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-version_info.o `test -f 'version_info.c' || echo '$(srcdir)/'`version_info.c
+
+tshark-version_info.obj: version_info.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-version_info.obj -MD -MP -MF $(DEPDIR)/tshark-version_info.Tpo -c -o tshark-version_info.obj `if test -f 'version_info.c'; then $(CYGPATH_W) 'version_info.c'; else $(CYGPATH_W) '$(srcdir)/version_info.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-version_info.Tpo $(DEPDIR)/tshark-version_info.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='version_info.c' object='tshark-version_info.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-version_info.obj `if test -f 'version_info.c'; then $(CYGPATH_W) 'version_info.c'; else $(CYGPATH_W) '$(srcdir)/version_info.c'; fi`
+
+tshark-capture_errs.o: capture_errs.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_errs.o -MD -MP -MF $(DEPDIR)/tshark-capture_errs.Tpo -c -o tshark-capture_errs.o `test -f 'capture_errs.c' || echo '$(srcdir)/'`capture_errs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_errs.Tpo $(DEPDIR)/tshark-capture_errs.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_errs.c' object='tshark-capture_errs.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_errs.o `test -f 'capture_errs.c' || echo '$(srcdir)/'`capture_errs.c
+
+tshark-capture_errs.obj: capture_errs.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_errs.obj -MD -MP -MF $(DEPDIR)/tshark-capture_errs.Tpo -c -o tshark-capture_errs.obj `if test -f 'capture_errs.c'; then $(CYGPATH_W) 'capture_errs.c'; else $(CYGPATH_W) '$(srcdir)/capture_errs.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_errs.Tpo $(DEPDIR)/tshark-capture_errs.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_errs.c' object='tshark-capture_errs.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_errs.obj `if test -f 'capture_errs.c'; then $(CYGPATH_W) 'capture_errs.c'; else $(CYGPATH_W) '$(srcdir)/capture_errs.c'; fi`
+
+tshark-capture_ifinfo.o: capture_ifinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_ifinfo.o -MD -MP -MF $(DEPDIR)/tshark-capture_ifinfo.Tpo -c -o tshark-capture_ifinfo.o `test -f 'capture_ifinfo.c' || echo '$(srcdir)/'`capture_ifinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_ifinfo.Tpo $(DEPDIR)/tshark-capture_ifinfo.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_ifinfo.c' object='tshark-capture_ifinfo.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_ifinfo.o `test -f 'capture_ifinfo.c' || echo '$(srcdir)/'`capture_ifinfo.c
+
+tshark-capture_ifinfo.obj: capture_ifinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_ifinfo.obj -MD -MP -MF $(DEPDIR)/tshark-capture_ifinfo.Tpo -c -o tshark-capture_ifinfo.obj `if test -f 'capture_ifinfo.c'; then $(CYGPATH_W) 'capture_ifinfo.c'; else $(CYGPATH_W) '$(srcdir)/capture_ifinfo.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_ifinfo.Tpo $(DEPDIR)/tshark-capture_ifinfo.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_ifinfo.c' object='tshark-capture_ifinfo.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_ifinfo.obj `if test -f 'capture_ifinfo.c'; then $(CYGPATH_W) 'capture_ifinfo.c'; else $(CYGPATH_W) '$(srcdir)/capture_ifinfo.c'; fi`
+
+tshark-capture_ui_utils.o: capture_ui_utils.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_ui_utils.o -MD -MP -MF $(DEPDIR)/tshark-capture_ui_utils.Tpo -c -o tshark-capture_ui_utils.o `test -f 'capture_ui_utils.c' || echo '$(srcdir)/'`capture_ui_utils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_ui_utils.Tpo $(DEPDIR)/tshark-capture_ui_utils.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_ui_utils.c' object='tshark-capture_ui_utils.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_ui_utils.o `test -f 'capture_ui_utils.c' || echo '$(srcdir)/'`capture_ui_utils.c
+
+tshark-capture_ui_utils.obj: capture_ui_utils.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_ui_utils.obj -MD -MP -MF $(DEPDIR)/tshark-capture_ui_utils.Tpo -c -o tshark-capture_ui_utils.obj `if test -f 'capture_ui_utils.c'; then $(CYGPATH_W) 'capture_ui_utils.c'; else $(CYGPATH_W) '$(srcdir)/capture_ui_utils.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_ui_utils.Tpo $(DEPDIR)/tshark-capture_ui_utils.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_ui_utils.c' object='tshark-capture_ui_utils.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_ui_utils.obj `if test -f 'capture_ui_utils.c'; then $(CYGPATH_W) 'capture_ui_utils.c'; else $(CYGPATH_W) '$(srcdir)/capture_ui_utils.c'; fi`
+
+tshark-tap-afpstat.o: tap-afpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-afpstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-afpstat.Tpo -c -o tshark-tap-afpstat.o `test -f 'tap-afpstat.c' || echo '$(srcdir)/'`tap-afpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-afpstat.Tpo $(DEPDIR)/tshark-tap-afpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-afpstat.c' object='tshark-tap-afpstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-afpstat.o `test -f 'tap-afpstat.c' || echo '$(srcdir)/'`tap-afpstat.c
+
+tshark-tap-afpstat.obj: tap-afpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-afpstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-afpstat.Tpo -c -o tshark-tap-afpstat.obj `if test -f 'tap-afpstat.c'; then $(CYGPATH_W) 'tap-afpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-afpstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-afpstat.Tpo $(DEPDIR)/tshark-tap-afpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-afpstat.c' object='tshark-tap-afpstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-afpstat.obj `if test -f 'tap-afpstat.c'; then $(CYGPATH_W) 'tap-afpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-afpstat.c'; fi`
+
+tshark-tap-ansi_astat.o: tap-ansi_astat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-ansi_astat.o -MD -MP -MF $(DEPDIR)/tshark-tap-ansi_astat.Tpo -c -o tshark-tap-ansi_astat.o `test -f 'tap-ansi_astat.c' || echo '$(srcdir)/'`tap-ansi_astat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-ansi_astat.Tpo $(DEPDIR)/tshark-tap-ansi_astat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-ansi_astat.c' object='tshark-tap-ansi_astat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-ansi_astat.o `test -f 'tap-ansi_astat.c' || echo '$(srcdir)/'`tap-ansi_astat.c
+
+tshark-tap-ansi_astat.obj: tap-ansi_astat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-ansi_astat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-ansi_astat.Tpo -c -o tshark-tap-ansi_astat.obj `if test -f 'tap-ansi_astat.c'; then $(CYGPATH_W) 'tap-ansi_astat.c'; else $(CYGPATH_W) '$(srcdir)/tap-ansi_astat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-ansi_astat.Tpo $(DEPDIR)/tshark-tap-ansi_astat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-ansi_astat.c' object='tshark-tap-ansi_astat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-ansi_astat.obj `if test -f 'tap-ansi_astat.c'; then $(CYGPATH_W) 'tap-ansi_astat.c'; else $(CYGPATH_W) '$(srcdir)/tap-ansi_astat.c'; fi`
+
+tshark-tap-bootpstat.o: tap-bootpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-bootpstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-bootpstat.Tpo -c -o tshark-tap-bootpstat.o `test -f 'tap-bootpstat.c' || echo '$(srcdir)/'`tap-bootpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-bootpstat.Tpo $(DEPDIR)/tshark-tap-bootpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-bootpstat.c' object='tshark-tap-bootpstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-bootpstat.o `test -f 'tap-bootpstat.c' || echo '$(srcdir)/'`tap-bootpstat.c
+
+tshark-tap-bootpstat.obj: tap-bootpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-bootpstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-bootpstat.Tpo -c -o tshark-tap-bootpstat.obj `if test -f 'tap-bootpstat.c'; then $(CYGPATH_W) 'tap-bootpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-bootpstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-bootpstat.Tpo $(DEPDIR)/tshark-tap-bootpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-bootpstat.c' object='tshark-tap-bootpstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-bootpstat.obj `if test -f 'tap-bootpstat.c'; then $(CYGPATH_W) 'tap-bootpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-bootpstat.c'; fi`
+
+tshark-tap-camelcounter.o: tap-camelcounter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-camelcounter.o -MD -MP -MF $(DEPDIR)/tshark-tap-camelcounter.Tpo -c -o tshark-tap-camelcounter.o `test -f 'tap-camelcounter.c' || echo '$(srcdir)/'`tap-camelcounter.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-camelcounter.Tpo $(DEPDIR)/tshark-tap-camelcounter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-camelcounter.c' object='tshark-tap-camelcounter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-camelcounter.o `test -f 'tap-camelcounter.c' || echo '$(srcdir)/'`tap-camelcounter.c
+
+tshark-tap-camelcounter.obj: tap-camelcounter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-camelcounter.obj -MD -MP -MF $(DEPDIR)/tshark-tap-camelcounter.Tpo -c -o tshark-tap-camelcounter.obj `if test -f 'tap-camelcounter.c'; then $(CYGPATH_W) 'tap-camelcounter.c'; else $(CYGPATH_W) '$(srcdir)/tap-camelcounter.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-camelcounter.Tpo $(DEPDIR)/tshark-tap-camelcounter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-camelcounter.c' object='tshark-tap-camelcounter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-camelcounter.obj `if test -f 'tap-camelcounter.c'; then $(CYGPATH_W) 'tap-camelcounter.c'; else $(CYGPATH_W) '$(srcdir)/tap-camelcounter.c'; fi`
+
+tshark-tap-camelsrt.o: tap-camelsrt.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-camelsrt.o -MD -MP -MF $(DEPDIR)/tshark-tap-camelsrt.Tpo -c -o tshark-tap-camelsrt.o `test -f 'tap-camelsrt.c' || echo '$(srcdir)/'`tap-camelsrt.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-camelsrt.Tpo $(DEPDIR)/tshark-tap-camelsrt.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-camelsrt.c' object='tshark-tap-camelsrt.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-camelsrt.o `test -f 'tap-camelsrt.c' || echo '$(srcdir)/'`tap-camelsrt.c
+
+tshark-tap-camelsrt.obj: tap-camelsrt.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-camelsrt.obj -MD -MP -MF $(DEPDIR)/tshark-tap-camelsrt.Tpo -c -o tshark-tap-camelsrt.obj `if test -f 'tap-camelsrt.c'; then $(CYGPATH_W) 'tap-camelsrt.c'; else $(CYGPATH_W) '$(srcdir)/tap-camelsrt.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-camelsrt.Tpo $(DEPDIR)/tshark-tap-camelsrt.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-camelsrt.c' object='tshark-tap-camelsrt.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-camelsrt.obj `if test -f 'tap-camelsrt.c'; then $(CYGPATH_W) 'tap-camelsrt.c'; else $(CYGPATH_W) '$(srcdir)/tap-camelsrt.c'; fi`
+
+tshark-tap-comparestat.o: tap-comparestat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-comparestat.o -MD -MP -MF $(DEPDIR)/tshark-tap-comparestat.Tpo -c -o tshark-tap-comparestat.o `test -f 'tap-comparestat.c' || echo '$(srcdir)/'`tap-comparestat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-comparestat.Tpo $(DEPDIR)/tshark-tap-comparestat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-comparestat.c' object='tshark-tap-comparestat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-comparestat.o `test -f 'tap-comparestat.c' || echo '$(srcdir)/'`tap-comparestat.c
+
+tshark-tap-comparestat.obj: tap-comparestat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-comparestat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-comparestat.Tpo -c -o tshark-tap-comparestat.obj `if test -f 'tap-comparestat.c'; then $(CYGPATH_W) 'tap-comparestat.c'; else $(CYGPATH_W) '$(srcdir)/tap-comparestat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-comparestat.Tpo $(DEPDIR)/tshark-tap-comparestat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-comparestat.c' object='tshark-tap-comparestat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-comparestat.obj `if test -f 'tap-comparestat.c'; then $(CYGPATH_W) 'tap-comparestat.c'; else $(CYGPATH_W) '$(srcdir)/tap-comparestat.c'; fi`
+
+tshark-tap-dcerpcstat.o: tap-dcerpcstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-dcerpcstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-dcerpcstat.Tpo -c -o tshark-tap-dcerpcstat.o `test -f 'tap-dcerpcstat.c' || echo '$(srcdir)/'`tap-dcerpcstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-dcerpcstat.Tpo $(DEPDIR)/tshark-tap-dcerpcstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-dcerpcstat.c' object='tshark-tap-dcerpcstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-dcerpcstat.o `test -f 'tap-dcerpcstat.c' || echo '$(srcdir)/'`tap-dcerpcstat.c
+
+tshark-tap-dcerpcstat.obj: tap-dcerpcstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-dcerpcstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-dcerpcstat.Tpo -c -o tshark-tap-dcerpcstat.obj `if test -f 'tap-dcerpcstat.c'; then $(CYGPATH_W) 'tap-dcerpcstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-dcerpcstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-dcerpcstat.Tpo $(DEPDIR)/tshark-tap-dcerpcstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-dcerpcstat.c' object='tshark-tap-dcerpcstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-dcerpcstat.obj `if test -f 'tap-dcerpcstat.c'; then $(CYGPATH_W) 'tap-dcerpcstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-dcerpcstat.c'; fi`
+
+tshark-tap-diameter-avp.o: tap-diameter-avp.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-diameter-avp.o -MD -MP -MF $(DEPDIR)/tshark-tap-diameter-avp.Tpo -c -o tshark-tap-diameter-avp.o `test -f 'tap-diameter-avp.c' || echo '$(srcdir)/'`tap-diameter-avp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-diameter-avp.Tpo $(DEPDIR)/tshark-tap-diameter-avp.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-diameter-avp.c' object='tshark-tap-diameter-avp.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-diameter-avp.o `test -f 'tap-diameter-avp.c' || echo '$(srcdir)/'`tap-diameter-avp.c
+
+tshark-tap-diameter-avp.obj: tap-diameter-avp.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-diameter-avp.obj -MD -MP -MF $(DEPDIR)/tshark-tap-diameter-avp.Tpo -c -o tshark-tap-diameter-avp.obj `if test -f 'tap-diameter-avp.c'; then $(CYGPATH_W) 'tap-diameter-avp.c'; else $(CYGPATH_W) '$(srcdir)/tap-diameter-avp.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-diameter-avp.Tpo $(DEPDIR)/tshark-tap-diameter-avp.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-diameter-avp.c' object='tshark-tap-diameter-avp.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-diameter-avp.obj `if test -f 'tap-diameter-avp.c'; then $(CYGPATH_W) 'tap-diameter-avp.c'; else $(CYGPATH_W) '$(srcdir)/tap-diameter-avp.c'; fi`
+
+tshark-tap-funnel.o: tap-funnel.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-funnel.o -MD -MP -MF $(DEPDIR)/tshark-tap-funnel.Tpo -c -o tshark-tap-funnel.o `test -f 'tap-funnel.c' || echo '$(srcdir)/'`tap-funnel.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-funnel.Tpo $(DEPDIR)/tshark-tap-funnel.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-funnel.c' object='tshark-tap-funnel.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-funnel.o `test -f 'tap-funnel.c' || echo '$(srcdir)/'`tap-funnel.c
+
+tshark-tap-funnel.obj: tap-funnel.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-funnel.obj -MD -MP -MF $(DEPDIR)/tshark-tap-funnel.Tpo -c -o tshark-tap-funnel.obj `if test -f 'tap-funnel.c'; then $(CYGPATH_W) 'tap-funnel.c'; else $(CYGPATH_W) '$(srcdir)/tap-funnel.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-funnel.Tpo $(DEPDIR)/tshark-tap-funnel.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-funnel.c' object='tshark-tap-funnel.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-funnel.obj `if test -f 'tap-funnel.c'; then $(CYGPATH_W) 'tap-funnel.c'; else $(CYGPATH_W) '$(srcdir)/tap-funnel.c'; fi`
+
+tshark-tap-gsm_astat.o: tap-gsm_astat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-gsm_astat.o -MD -MP -MF $(DEPDIR)/tshark-tap-gsm_astat.Tpo -c -o tshark-tap-gsm_astat.o `test -f 'tap-gsm_astat.c' || echo '$(srcdir)/'`tap-gsm_astat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-gsm_astat.Tpo $(DEPDIR)/tshark-tap-gsm_astat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-gsm_astat.c' object='tshark-tap-gsm_astat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-gsm_astat.o `test -f 'tap-gsm_astat.c' || echo '$(srcdir)/'`tap-gsm_astat.c
+
+tshark-tap-gsm_astat.obj: tap-gsm_astat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-gsm_astat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-gsm_astat.Tpo -c -o tshark-tap-gsm_astat.obj `if test -f 'tap-gsm_astat.c'; then $(CYGPATH_W) 'tap-gsm_astat.c'; else $(CYGPATH_W) '$(srcdir)/tap-gsm_astat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-gsm_astat.Tpo $(DEPDIR)/tshark-tap-gsm_astat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-gsm_astat.c' object='tshark-tap-gsm_astat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-gsm_astat.obj `if test -f 'tap-gsm_astat.c'; then $(CYGPATH_W) 'tap-gsm_astat.c'; else $(CYGPATH_W) '$(srcdir)/tap-gsm_astat.c'; fi`
+
+tshark-tap-h225counter.o: tap-h225counter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-h225counter.o -MD -MP -MF $(DEPDIR)/tshark-tap-h225counter.Tpo -c -o tshark-tap-h225counter.o `test -f 'tap-h225counter.c' || echo '$(srcdir)/'`tap-h225counter.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-h225counter.Tpo $(DEPDIR)/tshark-tap-h225counter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-h225counter.c' object='tshark-tap-h225counter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-h225counter.o `test -f 'tap-h225counter.c' || echo '$(srcdir)/'`tap-h225counter.c
+
+tshark-tap-h225counter.obj: tap-h225counter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-h225counter.obj -MD -MP -MF $(DEPDIR)/tshark-tap-h225counter.Tpo -c -o tshark-tap-h225counter.obj `if test -f 'tap-h225counter.c'; then $(CYGPATH_W) 'tap-h225counter.c'; else $(CYGPATH_W) '$(srcdir)/tap-h225counter.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-h225counter.Tpo $(DEPDIR)/tshark-tap-h225counter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-h225counter.c' object='tshark-tap-h225counter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-h225counter.obj `if test -f 'tap-h225counter.c'; then $(CYGPATH_W) 'tap-h225counter.c'; else $(CYGPATH_W) '$(srcdir)/tap-h225counter.c'; fi`
+
+tshark-tap-h225rassrt.o: tap-h225rassrt.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-h225rassrt.o -MD -MP -MF $(DEPDIR)/tshark-tap-h225rassrt.Tpo -c -o tshark-tap-h225rassrt.o `test -f 'tap-h225rassrt.c' || echo '$(srcdir)/'`tap-h225rassrt.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-h225rassrt.Tpo $(DEPDIR)/tshark-tap-h225rassrt.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-h225rassrt.c' object='tshark-tap-h225rassrt.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-h225rassrt.o `test -f 'tap-h225rassrt.c' || echo '$(srcdir)/'`tap-h225rassrt.c
+
+tshark-tap-h225rassrt.obj: tap-h225rassrt.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-h225rassrt.obj -MD -MP -MF $(DEPDIR)/tshark-tap-h225rassrt.Tpo -c -o tshark-tap-h225rassrt.obj `if test -f 'tap-h225rassrt.c'; then $(CYGPATH_W) 'tap-h225rassrt.c'; else $(CYGPATH_W) '$(srcdir)/tap-h225rassrt.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-h225rassrt.Tpo $(DEPDIR)/tshark-tap-h225rassrt.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-h225rassrt.c' object='tshark-tap-h225rassrt.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-h225rassrt.obj `if test -f 'tap-h225rassrt.c'; then $(CYGPATH_W) 'tap-h225rassrt.c'; else $(CYGPATH_W) '$(srcdir)/tap-h225rassrt.c'; fi`
+
+tshark-tap-hosts.o: tap-hosts.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-hosts.o -MD -MP -MF $(DEPDIR)/tshark-tap-hosts.Tpo -c -o tshark-tap-hosts.o `test -f 'tap-hosts.c' || echo '$(srcdir)/'`tap-hosts.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-hosts.Tpo $(DEPDIR)/tshark-tap-hosts.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-hosts.c' object='tshark-tap-hosts.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-hosts.o `test -f 'tap-hosts.c' || echo '$(srcdir)/'`tap-hosts.c
+
+tshark-tap-hosts.obj: tap-hosts.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-hosts.obj -MD -MP -MF $(DEPDIR)/tshark-tap-hosts.Tpo -c -o tshark-tap-hosts.obj `if test -f 'tap-hosts.c'; then $(CYGPATH_W) 'tap-hosts.c'; else $(CYGPATH_W) '$(srcdir)/tap-hosts.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-hosts.Tpo $(DEPDIR)/tshark-tap-hosts.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-hosts.c' object='tshark-tap-hosts.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-hosts.obj `if test -f 'tap-hosts.c'; then $(CYGPATH_W) 'tap-hosts.c'; else $(CYGPATH_W) '$(srcdir)/tap-hosts.c'; fi`
+
+tshark-tap-httpstat.o: tap-httpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-httpstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-httpstat.Tpo -c -o tshark-tap-httpstat.o `test -f 'tap-httpstat.c' || echo '$(srcdir)/'`tap-httpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-httpstat.Tpo $(DEPDIR)/tshark-tap-httpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-httpstat.c' object='tshark-tap-httpstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-httpstat.o `test -f 'tap-httpstat.c' || echo '$(srcdir)/'`tap-httpstat.c
+
+tshark-tap-httpstat.obj: tap-httpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-httpstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-httpstat.Tpo -c -o tshark-tap-httpstat.obj `if test -f 'tap-httpstat.c'; then $(CYGPATH_W) 'tap-httpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-httpstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-httpstat.Tpo $(DEPDIR)/tshark-tap-httpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-httpstat.c' object='tshark-tap-httpstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-httpstat.obj `if test -f 'tap-httpstat.c'; then $(CYGPATH_W) 'tap-httpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-httpstat.c'; fi`
+
+tshark-tap-icmpstat.o: tap-icmpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-icmpstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-icmpstat.Tpo -c -o tshark-tap-icmpstat.o `test -f 'tap-icmpstat.c' || echo '$(srcdir)/'`tap-icmpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-icmpstat.Tpo $(DEPDIR)/tshark-tap-icmpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-icmpstat.c' object='tshark-tap-icmpstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-icmpstat.o `test -f 'tap-icmpstat.c' || echo '$(srcdir)/'`tap-icmpstat.c
+
+tshark-tap-icmpstat.obj: tap-icmpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-icmpstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-icmpstat.Tpo -c -o tshark-tap-icmpstat.obj `if test -f 'tap-icmpstat.c'; then $(CYGPATH_W) 'tap-icmpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-icmpstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-icmpstat.Tpo $(DEPDIR)/tshark-tap-icmpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-icmpstat.c' object='tshark-tap-icmpstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-icmpstat.obj `if test -f 'tap-icmpstat.c'; then $(CYGPATH_W) 'tap-icmpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-icmpstat.c'; fi`
+
+tshark-tap-icmpv6stat.o: tap-icmpv6stat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-icmpv6stat.o -MD -MP -MF $(DEPDIR)/tshark-tap-icmpv6stat.Tpo -c -o tshark-tap-icmpv6stat.o `test -f 'tap-icmpv6stat.c' || echo '$(srcdir)/'`tap-icmpv6stat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-icmpv6stat.Tpo $(DEPDIR)/tshark-tap-icmpv6stat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-icmpv6stat.c' object='tshark-tap-icmpv6stat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-icmpv6stat.o `test -f 'tap-icmpv6stat.c' || echo '$(srcdir)/'`tap-icmpv6stat.c
+
+tshark-tap-icmpv6stat.obj: tap-icmpv6stat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-icmpv6stat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-icmpv6stat.Tpo -c -o tshark-tap-icmpv6stat.obj `if test -f 'tap-icmpv6stat.c'; then $(CYGPATH_W) 'tap-icmpv6stat.c'; else $(CYGPATH_W) '$(srcdir)/tap-icmpv6stat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-icmpv6stat.Tpo $(DEPDIR)/tshark-tap-icmpv6stat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-icmpv6stat.c' object='tshark-tap-icmpv6stat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-icmpv6stat.obj `if test -f 'tap-icmpv6stat.c'; then $(CYGPATH_W) 'tap-icmpv6stat.c'; else $(CYGPATH_W) '$(srcdir)/tap-icmpv6stat.c'; fi`
+
+tshark-tap-iostat.o: tap-iostat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-iostat.o -MD -MP -MF $(DEPDIR)/tshark-tap-iostat.Tpo -c -o tshark-tap-iostat.o `test -f 'tap-iostat.c' || echo '$(srcdir)/'`tap-iostat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-iostat.Tpo $(DEPDIR)/tshark-tap-iostat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-iostat.c' object='tshark-tap-iostat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-iostat.o `test -f 'tap-iostat.c' || echo '$(srcdir)/'`tap-iostat.c
+
+tshark-tap-iostat.obj: tap-iostat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-iostat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-iostat.Tpo -c -o tshark-tap-iostat.obj `if test -f 'tap-iostat.c'; then $(CYGPATH_W) 'tap-iostat.c'; else $(CYGPATH_W) '$(srcdir)/tap-iostat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-iostat.Tpo $(DEPDIR)/tshark-tap-iostat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-iostat.c' object='tshark-tap-iostat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-iostat.obj `if test -f 'tap-iostat.c'; then $(CYGPATH_W) 'tap-iostat.c'; else $(CYGPATH_W) '$(srcdir)/tap-iostat.c'; fi`
+
+tshark-tap-iousers.o: tap-iousers.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-iousers.o -MD -MP -MF $(DEPDIR)/tshark-tap-iousers.Tpo -c -o tshark-tap-iousers.o `test -f 'tap-iousers.c' || echo '$(srcdir)/'`tap-iousers.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-iousers.Tpo $(DEPDIR)/tshark-tap-iousers.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-iousers.c' object='tshark-tap-iousers.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-iousers.o `test -f 'tap-iousers.c' || echo '$(srcdir)/'`tap-iousers.c
+
+tshark-tap-iousers.obj: tap-iousers.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-iousers.obj -MD -MP -MF $(DEPDIR)/tshark-tap-iousers.Tpo -c -o tshark-tap-iousers.obj `if test -f 'tap-iousers.c'; then $(CYGPATH_W) 'tap-iousers.c'; else $(CYGPATH_W) '$(srcdir)/tap-iousers.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-iousers.Tpo $(DEPDIR)/tshark-tap-iousers.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-iousers.c' object='tshark-tap-iousers.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-iousers.obj `if test -f 'tap-iousers.c'; then $(CYGPATH_W) 'tap-iousers.c'; else $(CYGPATH_W) '$(srcdir)/tap-iousers.c'; fi`
+
+tshark-tap-mgcpstat.o: tap-mgcpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-mgcpstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-mgcpstat.Tpo -c -o tshark-tap-mgcpstat.o `test -f 'tap-mgcpstat.c' || echo '$(srcdir)/'`tap-mgcpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-mgcpstat.Tpo $(DEPDIR)/tshark-tap-mgcpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-mgcpstat.c' object='tshark-tap-mgcpstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-mgcpstat.o `test -f 'tap-mgcpstat.c' || echo '$(srcdir)/'`tap-mgcpstat.c
+
+tshark-tap-mgcpstat.obj: tap-mgcpstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-mgcpstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-mgcpstat.Tpo -c -o tshark-tap-mgcpstat.obj `if test -f 'tap-mgcpstat.c'; then $(CYGPATH_W) 'tap-mgcpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-mgcpstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-mgcpstat.Tpo $(DEPDIR)/tshark-tap-mgcpstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-mgcpstat.c' object='tshark-tap-mgcpstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-mgcpstat.obj `if test -f 'tap-mgcpstat.c'; then $(CYGPATH_W) 'tap-mgcpstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-mgcpstat.c'; fi`
+
+tshark-tap-megacostat.o: tap-megacostat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-megacostat.o -MD -MP -MF $(DEPDIR)/tshark-tap-megacostat.Tpo -c -o tshark-tap-megacostat.o `test -f 'tap-megacostat.c' || echo '$(srcdir)/'`tap-megacostat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-megacostat.Tpo $(DEPDIR)/tshark-tap-megacostat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-megacostat.c' object='tshark-tap-megacostat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-megacostat.o `test -f 'tap-megacostat.c' || echo '$(srcdir)/'`tap-megacostat.c
+
+tshark-tap-megacostat.obj: tap-megacostat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-megacostat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-megacostat.Tpo -c -o tshark-tap-megacostat.obj `if test -f 'tap-megacostat.c'; then $(CYGPATH_W) 'tap-megacostat.c'; else $(CYGPATH_W) '$(srcdir)/tap-megacostat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-megacostat.Tpo $(DEPDIR)/tshark-tap-megacostat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-megacostat.c' object='tshark-tap-megacostat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-megacostat.obj `if test -f 'tap-megacostat.c'; then $(CYGPATH_W) 'tap-megacostat.c'; else $(CYGPATH_W) '$(srcdir)/tap-megacostat.c'; fi`
+
+tshark-tap-protocolinfo.o: tap-protocolinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-protocolinfo.o -MD -MP -MF $(DEPDIR)/tshark-tap-protocolinfo.Tpo -c -o tshark-tap-protocolinfo.o `test -f 'tap-protocolinfo.c' || echo '$(srcdir)/'`tap-protocolinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-protocolinfo.Tpo $(DEPDIR)/tshark-tap-protocolinfo.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-protocolinfo.c' object='tshark-tap-protocolinfo.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-protocolinfo.o `test -f 'tap-protocolinfo.c' || echo '$(srcdir)/'`tap-protocolinfo.c
+
+tshark-tap-protocolinfo.obj: tap-protocolinfo.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-protocolinfo.obj -MD -MP -MF $(DEPDIR)/tshark-tap-protocolinfo.Tpo -c -o tshark-tap-protocolinfo.obj `if test -f 'tap-protocolinfo.c'; then $(CYGPATH_W) 'tap-protocolinfo.c'; else $(CYGPATH_W) '$(srcdir)/tap-protocolinfo.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-protocolinfo.Tpo $(DEPDIR)/tshark-tap-protocolinfo.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-protocolinfo.c' object='tshark-tap-protocolinfo.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-protocolinfo.obj `if test -f 'tap-protocolinfo.c'; then $(CYGPATH_W) 'tap-protocolinfo.c'; else $(CYGPATH_W) '$(srcdir)/tap-protocolinfo.c'; fi`
+
+tshark-tap-protohierstat.o: tap-protohierstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-protohierstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-protohierstat.Tpo -c -o tshark-tap-protohierstat.o `test -f 'tap-protohierstat.c' || echo '$(srcdir)/'`tap-protohierstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-protohierstat.Tpo $(DEPDIR)/tshark-tap-protohierstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-protohierstat.c' object='tshark-tap-protohierstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-protohierstat.o `test -f 'tap-protohierstat.c' || echo '$(srcdir)/'`tap-protohierstat.c
+
+tshark-tap-protohierstat.obj: tap-protohierstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-protohierstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-protohierstat.Tpo -c -o tshark-tap-protohierstat.obj `if test -f 'tap-protohierstat.c'; then $(CYGPATH_W) 'tap-protohierstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-protohierstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-protohierstat.Tpo $(DEPDIR)/tshark-tap-protohierstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-protohierstat.c' object='tshark-tap-protohierstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-protohierstat.obj `if test -f 'tap-protohierstat.c'; then $(CYGPATH_W) 'tap-protohierstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-protohierstat.c'; fi`
+
+tshark-tap-radiusstat.o: tap-radiusstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-radiusstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-radiusstat.Tpo -c -o tshark-tap-radiusstat.o `test -f 'tap-radiusstat.c' || echo '$(srcdir)/'`tap-radiusstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-radiusstat.Tpo $(DEPDIR)/tshark-tap-radiusstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-radiusstat.c' object='tshark-tap-radiusstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-radiusstat.o `test -f 'tap-radiusstat.c' || echo '$(srcdir)/'`tap-radiusstat.c
+
+tshark-tap-radiusstat.obj: tap-radiusstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-radiusstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-radiusstat.Tpo -c -o tshark-tap-radiusstat.obj `if test -f 'tap-radiusstat.c'; then $(CYGPATH_W) 'tap-radiusstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-radiusstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-radiusstat.Tpo $(DEPDIR)/tshark-tap-radiusstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-radiusstat.c' object='tshark-tap-radiusstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-radiusstat.obj `if test -f 'tap-radiusstat.c'; then $(CYGPATH_W) 'tap-radiusstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-radiusstat.c'; fi`
+
+tshark-tap-rpcstat.o: tap-rpcstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-rpcstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-rpcstat.Tpo -c -o tshark-tap-rpcstat.o `test -f 'tap-rpcstat.c' || echo '$(srcdir)/'`tap-rpcstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-rpcstat.Tpo $(DEPDIR)/tshark-tap-rpcstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-rpcstat.c' object='tshark-tap-rpcstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-rpcstat.o `test -f 'tap-rpcstat.c' || echo '$(srcdir)/'`tap-rpcstat.c
+
+tshark-tap-rpcstat.obj: tap-rpcstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-rpcstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-rpcstat.Tpo -c -o tshark-tap-rpcstat.obj `if test -f 'tap-rpcstat.c'; then $(CYGPATH_W) 'tap-rpcstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-rpcstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-rpcstat.Tpo $(DEPDIR)/tshark-tap-rpcstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-rpcstat.c' object='tshark-tap-rpcstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-rpcstat.obj `if test -f 'tap-rpcstat.c'; then $(CYGPATH_W) 'tap-rpcstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-rpcstat.c'; fi`
+
+tshark-tap-rpcprogs.o: tap-rpcprogs.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-rpcprogs.o -MD -MP -MF $(DEPDIR)/tshark-tap-rpcprogs.Tpo -c -o tshark-tap-rpcprogs.o `test -f 'tap-rpcprogs.c' || echo '$(srcdir)/'`tap-rpcprogs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-rpcprogs.Tpo $(DEPDIR)/tshark-tap-rpcprogs.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-rpcprogs.c' object='tshark-tap-rpcprogs.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-rpcprogs.o `test -f 'tap-rpcprogs.c' || echo '$(srcdir)/'`tap-rpcprogs.c
+
+tshark-tap-rpcprogs.obj: tap-rpcprogs.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-rpcprogs.obj -MD -MP -MF $(DEPDIR)/tshark-tap-rpcprogs.Tpo -c -o tshark-tap-rpcprogs.obj `if test -f 'tap-rpcprogs.c'; then $(CYGPATH_W) 'tap-rpcprogs.c'; else $(CYGPATH_W) '$(srcdir)/tap-rpcprogs.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-rpcprogs.Tpo $(DEPDIR)/tshark-tap-rpcprogs.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-rpcprogs.c' object='tshark-tap-rpcprogs.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-rpcprogs.obj `if test -f 'tap-rpcprogs.c'; then $(CYGPATH_W) 'tap-rpcprogs.c'; else $(CYGPATH_W) '$(srcdir)/tap-rpcprogs.c'; fi`
+
+tshark-tap-rtp.o: tap-rtp.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-rtp.o -MD -MP -MF $(DEPDIR)/tshark-tap-rtp.Tpo -c -o tshark-tap-rtp.o `test -f 'tap-rtp.c' || echo '$(srcdir)/'`tap-rtp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-rtp.Tpo $(DEPDIR)/tshark-tap-rtp.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-rtp.c' object='tshark-tap-rtp.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-rtp.o `test -f 'tap-rtp.c' || echo '$(srcdir)/'`tap-rtp.c
+
+tshark-tap-rtp.obj: tap-rtp.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-rtp.obj -MD -MP -MF $(DEPDIR)/tshark-tap-rtp.Tpo -c -o tshark-tap-rtp.obj `if test -f 'tap-rtp.c'; then $(CYGPATH_W) 'tap-rtp.c'; else $(CYGPATH_W) '$(srcdir)/tap-rtp.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-rtp.Tpo $(DEPDIR)/tshark-tap-rtp.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-rtp.c' object='tshark-tap-rtp.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-rtp.obj `if test -f 'tap-rtp.c'; then $(CYGPATH_W) 'tap-rtp.c'; else $(CYGPATH_W) '$(srcdir)/tap-rtp.c'; fi`
+
+tshark-tap-scsistat.o: tap-scsistat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-scsistat.o -MD -MP -MF $(DEPDIR)/tshark-tap-scsistat.Tpo -c -o tshark-tap-scsistat.o `test -f 'tap-scsistat.c' || echo '$(srcdir)/'`tap-scsistat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-scsistat.Tpo $(DEPDIR)/tshark-tap-scsistat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-scsistat.c' object='tshark-tap-scsistat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-scsistat.o `test -f 'tap-scsistat.c' || echo '$(srcdir)/'`tap-scsistat.c
+
+tshark-tap-scsistat.obj: tap-scsistat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-scsistat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-scsistat.Tpo -c -o tshark-tap-scsistat.obj `if test -f 'tap-scsistat.c'; then $(CYGPATH_W) 'tap-scsistat.c'; else $(CYGPATH_W) '$(srcdir)/tap-scsistat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-scsistat.Tpo $(DEPDIR)/tshark-tap-scsistat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-scsistat.c' object='tshark-tap-scsistat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-scsistat.obj `if test -f 'tap-scsistat.c'; then $(CYGPATH_W) 'tap-scsistat.c'; else $(CYGPATH_W) '$(srcdir)/tap-scsistat.c'; fi`
+
+tshark-tap-sctpchunkstat.o: tap-sctpchunkstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-sctpchunkstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-sctpchunkstat.Tpo -c -o tshark-tap-sctpchunkstat.o `test -f 'tap-sctpchunkstat.c' || echo '$(srcdir)/'`tap-sctpchunkstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-sctpchunkstat.Tpo $(DEPDIR)/tshark-tap-sctpchunkstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-sctpchunkstat.c' object='tshark-tap-sctpchunkstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-sctpchunkstat.o `test -f 'tap-sctpchunkstat.c' || echo '$(srcdir)/'`tap-sctpchunkstat.c
+
+tshark-tap-sctpchunkstat.obj: tap-sctpchunkstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-sctpchunkstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-sctpchunkstat.Tpo -c -o tshark-tap-sctpchunkstat.obj `if test -f 'tap-sctpchunkstat.c'; then $(CYGPATH_W) 'tap-sctpchunkstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-sctpchunkstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-sctpchunkstat.Tpo $(DEPDIR)/tshark-tap-sctpchunkstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-sctpchunkstat.c' object='tshark-tap-sctpchunkstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-sctpchunkstat.obj `if test -f 'tap-sctpchunkstat.c'; then $(CYGPATH_W) 'tap-sctpchunkstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-sctpchunkstat.c'; fi`
+
+tshark-tap-sipstat.o: tap-sipstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-sipstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-sipstat.Tpo -c -o tshark-tap-sipstat.o `test -f 'tap-sipstat.c' || echo '$(srcdir)/'`tap-sipstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-sipstat.Tpo $(DEPDIR)/tshark-tap-sipstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-sipstat.c' object='tshark-tap-sipstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-sipstat.o `test -f 'tap-sipstat.c' || echo '$(srcdir)/'`tap-sipstat.c
+
+tshark-tap-sipstat.obj: tap-sipstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-sipstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-sipstat.Tpo -c -o tshark-tap-sipstat.obj `if test -f 'tap-sipstat.c'; then $(CYGPATH_W) 'tap-sipstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-sipstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-sipstat.Tpo $(DEPDIR)/tshark-tap-sipstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-sipstat.c' object='tshark-tap-sipstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-sipstat.obj `if test -f 'tap-sipstat.c'; then $(CYGPATH_W) 'tap-sipstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-sipstat.c'; fi`
+
+tshark-tap-smbsids.o: tap-smbsids.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-smbsids.o -MD -MP -MF $(DEPDIR)/tshark-tap-smbsids.Tpo -c -o tshark-tap-smbsids.o `test -f 'tap-smbsids.c' || echo '$(srcdir)/'`tap-smbsids.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-smbsids.Tpo $(DEPDIR)/tshark-tap-smbsids.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-smbsids.c' object='tshark-tap-smbsids.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-smbsids.o `test -f 'tap-smbsids.c' || echo '$(srcdir)/'`tap-smbsids.c
+
+tshark-tap-smbsids.obj: tap-smbsids.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-smbsids.obj -MD -MP -MF $(DEPDIR)/tshark-tap-smbsids.Tpo -c -o tshark-tap-smbsids.obj `if test -f 'tap-smbsids.c'; then $(CYGPATH_W) 'tap-smbsids.c'; else $(CYGPATH_W) '$(srcdir)/tap-smbsids.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-smbsids.Tpo $(DEPDIR)/tshark-tap-smbsids.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-smbsids.c' object='tshark-tap-smbsids.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-smbsids.obj `if test -f 'tap-smbsids.c'; then $(CYGPATH_W) 'tap-smbsids.c'; else $(CYGPATH_W) '$(srcdir)/tap-smbsids.c'; fi`
+
+tshark-tap-smbstat.o: tap-smbstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-smbstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-smbstat.Tpo -c -o tshark-tap-smbstat.o `test -f 'tap-smbstat.c' || echo '$(srcdir)/'`tap-smbstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-smbstat.Tpo $(DEPDIR)/tshark-tap-smbstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-smbstat.c' object='tshark-tap-smbstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-smbstat.o `test -f 'tap-smbstat.c' || echo '$(srcdir)/'`tap-smbstat.c
+
+tshark-tap-smbstat.obj: tap-smbstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-smbstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-smbstat.Tpo -c -o tshark-tap-smbstat.obj `if test -f 'tap-smbstat.c'; then $(CYGPATH_W) 'tap-smbstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-smbstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-smbstat.Tpo $(DEPDIR)/tshark-tap-smbstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-smbstat.c' object='tshark-tap-smbstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-smbstat.obj `if test -f 'tap-smbstat.c'; then $(CYGPATH_W) 'tap-smbstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-smbstat.c'; fi`
+
+tshark-tap-stats_tree.o: tap-stats_tree.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-stats_tree.o -MD -MP -MF $(DEPDIR)/tshark-tap-stats_tree.Tpo -c -o tshark-tap-stats_tree.o `test -f 'tap-stats_tree.c' || echo '$(srcdir)/'`tap-stats_tree.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-stats_tree.Tpo $(DEPDIR)/tshark-tap-stats_tree.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-stats_tree.c' object='tshark-tap-stats_tree.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-stats_tree.o `test -f 'tap-stats_tree.c' || echo '$(srcdir)/'`tap-stats_tree.c
+
+tshark-tap-stats_tree.obj: tap-stats_tree.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-stats_tree.obj -MD -MP -MF $(DEPDIR)/tshark-tap-stats_tree.Tpo -c -o tshark-tap-stats_tree.obj `if test -f 'tap-stats_tree.c'; then $(CYGPATH_W) 'tap-stats_tree.c'; else $(CYGPATH_W) '$(srcdir)/tap-stats_tree.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-stats_tree.Tpo $(DEPDIR)/tshark-tap-stats_tree.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-stats_tree.c' object='tshark-tap-stats_tree.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-stats_tree.obj `if test -f 'tap-stats_tree.c'; then $(CYGPATH_W) 'tap-stats_tree.c'; else $(CYGPATH_W) '$(srcdir)/tap-stats_tree.c'; fi`
+
+tshark-tap-sv.o: tap-sv.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-sv.o -MD -MP -MF $(DEPDIR)/tshark-tap-sv.Tpo -c -o tshark-tap-sv.o `test -f 'tap-sv.c' || echo '$(srcdir)/'`tap-sv.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-sv.Tpo $(DEPDIR)/tshark-tap-sv.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-sv.c' object='tshark-tap-sv.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-sv.o `test -f 'tap-sv.c' || echo '$(srcdir)/'`tap-sv.c
+
+tshark-tap-sv.obj: tap-sv.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-sv.obj -MD -MP -MF $(DEPDIR)/tshark-tap-sv.Tpo -c -o tshark-tap-sv.obj `if test -f 'tap-sv.c'; then $(CYGPATH_W) 'tap-sv.c'; else $(CYGPATH_W) '$(srcdir)/tap-sv.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-sv.Tpo $(DEPDIR)/tshark-tap-sv.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-sv.c' object='tshark-tap-sv.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-sv.obj `if test -f 'tap-sv.c'; then $(CYGPATH_W) 'tap-sv.c'; else $(CYGPATH_W) '$(srcdir)/tap-sv.c'; fi`
+
+tshark-tap-wspstat.o: tap-wspstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-wspstat.o -MD -MP -MF $(DEPDIR)/tshark-tap-wspstat.Tpo -c -o tshark-tap-wspstat.o `test -f 'tap-wspstat.c' || echo '$(srcdir)/'`tap-wspstat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-wspstat.Tpo $(DEPDIR)/tshark-tap-wspstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-wspstat.c' object='tshark-tap-wspstat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-wspstat.o `test -f 'tap-wspstat.c' || echo '$(srcdir)/'`tap-wspstat.c
+
+tshark-tap-wspstat.obj: tap-wspstat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tap-wspstat.obj -MD -MP -MF $(DEPDIR)/tshark-tap-wspstat.Tpo -c -o tshark-tap-wspstat.obj `if test -f 'tap-wspstat.c'; then $(CYGPATH_W) 'tap-wspstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-wspstat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tap-wspstat.Tpo $(DEPDIR)/tshark-tap-wspstat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tap-wspstat.c' object='tshark-tap-wspstat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tap-wspstat.obj `if test -f 'tap-wspstat.c'; then $(CYGPATH_W) 'tap-wspstat.c'; else $(CYGPATH_W) '$(srcdir)/tap-wspstat.c'; fi`
+
+tshark-capture_opts.o: capture_opts.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_opts.o -MD -MP -MF $(DEPDIR)/tshark-capture_opts.Tpo -c -o tshark-capture_opts.o `test -f 'capture_opts.c' || echo '$(srcdir)/'`capture_opts.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_opts.Tpo $(DEPDIR)/tshark-capture_opts.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_opts.c' object='tshark-capture_opts.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_opts.o `test -f 'capture_opts.c' || echo '$(srcdir)/'`capture_opts.c
+
+tshark-capture_opts.obj: capture_opts.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_opts.obj -MD -MP -MF $(DEPDIR)/tshark-capture_opts.Tpo -c -o tshark-capture_opts.obj `if test -f 'capture_opts.c'; then $(CYGPATH_W) 'capture_opts.c'; else $(CYGPATH_W) '$(srcdir)/capture_opts.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_opts.Tpo $(DEPDIR)/tshark-capture_opts.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_opts.c' object='tshark-capture_opts.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_opts.obj `if test -f 'capture_opts.c'; then $(CYGPATH_W) 'capture_opts.c'; else $(CYGPATH_W) '$(srcdir)/capture_opts.c'; fi`
+
+tshark-capture_sync.o: capture_sync.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_sync.o -MD -MP -MF $(DEPDIR)/tshark-capture_sync.Tpo -c -o tshark-capture_sync.o `test -f 'capture_sync.c' || echo '$(srcdir)/'`capture_sync.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_sync.Tpo $(DEPDIR)/tshark-capture_sync.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_sync.c' object='tshark-capture_sync.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_sync.o `test -f 'capture_sync.c' || echo '$(srcdir)/'`capture_sync.c
+
+tshark-capture_sync.obj: capture_sync.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-capture_sync.obj -MD -MP -MF $(DEPDIR)/tshark-capture_sync.Tpo -c -o tshark-capture_sync.obj `if test -f 'capture_sync.c'; then $(CYGPATH_W) 'capture_sync.c'; else $(CYGPATH_W) '$(srcdir)/capture_sync.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-capture_sync.Tpo $(DEPDIR)/tshark-capture_sync.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='capture_sync.c' object='tshark-capture_sync.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-capture_sync.obj `if test -f 'capture_sync.c'; then $(CYGPATH_W) 'capture_sync.c'; else $(CYGPATH_W) '$(srcdir)/capture_sync.c'; fi`
+
+tshark-tempfile.o: tempfile.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tempfile.o -MD -MP -MF $(DEPDIR)/tshark-tempfile.Tpo -c -o tshark-tempfile.o `test -f 'tempfile.c' || echo '$(srcdir)/'`tempfile.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tempfile.Tpo $(DEPDIR)/tshark-tempfile.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tempfile.c' object='tshark-tempfile.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tempfile.o `test -f 'tempfile.c' || echo '$(srcdir)/'`tempfile.c
+
+tshark-tempfile.obj: tempfile.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tempfile.obj -MD -MP -MF $(DEPDIR)/tshark-tempfile.Tpo -c -o tshark-tempfile.obj `if test -f 'tempfile.c'; then $(CYGPATH_W) 'tempfile.c'; else $(CYGPATH_W) '$(srcdir)/tempfile.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tempfile.Tpo $(DEPDIR)/tshark-tempfile.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tempfile.c' object='tshark-tempfile.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tempfile.obj `if test -f 'tempfile.c'; then $(CYGPATH_W) 'tempfile.c'; else $(CYGPATH_W) '$(srcdir)/tempfile.c'; fi`
+
+tshark-tshark-tap-register.o: tshark-tap-register.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tshark-tap-register.o -MD -MP -MF $(DEPDIR)/tshark-tshark-tap-register.Tpo -c -o tshark-tshark-tap-register.o `test -f 'tshark-tap-register.c' || echo '$(srcdir)/'`tshark-tap-register.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tshark-tap-register.Tpo $(DEPDIR)/tshark-tshark-tap-register.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tshark-tap-register.c' object='tshark-tshark-tap-register.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tshark-tap-register.o `test -f 'tshark-tap-register.c' || echo '$(srcdir)/'`tshark-tap-register.c
+
+tshark-tshark-tap-register.obj: tshark-tap-register.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tshark-tap-register.obj -MD -MP -MF $(DEPDIR)/tshark-tshark-tap-register.Tpo -c -o tshark-tshark-tap-register.obj `if test -f 'tshark-tap-register.c'; then $(CYGPATH_W) 'tshark-tap-register.c'; else $(CYGPATH_W) '$(srcdir)/tshark-tap-register.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tshark-tap-register.Tpo $(DEPDIR)/tshark-tshark-tap-register.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tshark-tap-register.c' object='tshark-tshark-tap-register.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tshark-tap-register.obj `if test -f 'tshark-tap-register.c'; then $(CYGPATH_W) 'tshark-tap-register.c'; else $(CYGPATH_W) '$(srcdir)/tshark-tap-register.c'; fi`
+
+tshark-tshark.o: tshark.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tshark.o -MD -MP -MF $(DEPDIR)/tshark-tshark.Tpo -c -o tshark-tshark.o `test -f 'tshark.c' || echo '$(srcdir)/'`tshark.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tshark.Tpo $(DEPDIR)/tshark-tshark.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tshark.c' object='tshark-tshark.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tshark.o `test -f 'tshark.c' || echo '$(srcdir)/'`tshark.c
+
+tshark-tshark.obj: tshark.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -MT tshark-tshark.obj -MD -MP -MF $(DEPDIR)/tshark-tshark.Tpo -c -o tshark-tshark.obj `if test -f 'tshark.c'; then $(CYGPATH_W) 'tshark.c'; else $(CYGPATH_W) '$(srcdir)/tshark.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/tshark-tshark.Tpo $(DEPDIR)/tshark-tshark.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tshark.c' object='tshark-tshark.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tshark_CFLAGS) $(CFLAGS) -c -o tshark-tshark.obj `if test -f 'tshark.c'; then $(CYGPATH_W) 'tshark.c'; else $(CYGPATH_W) '$(srcdir)/tshark.c'; fi`
 
 wireshark-capture-pcap-util-unix.o: capture-pcap-util-unix.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wireshark_CFLAGS) $(CFLAGS) -MT wireshark-capture-pcap-util-unix.o -MD -MP -MF $(DEPDIR)/wireshark-capture-pcap-util-unix.Tpo -c -o wireshark-capture-pcap-util-unix.o `test -f 'capture-pcap-util-unix.c' || echo '$(srcdir)/'`capture-pcap-util-unix.c

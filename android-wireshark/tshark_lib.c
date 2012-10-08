@@ -88,6 +88,7 @@
 #include <epan/stat_cmd_args.h>
 #include <epan/timestamp.h>
 #include <epan/ex-opt.h>
+#include <android/log.h>
 
 #ifdef HAVE_LIBPCAP
 #include "capture_ui_utils.h"
@@ -3554,6 +3555,7 @@ open_failure_message(const char *filename, int err, gboolean for_writing)
   fprintf(stderr, "tshark: ");
   fprintf(stderr, file_open_error_message(err, for_writing), filename);
   fprintf(stderr, "\n");
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "failure opening file");
 }
 
 
@@ -3563,6 +3565,7 @@ open_failure_message(const char *filename, int err, gboolean for_writing)
 void
 failure_message(const char *msg_format, va_list ap)
 {
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", msg_format, ap);
   fprintf(stderr, "tshark: ");
   vfprintf(stderr, msg_format, ap);
   fprintf(stderr, "\n");
@@ -3576,6 +3579,7 @@ read_failure_message(const char *filename, int err)
 {
   cmdarg_err("An error occurred while reading from the file \"%s\": %s.",
           filename, strerror(err));
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "failure reading file");
 }
 
 /*
@@ -3586,6 +3590,7 @@ write_failure_message(const char *filename, int err)
 {
   cmdarg_err("An error occurred while writing to the file \"%s\": %s.",
           filename, strerror(err));
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "failure writing file");
 }
 
 /*
