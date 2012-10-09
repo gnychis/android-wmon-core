@@ -2873,8 +2873,6 @@ dissectPacket(char *pHeader, char *pData, int encap)
 	memset(dissection->edt, '\0', sizeof(epan_dissect_t));
 
 	// Set up the frame data
-  __android_log_print(ANDROID_LOG_INFO, "tshark_lib", "frame_data_init:  whdr.caplen: %d, whdr.len: %d", whdr.caplen, whdr.len); 
-  __android_log_print(ANDROID_LOG_INFO, "tshark_lib", "frame_data_init: cum_bytes: %d", cum_bytes); 
 	frame_data_init(&fdata, 0, &whdr, offset, cum_bytes);  // count is hardcoded 0, doesn't matter
 
 	// Set up the dissection
