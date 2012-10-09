@@ -16,7 +16,7 @@ CONFIG_OPTIONS="-host=arm-linux-androideabi --disable-wireshark --with-pcap=yes 
 make clean
 ./configure $CONFIG_OPTIONS
 find . -name Makefile -exec sed -i 's/-pthread//g' {} \;
-find . -name Makefile -exec sed -i 's/-lrt/-lgcc -lpcap -lgpg-error/g' {} \;
+find . -name Makefile -exec sed -i 's/-lrt/-lgcc -lpcap -lgpg-error -llog/g' {} \;
 find . -name Makefile -exec sed -i 's/-g -O2/-g/g' {} \;
 cp libtool.good libtool
 cd tools/lemon/

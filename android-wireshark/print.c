@@ -45,6 +45,7 @@
 #include <epan/charsets.h>
 #include <epan/dissectors/packet-data.h>
 #include <epan/dissectors/packet-frame.h>
+#include <android/log.h>
 
 #define PDML_VERSION "0"
 #define PSML_VERSION "0"
@@ -131,19 +132,30 @@ proto_tree_print(print_args_t *print_args, epan_dissect_t *edt,
     print_stream_t *stream)
 {
 	print_data data;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "in proto_tree_print");
 
 	/* Create the output */
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "1");
 	data.level = 0;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "2");
 	data.stream = stream;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "3");
 	data.success = TRUE;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "4");
 	data.src_list = edt->pi.data_src;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "5");
 	data.encoding = edt->pi.fd->flags.encoding;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "6");
 	data.print_dissections = print_args->print_dissections;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "7");
 	/* If we're printing the entire packet in hex, don't
 	   print uninterpreted data fields in hex as well. */
 	data.print_hex_for_data = !print_args->print_hex;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "8");
 	data.edt = edt;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "9");
 
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "about to call proto_tree_print_node");
 	proto_tree_children_foreach(edt->tree, proto_tree_print_node, &data);
 	return data.success;
 }
@@ -160,38 +172,55 @@ void proto_tree_print_node(proto_node *node, gpointer data)
 	gchar		label_str[ITEM_LABEL_LENGTH];
 	gchar		*label_ptr;
 
-	g_assert(fi && "dissection with an invisible proto tree?");
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "in proto_tree_print_node !");
 
+	g_assert(fi && "dissection with an invisible proto tree?");
+  
 	/* Don't print invisible entries. */
 	if (PROTO_ITEM_IS_HIDDEN(node))
 		return;
+  
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "the proto tree is not invisible");
 
 	/* Give up if we've already gotten an error. */
 	if (!pdata->success)
 		return;
+  
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "success so far");
 
 	/* was a free format label produced? */
 	if (fi->rep) {
 		label_ptr = fi->rep->representation;
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "free format");
 	}
 	else { /* no, make a generic label */
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "generic label");
 		label_ptr = label_str;
 		proto_item_fill_label(fi, label_str);
 	}
+  
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "A-OK");
 
 	if (PROTO_ITEM_IS_GENERATED(node)) {
 		label_ptr = g_strdup_printf("[%s]", label_ptr);
 	}
+  
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "proto was generated");
 
-	if (!print_line(pdata->stream, pdata->level, label_ptr)) {
-		pdata->success = FALSE;
-		return;
-	}
+	//if (!print_line(pdata->stream, pdata->level, label_ptr)) {
+	//	pdata->success = FALSE;
+	//	return;
+	//}
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "line: %s", label_ptr);
+  
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "line is printed");
 
 	if (PROTO_ITEM_IS_GENERATED(node)) {
 		g_free(label_ptr);
 	}
-
+  
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "item is generated");
+  
 	/* If it's uninterpreted data, dump it (unless our caller will
 	   be printing the entire packet in hex). */
 	if (fi->hfinfo->id == proto_data && pdata->print_hex_for_data) {
@@ -199,6 +228,7 @@ void proto_tree_print_node(proto_node *node, gpointer data)
 		 * Find the data for this field.
 		 */
 		pd = get_field_data(pdata->src_list, fi);
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "uninterpreted");
 		if (pd) {
 			if (!print_hex_data_buffer(pdata->stream, pd,
 			    fi->length, pdata->encoding)) {
@@ -207,16 +237,22 @@ void proto_tree_print_node(proto_node *node, gpointer data)
 			}
 		}
 	}
+  
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "getting ready to traverse all subtrees");
 
 	/* If we're printing all levels, or if this node is one with a
 	   subtree and its subtree is expanded, recurse into the subtree,
 	   if it exists. */
 	g_assert(fi->tree_type >= -1 && fi->tree_type < num_tree_types);
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "passed the assert");
 	if (pdata->print_dissections == print_dissections_expanded ||
 	    (pdata->print_dissections == print_dissections_as_displayed &&
 		fi->tree_type >= 0 && tree_is_expanded[fi->tree_type])) {
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "made it in");
 		if (node->first_child != NULL) {
+      __android_log_print(ANDROID_LOG_INFO, "libtshark", "and we're about to level up");
 			pdata->level++;
+      __android_log_print(ANDROID_LOG_INFO, "libtshark", "for each child...");
 			proto_tree_children_foreach(node,
 				proto_tree_print_node, pdata);
 			pdata->level--;
@@ -1558,6 +1594,56 @@ void proto_tree_write_fields(output_fields_t* fields, epan_dissect_t *edt, FILE 
             fputs(fields->field_values[i]->str, fh);
             if(fields->quote != '\0') {
                 fputc(fields->quote, fh);
+            }
+        }
+    }
+}
+
+void proto_tree_write_fields_android(output_fields_t* fields, epan_dissect_t *edt)
+{
+    gsize i;
+
+    write_field_data_t data;
+
+    g_assert(fields);
+    g_assert(edt);
+
+    data.fields = fields;
+    data.edt = edt;
+
+    if(NULL == fields->field_indicies) {
+        /* Prepare a lookup table from string abbreviation for field to its index. */
+        fields->field_indicies = g_hash_table_new(g_str_hash, g_str_equal);
+
+        i = 0;
+        while( i < fields->fields->len) {
+            gchar* field = (gchar *)g_ptr_array_index(fields->fields, i);
+             /* Store field indicies +1 so that zero is not a valid value,
+              * and can be distinguished from NULL as a pointer.
+              */
+            ++i;
+            g_hash_table_insert(fields->field_indicies, field, GUINT_TO_POINTER(i));
+        }
+    }
+
+    /* Buffer to store values for this packet */
+    fields->field_values = ep_alloc_array0(emem_strbuf_t*, fields->fields->len);
+
+    proto_tree_children_foreach(edt->tree, proto_tree_get_node_field_values,
+                                &data);
+
+    for(i = 0; i < fields->fields->len; ++i) {
+        if(0 != i) {
+//            fputc(fields->separator, fh);
+        }
+        if(NULL != fields->field_values[i]) {
+            if(fields->quote != '\0') {
+//                fputc(fields->quote, fh);
+            }
+//            fputs(fields->field_values[i]->str, fh);
+            __android_log_print(ANDROID_LOG_INFO, "libtshark", "--- %s", fields->field_values[i]->str);
+            if(fields->quote != '\0') {
+//                fputc(fields->quote, fh);
             }
         }
     }

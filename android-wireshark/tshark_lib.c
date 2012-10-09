@@ -104,6 +104,13 @@
 #include "log.h"
 #include <epan/funnel.h>
 
+int dissectPacket(char *pHeader, char *pData, int encap);
+
+typedef struct {
+    output_fields_t* fields;
+	epan_dissect_t		*edt;
+} write_field_data_t;
+
 
 /*
  * This is the template for the decode as option; it is shared between the
@@ -131,8 +138,8 @@ typedef enum {
 } output_action_e;
 
 static output_action_e output_action;
-static gboolean do_dissection;  /* TRUE if we have to dissect each packet */
-static gboolean verbose;
+static gboolean do_dissection=TRUE;  /* TRUE if we have to dissect each packet */
+static gboolean verbose=TRUE;
 static gboolean print_hex;
 static gboolean line_buffered;
 
@@ -174,7 +181,7 @@ gboolean process_packet(capture_file *cf, gint64 offset,
 static void show_capture_file_io_error(const char *, int, gboolean);
 static void show_print_file_io_error(int err);
 static gboolean write_preamble(capture_file *cf);
-static gboolean print_packet(capture_file *cf, epan_dissect_t *edt);
+gboolean print_packet(capture_file *cf, epan_dissect_t *edt);
 static gboolean write_finale(void);
 static const char *cf_open_error_message(int err, gchar *err_info,
     gboolean for_writing, int file_type);
@@ -1665,6 +1672,7 @@ tshark_main(int argc, char *argv[])
 
         we're using any taps. */
   do_dissection = print_packet_info || rfcode || have_tap_listeners();
+  do_dissection = TRUE;
 
   if (cf_name) {
     /*
@@ -2521,10 +2529,13 @@ process_packet_second_pass(capture_file *cf, frame_data *fdata,
     if (print_packet_info) {
       /* We're printing packet information; print the information for
          this packet. */
-      if (do_dissection)
+      if (do_dissection) {
         print_packet(cf, &edt);
-      else
+        __android_log_print(ANDROID_LOG_INFO, "libtshark", "do dissection s2pass with edt");
+      } else {
         print_packet(cf, NULL);
+        __android_log_print(ANDROID_LOG_INFO, "libtshark", "do dissection s2pass");
+      }
 
       /* The ANSI C standard does not appear to *require* that a line-buffered
          stream be flushed to the host environment whenever a newline is
@@ -2576,6 +2587,11 @@ load_cap_file(capture_file *cf, char *save_file, int out_file_type,
   char         *save_file_string = NULL;
   gboolean     filtering_tap_listeners;
   guint        tap_flags;
+
+
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "... do_dissection in load_cap_file: %d", do_dissection);
+  do_dissection=TRUE;
+  verbose=TRUE;
 
   linktype = wtap_file_encap(cf->wth);
   if (save_file != NULL) {
@@ -2710,6 +2726,14 @@ load_cap_file(capture_file *cf, char *save_file, int out_file_type,
   }
   else {
     while (wtap_read(cf->wth, &err, &err_info, &data_offset)) {
+      // gnychis: this is where each packet is
+      verbose=TRUE;
+      __android_log_print(ANDROID_LOG_INFO, "libtshark", "... and a packet");
+      __android_log_print(ANDROID_LOG_INFO, "libtshark", "... wtap pseudo header: fcs_len: %d, channel: %d, data_rate: %d, signal_level: %d", 
+                                                                              (wtap_pseudoheader(cf->wth))->ieee_802_11.fcs_len,
+                                                                              (wtap_pseudoheader(cf->wth))->ieee_802_11.channel,
+                                                                              (wtap_pseudoheader(cf->wth))->ieee_802_11.data_rate,
+                                                                              (wtap_pseudoheader(cf->wth))->ieee_802_11.signal_level);
       if (process_packet(cf, data_offset, wtap_phdr(cf->wth),
                          wtap_pseudoheader(cf->wth), wtap_buf_ptr(cf->wth),
                          filtering_tap_listeners, tap_flags)) {
@@ -2819,7 +2843,62 @@ out:
 
   g_free(save_file_string);
 
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "finishing load_cap_file: %d", err);
+
   return err;
+}
+
+int
+dissectPacket(char *pHeader, char *pData, int encap)
+{
+	// From the Java environment
+	struct wtap_pkthdr whdr;
+	int i;
+	gsize z;
+	
+	// Wireshark related
+	frame_data fdata;
+	gboolean create_proto_tree = 1;
+	gint64 offset = 0;
+	union wtap_pseudo_header psh;
+	
+  // We are going to copy, not cast, in to the whdr because we need to set an additional value
+	memcpy(&whdr, pHeader, sizeof(struct wtap_pkthdr));
+	whdr.pkt_encap = encap;
+
+	// This structure is *critical*, it holds two points which we hold and pass back to
+	// the Java code.  This way we don't have to dissect multiple times for a packet.
+	write_field_data_t *dissection = malloc(sizeof(write_field_data_t));
+	dissection->edt = malloc(sizeof(epan_dissect_t));
+	memset(dissection->edt, '\0', sizeof(epan_dissect_t));
+
+	// Set up the frame data
+  __android_log_print(ANDROID_LOG_INFO, "tshark_lib", "frame_data_init:  whdr.caplen: %d, whdr.len: %d", whdr.caplen, whdr.len); 
+  __android_log_print(ANDROID_LOG_INFO, "tshark_lib", "frame_data_init: cum_bytes: %d", cum_bytes); 
+	frame_data_init(&fdata, 0, &whdr, offset, cum_bytes);  // count is hardcoded 0, doesn't matter
+
+	// Set up the dissection
+	epan_dissect_init(dissection->edt, create_proto_tree, 1);
+	tap_queue_init(dissection->edt);
+
+	// Set some of the frame data
+	memset(&cfile.elapsed_time, '\0', sizeof(nstime_t));
+	memset(&first_ts, '\0', sizeof(nstime_t));
+	memset(&prev_dis_ts, '\0', sizeof(nstime_t));
+	memset(&prev_cap_ts, '\0', sizeof(nstime_t));
+	frame_data_set_before_dissect(&fdata, &cfile.elapsed_time,
+									&first_ts, &prev_dis_ts, &prev_cap_ts);
+	fdata.file_off=0;
+
+	// Run the actual dissection
+	memset(&psh, '\0', sizeof(union wtap_pseudo_header));
+	epan_dissect_run(dissection->edt, &psh, pData, &fdata, NULL);
+  tap_push_tapped_queue(dissection->edt);
+
+	// Do some cleanup
+	frame_data_cleanup(&fdata);
+
+	return (int)dissection;
 }
 
 gboolean
@@ -2833,6 +2912,8 @@ process_packet(capture_file *cf, gint64 offset, const struct wtap_pkthdr *whdr,
   epan_dissect_t edt;
   gboolean passed;
 
+  print_packet_info=TRUE;
+
   /* Count this packet. */
   cf->count++;
 
@@ -2841,12 +2922,17 @@ process_packet(capture_file *cf, gint64 offset, const struct wtap_pkthdr *whdr,
      that all packets can be marked as 'passed'. */
   passed = TRUE;
 
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "... frame data:  whdr->pkt_encap: %d, caplen: %d, len: %d", whdr->pkt_encap, whdr->caplen, whdr->len);
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "... tap flags: %d", tap_flags);
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "... filtering tap listeners: %d", filtering_tap_listeners);
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "... cum_bytes: %d", cum_bytes);
   frame_data_init(&fdata, cf->count, whdr, offset, cum_bytes);
 
   /* If we're going to print packet information, or we're going to
      run a read filter, or we're going to process taps, set up to
      do a dissection and do so. */
   if (do_dissection) {
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "... doing this dissection thing");
     if (print_packet_info && gbl_resolv_flags)
       /* Grab any resolved addresses */
       host_name_lookup_process(NULL);
@@ -2857,18 +2943,22 @@ process_packet(capture_file *cf, gint64 offset, const struct wtap_pkthdr *whdr,
     else
       create_proto_tree = FALSE;
 
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "... create the proto tree: %d", create_proto_tree);
+
+
     /* The protocol tree will be "visible", i.e., printed, only if we're
        printing packet details, which is true if we're printing stuff
        ("print_packet_info" is true) and we're in verbose mode ("verbose"
        is true). */
     epan_dissect_init(&edt, create_proto_tree, print_packet_info && verbose);
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "... initialized the dissection");
 
     /* If we're running a read filter, prime the epan_dissect_t with that
        filter. */
     if (cf->rfcode)
       epan_dissect_prime_dfilter(&edt, cf->rfcode);
 
-    col_custom_prime_edt(&edt, &cf->cinfo);
+    //col_custom_prime_edt(&edt, &cf->cinfo);
 
     tap_queue_init(&edt);
 
@@ -2887,8 +2977,10 @@ process_packet(capture_file *cf, gint64 offset, const struct wtap_pkthdr *whdr,
 
     frame_data_set_before_dissect(&fdata, &cf->elapsed_time,
                                   &first_ts, &prev_dis_ts, &prev_cap_ts);
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "... frame data before the dissect");
 
     epan_dissect_run(&edt, pseudo_header, pd, &fdata, cinfo);
+    __android_log_print(ANDROID_LOG_INFO, "libtshark", "... and we ran it");
 
     tap_push_tapped_queue(&edt);
 
@@ -2904,10 +2996,13 @@ process_packet(capture_file *cf, gint64 offset, const struct wtap_pkthdr *whdr,
     if (print_packet_info) {
       /* We're printing packet information; print the information for
          this packet. */
-      if (do_dissection)
+      if (do_dissection) {
+        __android_log_print(ANDROID_LOG_INFO, "libtshark", "do dissection with edt");
         print_packet(cf, &edt);
-      else
+      } else {
+        __android_log_print(ANDROID_LOG_INFO, "libtshark", "print without dissection");
         print_packet(cf, NULL);
+      }
 
       /* The ANSI C standard does not appear to *require* that a line-buffered
          stream be flushed to the host environment whenever a newline is
@@ -3221,10 +3316,12 @@ print_columns(capture_file *cf)
   return print_line(print_stream, 0, line_bufp);
 }
 
-static gboolean
+gboolean
 print_packet(capture_file *cf, epan_dissect_t *edt)
 {
   print_args_t  print_args;
+  verbose=TRUE;
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", "printing another packet");
 
   if (verbose) {
     /* Print the information in the protocol tree. */
@@ -3238,9 +3335,11 @@ print_packet(capture_file *cf, epan_dissect_t *edt)
       print_args.print_formfeed = FALSE;
       print_args.print_dissections = verbose ? print_dissections_expanded : print_dissections_none;
 
+      __android_log_print(ANDROID_LOG_INFO, "libtshark", "packet range init");
       /* init the packet range */
       packet_range_init(&print_args.range);
 
+      __android_log_print(ANDROID_LOG_INFO, "libtshark", "heading in to proto_tree_print...");
       if (!proto_tree_print(&print_args, edt, print_stream))
         return FALSE;
       if (!print_hex) {
@@ -3257,7 +3356,9 @@ print_packet(capture_file *cf, epan_dissect_t *edt)
       printf("\n");
       return !ferror(stdout);
     case WRITE_FIELDS:
-      proto_tree_write_fields(output_fields, edt, stdout);
+      //proto_tree_write_fields(output_fields, edt, stdout);
+      __android_log_print(ANDROID_LOG_INFO, "libtshark", "let's write some fields...");
+      proto_tree_write_fields_android(output_fields,edt);
       printf("\n");
       return !ferror(stdout);
     }
@@ -3621,6 +3722,7 @@ cmdarg_err(const char *fmt, ...)
 {
   va_list ap;
 
+  __android_log_print(ANDROID_LOG_INFO, "libtshark", fmt, ap);
   va_start(ap, fmt);
   failure_message(fmt, ap);
   va_end(ap);
