@@ -1,7 +1,8 @@
 #!/bin/bash
 make clean
 ./scripts/driver-select restore
-./scripts/driver-select rt2x00
+./scripts/driver-select bcmdhd
+#./scripts/driver-select rt2x00
 #./scripts/driver-select brcm80211
 #KERNEL_DIR=$(pwd)/../usbhost-kernel
 #KERNEL_DIR=$(pwd)/../samsung-kernel-galaxysii

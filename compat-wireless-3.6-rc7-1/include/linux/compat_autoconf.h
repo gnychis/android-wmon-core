@@ -2,7 +2,7 @@
 #define COMPAT_AUTOCONF_INCLUDED
 /*
  * Automatically generated C config: don't edit
- * Thu Oct 11 11:26:30 PDT 2012 
+ * Thu Oct 11 14:34:29 PDT 2012 
  * compat-wireless-2.6: compat-wireless-v3.6-rc7-1
  * linux-2.6: v3.6-rc7
  */
@@ -704,6 +704,9 @@
 #ifndef CONFIG_RTL8192C_COMMON
 #define CONFIG_RTL8192C_COMMON 1
 #endif /* CONFIG_RTL8192C_COMMON */ 
+#ifndef CONFIG_BCMDHD
+#define CONFIG_BCMDHD 1
+#endif /* CONFIG_BCMDHD */ 
 #ifndef CONFIG_RT2X00
 #define CONFIG_RT2X00 1
 #endif /* CONFIG_RT2X00 */ 

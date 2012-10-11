@@ -1665,8 +1665,6 @@ main(int argc, char *argv[])
         we're using any taps. */
   do_dissection = print_packet_info || rfcode || have_tap_listeners();
 
-  printf("-------- We should be doing some dissection: %d\n", do_dissection);
-
   if (cf_name) {
     /*
      * We're reading a capture file.
@@ -1710,7 +1708,6 @@ main(int argc, char *argv[])
       g_assert_not_reached();
     }
 
-    printf("--------- about to read the cap file\n");
     /* Process the packets in the file */
 #ifdef HAVE_LIBPCAP
     err = load_cap_file(&cfile, global_capture_opts.save_file, out_file_type, out_file_name_res,
@@ -1719,7 +1716,6 @@ main(int argc, char *argv[])
 #else
     err = load_cap_file(&cfile, NULL, out_file_type, out_file_name_res, 0, 0);
 #endif
-    printf("--------- read the cap file\n");
     if (err != 0) {
       /* We still dump out the results of taps, etc., as we might have
          read some packets; however, we exit with an error status. */
@@ -1821,23 +1817,17 @@ main(int argc, char *argv[])
   }
 
   g_free(cf_name);
-  printf("--------------- Got to the free stage\n");
 
 #if GLIB_CHECK_VERSION(2,10,0)
-  printf("******** glib version...\n");
   if (cfile.plist_start != NULL)
     g_slice_free_chain(frame_data, cfile.plist_start, next);
 #endif
 
   draw_tap_listeners(TRUE);
-  printf("---------------- Drew the tap listener\n");
   funnel_dump_all_text_windows();
-  printf("------------ dumped the funnels\n");
   epan_cleanup();
-  printf("---------- epan cleanup\n");
 
   output_fields_free(output_fields);
-  printf("-------------- freeing output fields\n");
   output_fields = NULL;
 
   return exit_status;

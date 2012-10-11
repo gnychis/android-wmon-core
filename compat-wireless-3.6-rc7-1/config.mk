@@ -617,6 +617,9 @@ endif #CONFIG_MMC
 export CONFIG_RTLWIFI=m
 export CONFIG_RTL8192C_COMMON=m
 
+# Common bcmdhd requirements
+export CONFIG_BCMDHD=m
+
 # Common rt2x00 requirements
 ifeq ($(NEED_RT2X00),y)
 export CONFIG_RT2X00=y
