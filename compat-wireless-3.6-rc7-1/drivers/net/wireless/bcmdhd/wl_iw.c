@@ -56,6 +56,7 @@ typedef const struct si_pub  si_t;
 #define WL_WSEC(x)
 #define WL_SCAN(x)
 
+#define CSCAN
 
 #ifdef PNO_SET_DEBUG
 #define WL_PNO(x)	printf x

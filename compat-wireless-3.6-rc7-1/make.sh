@@ -7,4 +7,4 @@ make clean
 #KERNEL_DIR=$(pwd)/../usbhost-kernel
 #KERNEL_DIR=$(pwd)/../samsung-kernel-galaxysii
 KERNEL_DIR=$(pwd)/../galaxynexus-cm10-kernel
-make ARCH=arm CROSS_COMPILE=arm-linux-androideabi- KLIB=$KERNEL_DIR KLIB_BUILD=$KERNEL_DIR "$@" EXTRA_CFLAGS=-fno-pic
+make ARCH=arm CROSS_COMPILE=arm-linux-androideabi- KLIB=$KERNEL_DIR KLIB_BUILD=$KERNEL_DIR "$@" EXTRA_CFLAGS=-fno-pic V=1
