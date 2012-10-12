@@ -45,10 +45,10 @@
 		printk args;							\
 	} while (0)
 
-extern int dhd_ioctl_entry_local(struct net_device *net, wl_ioctl_t *ioc, int cmd);
+extern int dhd_ioctl_entry_local(struct wireless_dev *net, wl_ioctl_t *ioc, int cmd);
 
 s32 wldev_ioctl(
-	struct net_device *dev, u32 cmd, void *arg, u32 len, u32 set)
+	struct wireless_dev *dev, u32 cmd, void *arg, u32 len, u32 set)
 {
 	s32 ret = 0;
 	struct wl_ioctl ioc;
@@ -78,7 +78,7 @@ static s32 wldev_mkiovar(
 }
 
 s32 wldev_iovar_getbuf(
-	struct net_device *dev, s8 *iovar_name,
+	struct wireless_dev *dev, s8 *iovar_name,
 	void *param, s32 paramlen, void *buf, s32 buflen, struct mutex* buf_sync)
 {
 	s32 ret = 0;
@@ -95,7 +95,7 @@ s32 wldev_iovar_getbuf(
 
 
 s32 wldev_iovar_setbuf(
-	struct net_device *dev, s8 *iovar_name,
+	struct wireless_dev *dev, s8 *iovar_name,
 	void *param, s32 paramlen, void *buf, s32 buflen, struct mutex* buf_sync)
 {
 	s32 ret = 0;
@@ -111,7 +111,7 @@ s32 wldev_iovar_setbuf(
 }
 
 s32 wldev_iovar_setint(
-	struct net_device *dev, s8 *iovar, s32 val)
+	struct wireless_dev *dev, s8 *iovar, s32 val)
 {
 	s8 iovar_buf[WLC_IOCTL_SMLEN];
 
@@ -123,7 +123,7 @@ s32 wldev_iovar_setint(
 
 
 s32 wldev_iovar_getint(
-	struct net_device *dev, s8 *iovar, s32 *pval)
+	struct wireless_dev *dev, s8 *iovar, s32 *pval)
 {
 	s8 iovar_buf[WLC_IOCTL_SMLEN];
 	s32 err;
@@ -192,7 +192,7 @@ s32 wldev_mkiovar_bsscfg(
 }
 
 s32 wldev_iovar_getbuf_bsscfg(
-	struct net_device *dev, s8 *iovar_name,
+	struct wireless_dev *dev, s8 *iovar_name,
 	void *param, s32 paramlen, void *buf, s32 buflen, s32 bsscfg_idx, struct mutex* buf_sync)
 {
 	s32 ret = 0;
@@ -210,7 +210,7 @@ s32 wldev_iovar_getbuf_bsscfg(
 }
 
 s32 wldev_iovar_setbuf_bsscfg(
-	struct net_device *dev, s8 *iovar_name,
+	struct wireless_dev *dev, s8 *iovar_name,
 	void *param, s32 paramlen, void *buf, s32 buflen, s32 bsscfg_idx, struct mutex* buf_sync)
 {
 	s32 ret = 0;
@@ -228,7 +228,7 @@ s32 wldev_iovar_setbuf_bsscfg(
 }
 
 s32 wldev_iovar_setint_bsscfg(
-	struct net_device *dev, s8 *iovar, s32 val, s32 bssidx)
+	struct wireless_dev *dev, s8 *iovar, s32 val, s32 bssidx)
 {
 	s8 iovar_buf[WLC_IOCTL_SMLEN];
 
@@ -240,7 +240,7 @@ s32 wldev_iovar_setint_bsscfg(
 
 
 s32 wldev_iovar_getint_bsscfg(
-	struct net_device *dev, s8 *iovar, s32 *pval, s32 bssidx)
+	struct wireless_dev *dev, s8 *iovar, s32 *pval, s32 bssidx)
 {
 	s8 iovar_buf[WLC_IOCTL_SMLEN];
 	s32 err;
@@ -257,7 +257,7 @@ s32 wldev_iovar_getint_bsscfg(
 }
 
 int wldev_get_link_speed(
-	struct net_device *dev, int *plink_speed)
+	struct wireless_dev *dev, int *plink_speed)
 {
 	int error;
 
@@ -273,7 +273,7 @@ int wldev_get_link_speed(
 }
 
 int wldev_get_rssi(
-	struct net_device *dev, int *prssi)
+	struct wireless_dev *dev, int *prssi)
 {
 	scb_val_t scb_val;
 	int error;
@@ -291,7 +291,7 @@ int wldev_get_rssi(
 }
 
 int wldev_get_ssid(
-	struct net_device *dev, wlc_ssid_t *pssid)
+	struct wireless_dev *dev, wlc_ssid_t *pssid)
 {
 	int error;
 
@@ -305,7 +305,7 @@ int wldev_get_ssid(
 }
 
 int wldev_get_band(
-	struct net_device *dev, uint *pband)
+	struct wireless_dev *dev, uint *pband)
 {
 	int error;
 
@@ -314,7 +314,7 @@ int wldev_get_band(
 }
 
 int wldev_set_band(
-	struct net_device *dev, uint band)
+	struct wireless_dev *dev, uint band)
 {
 	int error = -1;
 
@@ -327,7 +327,7 @@ int wldev_set_band(
 }
 
 int wldev_set_country(
-	struct net_device *dev, char *country_code)
+	struct wireless_dev *dev, char *country_code)
 {
 	int error = -1;
 	wl_country_t cspec = {{0}, 0, {0}};
@@ -376,7 +376,7 @@ int wldev_set_country(
 /*
  *  softap channel autoselect
  */
-int wldev_get_auto_channel(struct net_device *dev, int *chan)
+int wldev_get_auto_channel(struct wireless_dev *dev, int *chan)
 {
 	int chosen = 0;
 	wl_uint32_list_t request;

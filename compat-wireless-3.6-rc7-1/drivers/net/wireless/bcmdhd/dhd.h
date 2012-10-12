@@ -334,8 +334,8 @@ inline static void MUTEX_UNLOCK_SOFTAP_SET(dhd_pub_t * dhdp)
 /* interface operations (register, remove) should be atomic, use this lock to prevent race
  * condition among wifi on/off and interface operation functions
  */
-void dhd_net_if_lock(struct net_device *dev);
-void dhd_net_if_unlock(struct net_device *dev);
+void dhd_net_if_lock(struct wireless_dev *dev);
+void dhd_net_if_unlock(struct wireless_dev *dev);
 
 typedef struct dhd_if_event {
 	uint8 ifidx;
@@ -432,7 +432,7 @@ extern void dhd_os_sdlock_eventq(dhd_pub_t * pub);
 extern void dhd_os_sdunlock_eventq(dhd_pub_t * pub);
 extern bool dhd_os_check_hang(dhd_pub_t *dhdp, int ifidx, int ret);
 extern int dhd_os_send_hang_message(dhd_pub_t *dhdp);
-extern int net_os_send_hang_message(struct net_device *dev);
+extern int net_os_send_hang_message(struct wireless_dev *dev);
 extern void dhd_set_version_info(dhd_pub_t *pub, char *fw);
 
 #ifdef PNO_SUPPORT
@@ -443,13 +443,13 @@ extern int dhd_pno_set(dhd_pub_t *dhd, wlc_ssid_t* ssids_local, int nssid,
 extern int dhd_pno_set_ex(dhd_pub_t *dhd, wl_pfn_t* ssidnet, int nssid,
 				ushort pno_interval, int pno_repeat, int pno_expo_max, int pno_lost_time);
 extern int dhd_pno_get_status(dhd_pub_t *dhd);
-extern int dhd_dev_pno_reset(struct net_device *dev);
-extern int dhd_dev_pno_set(struct net_device *dev, wlc_ssid_t* ssids_local,
+extern int dhd_dev_pno_reset(struct wireless_dev *dev);
+extern int dhd_dev_pno_set(struct wireless_dev *dev, wlc_ssid_t* ssids_local,
                            int nssid, ushort  scan_fr, int pno_repeat, int pno_freq_expo_max);
-extern int dhd_dev_pno_set_ex(struct net_device *dev, wl_pfn_t* ssidnet, int nssid,
+extern int dhd_dev_pno_set_ex(struct wireless_dev *dev, wl_pfn_t* ssidnet, int nssid,
 				ushort	pno_interval, int pno_repeat, int pno_expo_max, int pno_lost_time);
-extern int dhd_dev_pno_enable(struct net_device *dev,  int pfn_enabled);
-extern int dhd_dev_get_pno_status(struct net_device *dev);
+extern int dhd_dev_pno_enable(struct wireless_dev *dev,  int pfn_enabled);
+extern int dhd_dev_get_pno_status(struct wireless_dev *dev);
 #endif /* PNO_SUPPORT */
 
 #define DHD_UNICAST_FILTER_NUM		0
@@ -458,8 +458,8 @@ extern int dhd_dev_get_pno_status(struct net_device *dev);
 #define DHD_MULTICAST6_FILTER_NUM	3
 #define DHD_MDNS_FILTER_NUM		4
 extern int dhd_os_set_packet_filter(dhd_pub_t *dhdp, int val);
-extern int net_os_set_packet_filter(struct net_device *dev, int val);
-extern int net_os_rxfilter_add_remove(struct net_device *dev, int val, int num);
+extern int net_os_set_packet_filter(struct wireless_dev *dev, int val);
+extern int net_os_rxfilter_add_remove(struct wireless_dev *dev, int val, int num);
 
 extern int dhd_get_dtim_skip(dhd_pub_t *dhd);
 extern bool dhd_check_ap_wfd_mode_set(dhd_pub_t *dhd);
@@ -484,8 +484,8 @@ extern void dhd_timeout_start(dhd_timeout_t *tmo, uint usec);
 extern int dhd_timeout_expired(dhd_timeout_t *tmo);
 
 extern int dhd_ifname2idx(struct dhd_info *dhd, char *name);
-extern int dhd_net2idx(struct dhd_info *dhd, struct net_device *net);
-extern struct net_device * dhd_idx2net(void *pub, int ifidx);
+extern int dhd_net2idx(struct dhd_info *dhd, struct wireless_dev *net);
+extern struct wireless_dev * dhd_idx2net(void *pub, int ifidx);
 extern int wl_host_event(dhd_pub_t *dhd_pub, int *idx, void *pktdata,
                          wl_event_msg_t *, void **data_ptr);
 extern void wl_event_to_host_order(wl_event_msg_t * evt);
@@ -497,7 +497,7 @@ extern int dhd_wl_ioctl_cmd(dhd_pub_t *dhd_pub, int cmd, void *arg, int len, uin
 extern struct dhd_cmn *dhd_common_init(osl_t *osh);
 extern void dhd_common_deinit(dhd_pub_t *dhd_pub, dhd_cmn_t *sa_cmn);
 
-extern int dhd_do_driver_init(struct net_device *net);
+extern int dhd_do_driver_init(struct wireless_dev *net);
 extern int dhd_add_if(struct dhd_info *dhd, int ifidx, void *handle,
 	char *name, uint8 *mac_addr, uint32 flags, uint8 bssidx);
 extern void dhd_del_if(struct dhd_info *dhd, int ifidx);
@@ -543,8 +543,8 @@ typedef enum cust_gpio_modes {
 	WLAN_POWER_OFF
 } cust_gpio_modes_t;
 
-extern int wl_iw_iscan_set_scan_broadcast_prep(struct net_device *dev, uint flag);
-extern int wl_iw_send_priv_event(struct net_device *dev, char *flag);
+extern int wl_iw_iscan_set_scan_broadcast_prep(struct wireless_dev *dev, uint flag);
+extern int wl_iw_send_priv_event(struct wireless_dev *dev, char *flag);
 /*
  * Insmod parameters for debug/test
  */

@@ -61,7 +61,7 @@ struct p2p_saved_ie {
 
 struct p2p_bss {
 	u32 bssidx;
-	struct net_device *dev;
+	struct wireless_dev *dev;
 	struct p2p_saved_ie saved_ie;
 	void *private_data;
 };
@@ -173,16 +173,16 @@ wl_cfgp2p_ifidx(struct wl_priv *wl, struct ether_addr *mac, s32 *index);
 extern s32
 wl_cfgp2p_init_discovery(struct wl_priv *wl);
 extern s32
-wl_cfgp2p_enable_discovery(struct wl_priv *wl, struct net_device *dev, const u8 *ie, u32 ie_len);
+wl_cfgp2p_enable_discovery(struct wl_priv *wl, struct wireless_dev *dev, const u8 *ie, u32 ie_len);
 extern s32
 wl_cfgp2p_disable_discovery(struct wl_priv *wl);
 extern s32
-wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active, u32 num_chans,
+wl_cfgp2p_escan(struct wl_priv *wl, struct wireless_dev *dev, u16 active, u32 num_chans,
 	u16 *channels,
 	s32 search_state, u16 action, u32 bssidx);
 
 extern s32
-wl_cfgp2p_act_frm_search(struct wl_priv *wl, struct net_device *ndev,
+wl_cfgp2p_act_frm_search(struct wl_priv *wl, struct wireless_dev *ndev,
 	s32 bssidx, s32 channel);
 
 extern wpa_ie_fixed_t *
@@ -198,17 +198,17 @@ extern wifi_wfd_ie_t *
 wl_cfgp2p_find_wfdie(u8 *parse, u32 len);
 
 extern s32
-wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bssidx,
+wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct wireless_dev *ndev, s32 bssidx,
             s32 pktflag, const u8 *vndr_ie, u32 vndr_ie_len);
 extern s32
 wl_cfgp2p_clear_management_ie(struct wl_priv *wl, s32 bssidx);
 
 extern s32
-wl_cfgp2p_find_idx(struct wl_priv *wl, struct net_device *ndev);
+wl_cfgp2p_find_idx(struct wl_priv *wl, struct wireless_dev *ndev);
 
 
 extern s32
-wl_cfgp2p_listen_complete(struct wl_priv *wl, struct net_device *ndev,
+wl_cfgp2p_listen_complete(struct wl_priv *wl, struct wireless_dev *ndev,
             const wl_event_msg_t *e, void *data);
 extern s32
 wl_cfgp2p_discover_listen(struct wl_priv *wl, s32 channel, u32 duration_ms);
@@ -217,10 +217,10 @@ extern s32
 wl_cfgp2p_discover_enable_search(struct wl_priv *wl, u8 enable);
 
 extern s32
-wl_cfgp2p_action_tx_complete(struct wl_priv *wl, struct net_device *ndev,
+wl_cfgp2p_action_tx_complete(struct wl_priv *wl, struct wireless_dev *ndev,
             const wl_event_msg_t *e, void *data);
 extern s32
-wl_cfgp2p_tx_action_frame(struct wl_priv *wl, struct net_device *dev,
+wl_cfgp2p_tx_action_frame(struct wl_priv *wl, struct wireless_dev *dev,
 	wl_af_params_t *af_params, s32 bssidx);
 
 extern void
@@ -230,26 +230,26 @@ wl_cfgp2p_generate_bss_mac(struct ether_addr *primary_addr, struct ether_addr *o
 extern void
 wl_cfg80211_change_ifaddr(u8* buf, struct ether_addr *p2p_int_addr, u8 element_id);
 extern bool
-wl_cfgp2p_bss_isup(struct net_device *ndev, int bsscfg_idx);
+wl_cfgp2p_bss_isup(struct wireless_dev *ndev, int bsscfg_idx);
 
 extern s32
-wl_cfgp2p_bss(struct wl_priv *wl, struct net_device *ndev, s32 bsscfg_idx, s32 up);
+wl_cfgp2p_bss(struct wl_priv *wl, struct wireless_dev *ndev, s32 bsscfg_idx, s32 up);
 
 
 extern s32
-wl_cfgp2p_supported(struct wl_priv *wl, struct net_device *ndev);
+wl_cfgp2p_supported(struct wl_priv *wl, struct wireless_dev *ndev);
 
 extern s32
 wl_cfgp2p_down(struct wl_priv *wl);
 
 extern s32
-wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, int len);
+wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct wireless_dev *ndev, char* buf, int len);
 
 extern s32
-wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, int len);
+wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct wireless_dev *ndev, char* buf, int len);
 
 extern s32
-wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct net_device *ndev, char* buf, int len);
+wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct wireless_dev *ndev, char* buf, int len);
 
 extern u8 *
 wl_cfgp2p_retreive_p2pattrib(void *buf, u8 element_id);

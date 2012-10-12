@@ -47,7 +47,7 @@ typedef enum monitor_states
 	MONITOR_STATE_INTERFACE_ADDED = 0x2,
 	MONITOR_STATE_INTERFACE_DELETED = 0x4
 } monitor_states_t;
-extern int dhd_start_xmit(struct sk_buff *skb, struct net_device *net);
+extern int dhd_start_xmit(struct sk_buff *skb, struct wireless_dev *net);
 
 /**
  * Local declarations and defintions (not exposed)
@@ -71,12 +71,12 @@ typedef struct dhd_linux_monitor {
 static dhd_linux_monitor_t g_monitor;
 
 static struct net_device* lookup_real_netdev(char *name);
-static monitor_interface* ndev_to_monif(struct net_device *ndev);
-static int dhd_mon_if_open(struct net_device *ndev);
-static int dhd_mon_if_stop(struct net_device *ndev);
-static int dhd_mon_if_subif_start_xmit(struct sk_buff *skb, struct net_device *ndev);
-static void dhd_mon_if_set_multicast_list(struct net_device *ndev);
-static int dhd_mon_if_change_mac(struct net_device *ndev, void *addr);
+static monitor_interface* ndev_to_monif(struct wireless_dev *ndev);
+static int dhd_mon_if_open(struct wireless_dev *ndev);
+static int dhd_mon_if_stop(struct wireless_dev *ndev);
+static int dhd_mon_if_subif_start_xmit(struct sk_buff *skb, struct wireless_dev *ndev);
+static void dhd_mon_if_set_multicast_list(struct wireless_dev *ndev);
+static int dhd_mon_if_change_mac(struct wireless_dev *ndev, void *addr);
 
 static const struct net_device_ops dhd_mon_if_ops = {
 	.ndo_open		= dhd_mon_if_open,
@@ -98,8 +98,8 @@ static struct net_device* lookup_real_netdev(char *name)
 	int i;
 	int len = 0;
 	int last_name_len = 0;
-	struct net_device *ndev;
-	struct net_device *ndev_found = NULL;
+	struct wireless_dev *ndev;
+	struct wireless_dev *ndev_found = NULL;
 
 	/* We need to find interface "p2p-p2p-0" corresponding to monitor interface "mon-p2p-0",
 	 * Once mon iface name reaches IFNAMSIZ, it is reset to p2p0-0 and corresponding mon
@@ -130,7 +130,7 @@ static struct net_device* lookup_real_netdev(char *name)
 	return ndev_found;
 }
 
-static monitor_interface* ndev_to_monif(struct net_device *ndev)
+static monitor_interface* ndev_to_monif(struct wireless_dev *ndev)
 {
 	int i;
 
@@ -142,7 +142,7 @@ static monitor_interface* ndev_to_monif(struct net_device *ndev)
 	return NULL;
 }
 
-static int dhd_mon_if_open(struct net_device *ndev)
+static int dhd_mon_if_open(struct wireless_dev *ndev)
 {
 	int ret = 0;
 
@@ -150,7 +150,7 @@ static int dhd_mon_if_open(struct net_device *ndev)
 	return ret;
 }
 
-static int dhd_mon_if_stop(struct net_device *ndev)
+static int dhd_mon_if_stop(struct wireless_dev *ndev)
 {
 	int ret = 0;
 
@@ -158,7 +158,7 @@ static int dhd_mon_if_stop(struct net_device *ndev)
 	return ret;
 }
 
-static int dhd_mon_if_subif_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+static int dhd_mon_if_subif_start_xmit(struct sk_buff *skb, struct wireless_dev *ndev)
 {
 	int ret = 0;
 	int rtap_len;
@@ -232,7 +232,7 @@ fail:
 	return 0;
 }
 
-static void dhd_mon_if_set_multicast_list(struct net_device *ndev)
+static void dhd_mon_if_set_multicast_list(struct wireless_dev *ndev)
 {
 	monitor_interface* mon_if;
 
@@ -245,7 +245,7 @@ static void dhd_mon_if_set_multicast_list(struct net_device *ndev)
 	}
 }
 
-static int dhd_mon_if_change_mac(struct net_device *ndev, void *addr)
+static int dhd_mon_if_change_mac(struct wireless_dev *ndev, void *addr)
 {
 	int ret = 0;
 	monitor_interface* mon_if;
@@ -264,7 +264,7 @@ static int dhd_mon_if_change_mac(struct net_device *ndev, void *addr)
  * Global function definitions (declared in dhd_linux_mon.h)
  */
 
-int dhd_add_monitor(char *name, struct net_device **new_ndev)
+int dhd_add_monitor(char *name, struct wireless_dev **new_ndev)
 {
 	int i;
 	int idx = -1;
@@ -332,7 +332,7 @@ out:
 
 }
 
-int dhd_del_monitor(struct net_device *ndev)
+int dhd_del_monitor(struct wireless_dev *ndev)
 {
 	int i;
 	bool rollback_lock = false;
@@ -381,7 +381,7 @@ int dhd_monitor_init(void *dhd_pub)
 int dhd_monitor_uninit(void)
 {
 	int i;
-	struct net_device *ndev;
+	struct wireless_dev *ndev;
 	bool rollback_lock = false;
 	mutex_lock(&g_monitor.lock);
 	if (g_monitor.monitor_state != MONITOR_STATE_DEINIT) {

@@ -172,7 +172,7 @@ extern void dhd_pktfilter_offload_enable(dhd_pub_t * dhd, char *arg, int enable,
 typedef struct dhd_if {
 	struct dhd_info *info;			/* back pointer to dhd_info */
 	/* OS/stack specifics */
-	struct net_device *net;
+	struct wireless_dev *net;
 	struct net_device_stats stats;
 	int 			idx;			/* iface idx in dongle */
 	dhd_if_state_t	state;			/* interface state */
@@ -262,7 +262,7 @@ typedef struct dhd_info {
 #endif
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 25))
-	/* net_device interface lock, prevent race conditions among net_dev interface
+	/* wireless_dev interface lock, prevent race conditions among net_dev interface
 	 * calls and wifi_on or wifi_off
 	 */
 	struct mutex dhd_net_if_mutex;
@@ -304,7 +304,7 @@ module_param_string(info_string, info_string, MOD_PARAM_INFOLEN, 0444);
 
 int op_mode = 0;
 module_param(op_mode, int, 0644);
-extern int wl_control_wl_start(struct net_device *dev);
+extern int wl_control_wl_start(struct wireless_dev *dev);
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
 struct semaphore dhd_registration_sem;
 #define DHD_REGISTRATION_TIMEOUT  12000  /* msec : allowed time to finished dhd registration */
@@ -466,12 +466,12 @@ int dhd_monitor_uninit(void);
 
 
 #if defined(WL_WIRELESS_EXT)
-struct iw_statistics *dhd_get_wireless_stats(struct net_device *dev);
+struct iw_statistics *dhd_get_wireless_stats(struct wireless_dev *dev);
 #endif /* defined(WL_WIRELESS_EXT) */
 
 static void dhd_dpc(ulong data);
 /* forward decl */
-extern int dhd_wait_pend8021x(struct net_device *dev);
+extern int dhd_wait_pend8021x(struct wireless_dev *dev);
 
 #ifdef TOE
 #ifndef BDC
@@ -694,7 +694,7 @@ dhd_timeout_expired(dhd_timeout_t *tmo)
 }
 
 int
-dhd_net2idx(dhd_info_t *dhd, struct net_device *net)
+dhd_net2idx(dhd_info_t *dhd, struct wireless_dev *net)
 {
 	int i = 0;
 
@@ -708,7 +708,7 @@ dhd_net2idx(dhd_info_t *dhd, struct net_device *net)
 	return DHD_BAD_IF;
 }
 
-struct net_device * dhd_idx2net(void *pub, int ifidx)
+struct wireless_dev * dhd_idx2net(void *pub, int ifidx)
 {
 	struct dhd_pub *dhd_pub = (struct dhd_pub *)pub;
 	struct dhd_info *dhd_info;
@@ -781,7 +781,7 @@ dhd_bssidx2bssid(dhd_pub_t *dhdp, int idx)
 static void
 _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 {
-	struct net_device *dev;
+	struct wireless_dev *dev;
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 35)
 	struct netdev_hw_addr *ha;
 #else
@@ -865,7 +865,7 @@ _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 	MFREE(dhd->pub.osh, buf, buflen);
 
 	/* Now send the allmulti setting.  This is based on the setting in the
-	 * net_device flags, but might be modified above to be turned on if we
+	 * wireless_dev flags, but might be modified above to be turned on if we
 	 * were trying to set some addresses and dongle rejected it...
 	 */
 
@@ -945,7 +945,7 @@ _dhd_set_mac_address(dhd_info_t *dhd, int ifidx, struct ether_addr *addr)
 }
 
 #ifdef SOFTAP
-extern struct net_device *ap_net_dev;
+extern struct wireless_dev *ap_net_dev;
 extern tsk_ctl_t ap_eth_ctl; /* ap netdev heper thread ctl */
 #endif
 
@@ -1017,7 +1017,7 @@ dhd_op_if(dhd_if_t *ifp)
 				dhd_os_spin_unlock(&dhd->pub, flags);
 		}
 #endif
-				DHD_TRACE(("\n ==== pid:%x, net_device for if:%s created ===\n\n",
+				DHD_TRACE(("\n ==== pid:%x, wireless_dev for if:%s created ===\n\n",
 					current->pid, ifp->net->name));
 				ifp->state = DHD_IF_NONE;
 			}
@@ -1147,7 +1147,7 @@ _dhd_sysioc_thread(void *data)
 }
 
 static int
-dhd_set_mac_address(struct net_device *dev, void *addr)
+dhd_set_mac_address(struct wireless_dev *dev, void *addr)
 {
 	int ret = 0;
 
@@ -1168,7 +1168,7 @@ dhd_set_mac_address(struct net_device *dev, void *addr)
 }
 
 static void
-dhd_set_multicast_list(struct net_device *dev)
+dhd_set_multicast_list(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ifidx;
@@ -1287,7 +1287,7 @@ dhd_sendpkt(dhd_pub_t *dhdp, int ifidx, void *pktbuf)
 }
 
 int
-dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
+dhd_start_xmit(struct sk_buff *skb, struct wireless_dev *net)
 {
 	int ret;
 	void *pktbuf;
@@ -1386,7 +1386,7 @@ done:
 void
 dhd_txflowcontrol(dhd_pub_t *dhdp, int ifidx, bool state)
 {
-	struct net_device *net;
+	struct wireless_dev *net;
 	dhd_info_t *dhd = dhdp->info;
 	int i;
 
@@ -1624,7 +1624,7 @@ dhd_txcomplete(dhd_pub_t *dhdp, void *txp, bool success)
 }
 
 static struct net_device_stats *
-dhd_get_stats(struct net_device *net)
+dhd_get_stats(struct wireless_dev *net)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(net);
 	dhd_if_t *ifp;
@@ -1920,7 +1920,7 @@ dhd_toe_set(dhd_info_t *dhd, int ifidx, uint32 toe_ol)
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 24)
 static void
-dhd_ethtool_get_drvinfo(struct net_device *net, struct ethtool_drvinfo *info)
+dhd_ethtool_get_drvinfo(struct wireless_dev *net, struct ethtool_drvinfo *info)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(net);
 
@@ -2045,7 +2045,7 @@ dhd_ethtool(dhd_info_t *dhd, void *uaddr)
 }
 #endif /* LINUX_VERSION_CODE > KERNEL_VERSION(2, 4, 2) */
 
-static bool dhd_check_hang(struct net_device *net, dhd_pub_t *dhdp, int error)
+static bool dhd_check_hang(struct wireless_dev *net, dhd_pub_t *dhdp, int error)
 {
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
 	if (!dhdp)
@@ -2062,7 +2062,7 @@ static bool dhd_check_hang(struct net_device *net, dhd_pub_t *dhdp, int error)
 }
 
 static int
-dhd_ioctl_entry(struct net_device *net, struct ifreq *ifr, int cmd)
+dhd_ioctl_entry(struct wireless_dev *net, struct ifreq *ifr, int cmd)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(net);
 	dhd_ioctl_t ioc;
@@ -2308,7 +2308,7 @@ dhd_cleanup_virt_ifaces(dhd_info_t *dhd)
 #endif /* WL_CFG80211 */
 
 static int
-dhd_stop(struct net_device *net)
+dhd_stop(struct wireless_dev *net)
 {
 	int ifidx = 0;
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(net);
@@ -2358,7 +2358,7 @@ exit:
 }
 
 static int
-dhd_open(struct net_device *net)
+dhd_open(struct wireless_dev *net)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(net);
 
@@ -2469,7 +2469,7 @@ exit:
 	return ret;
 }
 
-int dhd_do_driver_init(struct net_device *net)
+int dhd_do_driver_init(struct wireless_dev *net)
 {
 	dhd_info_t *dhd = NULL;
 
@@ -2551,7 +2551,7 @@ dhd_add_if(dhd_info_t *dhd, int ifidx, void *handle, char *name,
 		ASSERT(dhd->thr_sysioc_ctl.thr_pid >= 0);
 		up(&dhd->thr_sysioc_ctl.sema);
 	} else
-		ifp->net = (struct net_device *)handle;
+		ifp->net = (struct wireless_dev *)handle;
 
 	return 0;
 }
@@ -2600,7 +2600,7 @@ dhd_pub_t *
 dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 {
 	dhd_info_t *dhd = NULL;
-	struct net_device *net = NULL;
+	struct wireless_dev *net = NULL;
 
 	dhd_attach_states_t dhd_state = DHD_ATTACH_STATE_INIT;
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
@@ -3388,7 +3388,7 @@ dhd_iovar(dhd_pub_t *pub, int ifidx, char *name, char *cmd_buf, uint cmd_len, in
 int dhd_change_mtu(dhd_pub_t *dhdp, int new_mtu, int ifidx)
 {
 	struct dhd_info *dhd = dhdp->info;
-	struct net_device *dev = NULL;
+	struct wireless_dev *dev = NULL;
 
 	ASSERT(dhd && dhd->iflist[ifidx]);
 	dev = dhd->iflist[ifidx]->net;
@@ -3541,7 +3541,7 @@ int
 dhd_net_attach(dhd_pub_t *dhdp, int ifidx)
 {
 	dhd_info_t *dhd = (dhd_info_t *)dhdp->info;
-	struct net_device *net = NULL;
+	struct wireless_dev *net = NULL;
 	int err = 0;
 	uint8 temp_addr[ETHER_ADDR_LEN] = { 0x00, 0x90, 0x4c, 0x11, 0x22, 0x33 };
 
@@ -4148,7 +4148,7 @@ void dhd_os_prefree(void *osh, void *addr, uint size)
 
 #if defined(WL_WIRELESS_EXT)
 struct iw_statistics *
-dhd_get_wireless_stats(struct net_device *dev)
+dhd_get_wireless_stats(struct wireless_dev *dev)
 {
 	int res = 0;
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -4347,7 +4347,7 @@ void dhd_wait_event_wakeup(dhd_pub_t *dhd)
 }
 
 int
-dhd_dev_reset(struct net_device *dev, uint8 flag)
+dhd_dev_reset(struct wireless_dev *dev, uint8 flag)
 {
 	int ret;
 
@@ -4369,7 +4369,7 @@ dhd_dev_reset(struct net_device *dev, uint8 flag)
 	return ret;
 }
 
-int net_os_set_suspend_disable(struct net_device *dev, int val)
+int net_os_set_suspend_disable(struct wireless_dev *dev, int val)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ret = 0;
@@ -4381,7 +4381,7 @@ int net_os_set_suspend_disable(struct net_device *dev, int val)
 	return ret;
 }
 
-int net_os_set_suspend(struct net_device *dev, int val, int force)
+int net_os_set_suspend(struct wireless_dev *dev, int val, int force)
 {
 	int ret = 0;
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -4399,7 +4399,7 @@ int net_os_set_suspend(struct net_device *dev, int val, int force)
 	return ret;
 }
 
-int net_os_set_dtim_skip(struct net_device *dev, int val)
+int net_os_set_dtim_skip(struct wireless_dev *dev, int val)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 
@@ -4409,7 +4409,7 @@ int net_os_set_dtim_skip(struct net_device *dev, int val)
 	return 0;
 }
 
-int net_os_rxfilter_add_remove(struct net_device *dev, int add_remove, int num)
+int net_os_rxfilter_add_remove(struct wireless_dev *dev, int add_remove, int num)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	char *filterp = NULL;
@@ -4458,7 +4458,7 @@ int dhd_os_set_packet_filter(dhd_pub_t *dhdp, int val)
 
 }
 
-int net_os_set_packet_filter(struct net_device *dev, int val)
+int net_os_set_packet_filter(struct wireless_dev *dev, int val)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 
@@ -4466,7 +4466,7 @@ int net_os_set_packet_filter(struct net_device *dev, int val)
 }
 
 int
-dhd_dev_init_ioctl(struct net_device *dev)
+dhd_dev_init_ioctl(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 
@@ -4476,7 +4476,7 @@ dhd_dev_init_ioctl(struct net_device *dev)
 #ifdef PNO_SUPPORT
 /* Linux wrapper to call common dhd_pno_clean */
 int
-dhd_dev_pno_reset(struct net_device *dev)
+dhd_dev_pno_reset(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 
@@ -4486,7 +4486,7 @@ dhd_dev_pno_reset(struct net_device *dev)
 
 /* Linux wrapper to call common dhd_pno_enable */
 int
-dhd_dev_pno_enable(struct net_device *dev,  int pfn_enabled)
+dhd_dev_pno_enable(struct wireless_dev *dev,  int pfn_enabled)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 
@@ -4496,7 +4496,7 @@ dhd_dev_pno_enable(struct net_device *dev,  int pfn_enabled)
 
 /* Linux wrapper to call common dhd_pno_set */
 int
-dhd_dev_pno_set(struct net_device *dev, wlc_ssid_t* ssids_local, int nssid,
+dhd_dev_pno_set(struct wireless_dev *dev, wlc_ssid_t* ssids_local, int nssid,
 	ushort  scan_fr, int pno_repeat, int pno_freq_expo_max)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -4506,7 +4506,7 @@ dhd_dev_pno_set(struct net_device *dev, wlc_ssid_t* ssids_local, int nssid,
 
 /* Linux wrapper to call common dhd_pno_set_ex */
 int
-dhd_dev_pno_set_ex(struct net_device *dev, wl_pfn_t* ssidnet, int nssid,
+dhd_dev_pno_set_ex(struct wireless_dev *dev, wl_pfn_t* ssidnet, int nssid,
 	ushort  pno_interval, int pno_repeat, int pno_expo_max, int pno_lost_time)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -4517,7 +4517,7 @@ dhd_dev_pno_set_ex(struct net_device *dev, wl_pfn_t* ssidnet, int nssid,
 
 /* Linux wrapper to get  pno status */
 int
-dhd_dev_get_pno_status(struct net_device *dev)
+dhd_dev_get_pno_status(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 
@@ -4530,7 +4530,7 @@ dhd_dev_get_pno_status(struct net_device *dev)
 static void dhd_hang_process(struct work_struct *work)
 {
 	dhd_info_t *dhd;
-	struct net_device *dev;
+	struct wireless_dev *dev;
 
 	dhd = (dhd_info_t *)container_of(work, dhd_info_t, work_hang);
 	dev = dhd->iflist[0]->net;
@@ -4564,7 +4564,7 @@ int dhd_os_send_hang_message(dhd_pub_t *dhdp)
 	return ret;
 }
 
-int net_os_send_hang_message(struct net_device *dev)
+int net_os_send_hang_message(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ret = 0;
@@ -4575,7 +4575,7 @@ int net_os_send_hang_message(struct net_device *dev)
 	return ret;
 }
 
-void dhd_bus_country_set(struct net_device *dev, wl_country_t *cspec)
+void dhd_bus_country_set(struct wireless_dev *dev, wl_country_t *cspec)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 
@@ -4587,7 +4587,7 @@ void dhd_bus_country_set(struct net_device *dev, wl_country_t *cspec)
 	}
 }
 
-void dhd_bus_band_set(struct net_device *dev, uint band)
+void dhd_bus_band_set(struct wireless_dev *dev, uint band)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 
@@ -4598,13 +4598,13 @@ void dhd_bus_band_set(struct net_device *dev, uint band)
 	}
 }
 
-void dhd_net_if_lock(struct net_device *dev)
+void dhd_net_if_lock(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	dhd_net_if_lock_local(dhd);
 }
 
-void dhd_net_if_unlock(struct net_device *dev)
+void dhd_net_if_unlock(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	dhd_net_if_unlock_local(dhd);
@@ -4672,7 +4672,7 @@ dhd_get_pend_8021x_cnt(dhd_info_t *dhd)
 #define MAX_WAIT_FOR_8021X_TX	10
 
 int
-dhd_wait_pend8021x(struct net_device *dev)
+dhd_wait_pend8021x(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int timeout = msecs_to_jiffies(10);
@@ -4753,7 +4753,7 @@ int dhd_os_wake_lock_timeout(dhd_pub_t *pub)
 	return ret;
 }
 
-int net_os_wake_lock_timeout(struct net_device *dev)
+int net_os_wake_lock_timeout(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ret = 0;
@@ -4791,7 +4791,7 @@ int dhd_os_wake_lock_ctrl_timeout_enable(dhd_pub_t *pub, int val)
 	return 0;
 }
 
-int net_os_wake_lock_rx_timeout_enable(struct net_device *dev, int val)
+int net_os_wake_lock_rx_timeout_enable(struct wireless_dev *dev, int val)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ret = 0;
@@ -4801,7 +4801,7 @@ int net_os_wake_lock_rx_timeout_enable(struct net_device *dev, int val)
 	return ret;
 }
 
-int net_os_wake_lock_ctrl_timeout_enable(struct net_device *dev, int val)
+int net_os_wake_lock_ctrl_timeout_enable(struct wireless_dev *dev, int val)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ret = 0;
@@ -4830,7 +4830,7 @@ int dhd_os_wake_lock(dhd_pub_t *pub)
 	return ret;
 }
 
-int net_os_wake_lock(struct net_device *dev)
+int net_os_wake_lock(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ret = 0;
@@ -4878,7 +4878,7 @@ int dhd_os_check_wakelock(void *dhdp)
 	return 0;
 }
 
-int net_os_wake_unlock(struct net_device *dev)
+int net_os_wake_unlock(struct wireless_dev *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ret = 0;
@@ -4911,7 +4911,7 @@ void dhd_set_version_info(dhd_pub_t *dhdp, char *fw)
 		dhd_bus_chiprev_id(dhdp), dhd_bus_chippkg_id(dhdp));
 }
 
-int dhd_ioctl_entry_local(struct net_device *net, wl_ioctl_t *ioc, int cmd)
+int dhd_ioctl_entry_local(struct wireless_dev *net, wl_ioctl_t *ioc, int cmd)
 {
 	int ifidx;
 	int ret = 0;
@@ -4939,7 +4939,7 @@ int dhd_ioctl_entry_local(struct net_device *net, wl_ioctl_t *ioc, int cmd)
 
 bool dhd_os_check_hang(dhd_pub_t *dhdp, int ifidx, int ret)
 {
-	struct net_device *net;
+	struct wireless_dev *net;
 
 	net = dhd_idx2net(dhdp, ifidx);
 	return dhd_check_hang(net, dhdp, ret);

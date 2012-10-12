@@ -114,19 +114,19 @@ typedef struct android_wifi_priv_cmd {
  * Extern function declarations (TODO: move them to dhd_linux.h)
  */
 void dhd_customer_gpio_wlan_ctrl(int onoff);
-uint dhd_dev_reset(struct net_device *dev, uint8 flag);
-int dhd_dev_init_ioctl(struct net_device *dev);
+uint dhd_dev_reset(struct wireless_dev *dev, uint8 flag);
+int dhd_dev_init_ioctl(struct wireless_dev *dev);
 #ifdef WL_CFG80211
-int wl_cfg80211_get_p2p_dev_addr(struct net_device *net, struct ether_addr *p2pdev_addr);
-int wl_cfg80211_set_btcoex_dhcp(struct net_device *dev, char *command);
+int wl_cfg80211_get_p2p_dev_addr(struct wireless_dev *net, struct ether_addr *p2pdev_addr);
+int wl_cfg80211_set_btcoex_dhcp(struct wireless_dev *dev, char *command);
 #else
-int wl_cfg80211_get_p2p_dev_addr(struct net_device *net, struct ether_addr *p2pdev_addr)
+int wl_cfg80211_get_p2p_dev_addr(struct wireless_dev *net, struct ether_addr *p2pdev_addr)
 { return 0; }
-int wl_cfg80211_set_p2p_noa(struct net_device *net, char* buf, int len)
+int wl_cfg80211_set_p2p_noa(struct wireless_dev *net, char* buf, int len)
 { return 0; }
-int wl_cfg80211_get_p2p_noa(struct net_device *net, char* buf, int len)
+int wl_cfg80211_get_p2p_noa(struct wireless_dev *net, char* buf, int len)
 { return 0; }
-int wl_cfg80211_set_p2p_ps(struct net_device *net, char* buf, int len)
+int wl_cfg80211_set_p2p_ps(struct wireless_dev *net, char* buf, int len)
 { return 0; }
 #endif
 extern int dhd_os_check_if_up(void *dhdp);
@@ -150,7 +150,7 @@ static int g_wifi_on = TRUE;
 /**
  * Local (static) function definitions
  */
-static int wl_android_get_link_speed(struct net_device *net, char *command, int total_len)
+static int wl_android_get_link_speed(struct wireless_dev *net, char *command, int total_len)
 {
 	int link_speed;
 	int bytes_written;
@@ -167,7 +167,7 @@ static int wl_android_get_link_speed(struct net_device *net, char *command, int 
 	return bytes_written;
 }
 
-static int wl_android_get_rssi(struct net_device *net, char *command, int total_len)
+static int wl_android_get_rssi(struct wireless_dev *net, char *command, int total_len)
 {
 	wlc_ssid_t ssid = {0};
 	int rssi;
@@ -192,7 +192,7 @@ static int wl_android_get_rssi(struct net_device *net, char *command, int total_
 	return bytes_written;
 }
 
-static int wl_android_set_suspendopt(struct net_device *dev, char *command, int total_len)
+static int wl_android_set_suspendopt(struct wireless_dev *dev, char *command, int total_len)
 {
 	int suspend_flag;
 	int ret_now;
@@ -214,7 +214,7 @@ static int wl_android_set_suspendopt(struct net_device *dev, char *command, int 
 	return ret;
 }
 
-static int wl_android_set_suspendmode(struct net_device *dev, char *command, int total_len)
+static int wl_android_set_suspendmode(struct wireless_dev *dev, char *command, int total_len)
 {
 	int ret = 0;
 
@@ -234,7 +234,7 @@ static int wl_android_set_suspendmode(struct net_device *dev, char *command, int
 	return ret;
 }
 
-static int wl_android_get_band(struct net_device *dev, char *command, int total_len)
+static int wl_android_get_band(struct wireless_dev *dev, char *command, int total_len)
 {
 	uint band;
 	int bytes_written;
@@ -248,7 +248,7 @@ static int wl_android_get_band(struct net_device *dev, char *command, int total_
 }
 
 #if defined(PNO_SUPPORT) && !defined(WL_SCHED_SCAN)
-static int wl_android_set_pno_setup(struct net_device *dev, char *command, int total_len)
+static int wl_android_set_pno_setup(struct wireless_dev *dev, char *command, int total_len)
 {
 	wlc_ssid_t ssids_local[MAX_PFN_LIST_COUNT];
 	int res = -1;
@@ -355,7 +355,7 @@ exit_proc:
 }
 #endif /* PNO_SUPPORT && !WL_SCHED_SCAN */
 
-static int wl_android_get_p2p_dev_addr(struct net_device *ndev, char *command, int total_len)
+static int wl_android_get_p2p_dev_addr(struct wireless_dev *ndev, char *command, int total_len)
 {
 	int ret;
 	int bytes_written = 0;
@@ -371,7 +371,7 @@ static int wl_android_get_p2p_dev_addr(struct net_device *ndev, char *command, i
  * Global function definitions (declared in wl_android.h)
  */
 
-int wl_android_wifi_on(struct net_device *dev)
+int wl_android_wifi_on(struct wireless_dev *dev)
 {
 	int ret = 0;
 
@@ -398,7 +398,7 @@ int wl_android_wifi_on(struct net_device *dev)
 	return ret;
 }
 
-int wl_android_wifi_off(struct net_device *dev)
+int wl_android_wifi_off(struct wireless_dev *dev)
 {
 	int ret = 0;
 
@@ -420,7 +420,7 @@ int wl_android_wifi_off(struct net_device *dev)
 	return ret;
 }
 
-static int wl_android_set_fwpath(struct net_device *net, char *command, int total_len)
+static int wl_android_set_fwpath(struct wireless_dev *net, char *command, int total_len)
 {
 	if ((strlen(command) - strlen(CMD_SETFWPATH)) > MOD_PARAM_PATHLEN)
 		return -1;
@@ -436,7 +436,7 @@ static int wl_android_set_fwpath(struct net_device *net, char *command, int tota
 	return 0;
 }
 
-int wl_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
+int wl_android_priv_cmd(struct wireless_dev *net, struct ifreq *ifr, int cmd)
 {
 	int ret = 0;
 	char *command = NULL;

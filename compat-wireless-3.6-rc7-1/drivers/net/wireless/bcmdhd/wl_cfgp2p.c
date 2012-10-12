@@ -52,14 +52,14 @@ static bool
 wl_cfgp2p_has_ie(u8 *ie, u8 **tlvs, u32 *tlvs_len, const u8 *oui, u32 oui_len, u8 type);
 
 static s32
-wl_cfgp2p_vndr_ie(struct wl_priv *wl, struct net_device *ndev, s32 bssidx, s32 pktflag,
+wl_cfgp2p_vndr_ie(struct wl_priv *wl, struct wireless_dev *ndev, s32 bssidx, s32 pktflag,
             s8 *oui, s32 ie_id, s8 *data, s32 data_len, s32 delete);
 
-static int wl_cfgp2p_start_xmit(struct sk_buff *skb, struct net_device *ndev);
-static int wl_cfgp2p_do_ioctl(struct net_device *net, struct ifreq *ifr, int cmd);
-static int wl_cfgp2p_if_open(struct net_device *net);
-static int wl_cfgp2p_if_stop(struct net_device *net);
-static s32 wl_cfgp2p_cancel_listen(struct wl_priv *wl, struct net_device *ndev,
+static int wl_cfgp2p_start_xmit(struct sk_buff *skb, struct wireless_dev *ndev);
+static int wl_cfgp2p_do_ioctl(struct wireless_dev *net, struct ifreq *ifr, int cmd);
+static int wl_cfgp2p_if_open(struct wireless_dev *net);
+static int wl_cfgp2p_if_stop(struct wireless_dev *net);
+static s32 wl_cfgp2p_cancel_listen(struct wl_priv *wl, struct wireless_dev *ndev,
 	bool notify);
 
 static const struct net_device_ops wl_cfgp2p_if_ops = {
@@ -299,7 +299,7 @@ wl_cfgp2p_deinit_priv(struct wl_priv *wl)
 s32
 wl_cfgp2p_set_firm_p2p(struct wl_priv *wl)
 {
-	struct net_device *ndev = wl_to_prmry_ndev(wl);
+	struct wireless_dev *ndev = wl_to_prmry_ndev(wl);
 	struct ether_addr null_eth_addr = { { 0, 0, 0, 0, 0, 0 } };
 	s32 ret = BCME_OK;
 	s32 val = 0;
@@ -339,7 +339,7 @@ wl_cfgp2p_ifadd(struct wl_priv *wl, struct ether_addr *mac, u8 if_type,
 {
 	wl_p2p_if_t ifreq;
 	s32 err;
-	struct net_device *ndev = wl_to_prmry_ndev(wl);
+	struct wireless_dev *ndev = wl_to_prmry_ndev(wl);
 	u32 scb_timeout = WL_SCB_TIMEOUT;
 
 	ifreq.type = if_type;
@@ -375,7 +375,7 @@ s32
 wl_cfgp2p_ifdel(struct wl_priv *wl, struct ether_addr *mac)
 {
 	s32 ret;
-	struct net_device *netdev = wl_to_prmry_ndev(wl);
+	struct wireless_dev *netdev = wl_to_prmry_ndev(wl);
 
 	CFGP2P_INFO(("------primary idx %d : wl p2p_ifdel %02x:%02x:%02x:%02x:%02x:%02x\n",
 	    netdev->ifindex, mac->octet[0], mac->octet[1], mac->octet[2],
@@ -400,7 +400,7 @@ wl_cfgp2p_ifchange(struct wl_priv *wl, struct ether_addr *mac, u8 if_type,
 	wl_p2p_if_t ifreq;
 	s32 err;
 	u32 scb_timeout = WL_SCB_TIMEOUT;
-	struct net_device *netdev =  wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_CONNECTION);
+	struct wireless_dev *netdev =  wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_CONNECTION);
 
 	ifreq.type = if_type;
 	ifreq.chspec = chspec;
@@ -437,7 +437,7 @@ wl_cfgp2p_ifidx(struct wl_priv *wl, struct ether_addr *mac, s32 *index)
 {
 	s32 ret;
 	u8 getbuf[64];
-	struct net_device *dev = wl_to_prmry_ndev(wl);
+	struct wireless_dev *dev = wl_to_prmry_ndev(wl);
 
 	CFGP2P_INFO(("---wl p2p_if %02x:%02x:%02x:%02x:%02x:%02x\n",
 	    mac->octet[0], mac->octet[1], mac->octet[2],
@@ -458,7 +458,7 @@ static s32
 wl_cfgp2p_set_discovery(struct wl_priv *wl, s32 on)
 {
 	s32 ret = BCME_OK;
-	struct net_device *ndev = wl_to_prmry_ndev(wl);
+	struct wireless_dev *ndev = wl_to_prmry_ndev(wl);
 	CFGP2P_DBG(("enter\n"));
 
 	ret = wldev_iovar_setint(ndev, "p2p_disc", on);
@@ -484,7 +484,7 @@ wl_cfgp2p_set_p2p_mode(struct wl_priv *wl, u8 mode, u32 channel, u16 listen_ms, 
 {
 	wl_p2p_disc_st_t discovery_mode;
 	s32 ret;
-	struct net_device *dev;
+	struct wireless_dev *dev;
 	CFGP2P_DBG(("enter\n"));
 
 	if (unlikely(bssidx >= P2PAPI_BSSCFG_MAX)) {
@@ -514,7 +514,7 @@ static s32
 wl_cfgp2p_get_disc_idx(struct wl_priv *wl, s32 *index)
 {
 	s32 ret;
-	struct net_device *dev = wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_PRIMARY);
+	struct wireless_dev *dev = wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_PRIMARY);
 
 	ret = wldev_iovar_getint(dev, "p2p_dev", index);
 	CFGP2P_INFO(("p2p_dev bsscfg_idx=%d ret=%d\n", *index, ret));
@@ -612,7 +612,7 @@ wl_cfgp2p_deinit_discovery(struct wl_priv *wl)
  * Returns 0 if success.
  */
 s32
-wl_cfgp2p_enable_discovery(struct wl_priv *wl, struct net_device *dev,
+wl_cfgp2p_enable_discovery(struct wl_priv *wl, struct wireless_dev *dev,
 	const u8 *ie, u32 ie_len)
 {
 	s32 ret = BCME_OK;
@@ -692,7 +692,7 @@ exit:
 }
 
 s32
-wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
+wl_cfgp2p_escan(struct wl_priv *wl, struct wireless_dev *dev, u16 active,
 	u32 num_chans, u16 *channels,
 	s32 search_state, u16 action, u32 bssidx)
 {
@@ -709,7 +709,7 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
 #define P2PAPI_SCAN_DWELL_TIME_MS 50
 #define P2PAPI_SCAN_SOCIAL_DWELL_TIME_MS 40
 #define P2PAPI_SCAN_HOME_TIME_MS 60
-	struct net_device *pri_dev = wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_PRIMARY);
+	struct wireless_dev *pri_dev = wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_PRIMARY);
 	wl_set_p2p_status(wl, SCANNING);
 	/* Allocate scan params which need space for 3 channels and 0 ssids */
 	eparams_size = (WL_SCAN_PARAMS_FIXED_SIZE +
@@ -801,7 +801,7 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
  * Returns 0 if success.
  */
 s32
-wl_cfgp2p_act_frm_search(struct wl_priv *wl, struct net_device *ndev,
+wl_cfgp2p_act_frm_search(struct wl_priv *wl, struct wireless_dev *ndev,
 	s32 bssidx, s32 channel)
 {
 	s32 ret = 0;
@@ -864,7 +864,7 @@ exit:
  */
 
 s32
-wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bssidx,
+wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct wireless_dev *ndev, s32 bssidx,
     s32 pktflag, const u8 *vndr_ie, u32 vndr_ie_len)
 {
 	/* Vendor-specific Information Element ID */
@@ -1128,7 +1128,7 @@ wl_cfgp2p_find_wfdie(u8 *parse, u32 len)
 }
 
 static s32
-wl_cfgp2p_vndr_ie(struct wl_priv *wl, struct net_device *ndev, s32 bssidx, s32 pktflag,
+wl_cfgp2p_vndr_ie(struct wl_priv *wl, struct wireless_dev *ndev, s32 bssidx, s32 pktflag,
             s8 *oui, s32 ie_id, s8 *data, s32 data_len, s32 delete)
 {
 	s32 err = BCME_OK;
@@ -1185,7 +1185,7 @@ wl_cfgp2p_vndr_ie(struct wl_priv *wl, struct net_device *ndev, s32 bssidx, s32 p
  *  Returns bssidx for ndev
  */
 s32
-wl_cfgp2p_find_idx(struct wl_priv *wl, struct net_device *ndev)
+wl_cfgp2p_find_idx(struct wl_priv *wl, struct wireless_dev *ndev)
 {
 	u32 i;
 	s32 index = -1;
@@ -1212,7 +1212,7 @@ exit:
  * Callback function for WLC_E_P2P_DISC_LISTEN_COMPLETE
  */
 s32
-wl_cfgp2p_listen_complete(struct wl_priv *wl, struct net_device *ndev,
+wl_cfgp2p_listen_complete(struct wl_priv *wl, struct wireless_dev *ndev,
             const wl_event_msg_t *e, void *data)
 {
 	s32 ret = BCME_OK;
@@ -1258,7 +1258,7 @@ wl_cfgp2p_listen_expired(unsigned long data)
  *  Routine for cancelling the P2P LISTEN
  */
 static s32
-wl_cfgp2p_cancel_listen(struct wl_priv *wl, struct net_device *ndev,
+wl_cfgp2p_cancel_listen(struct wl_priv *wl, struct wireless_dev *ndev,
                          bool notify)
 {
 	WL_DBG(("Enter \n"));
@@ -1368,7 +1368,7 @@ wl_cfgp2p_discover_enable_search(struct wl_priv *wl, u8 enable)
  * Callback function for WLC_E_ACTION_FRAME_COMPLETE, WLC_E_ACTION_FRAME_OFF_CHAN_COMPLETE
  */
 s32
-wl_cfgp2p_action_tx_complete(struct wl_priv *wl, struct net_device *ndev,
+wl_cfgp2p_action_tx_complete(struct wl_priv *wl, struct wireless_dev *ndev,
             const wl_event_msg_t *e, void *data)
 {
 	s32 ret = BCME_OK;
@@ -1401,7 +1401,7 @@ wl_cfgp2p_action_tx_complete(struct wl_priv *wl, struct net_device *ndev,
  * 802.11 ack has been received for the sent action frame.
  */
 s32
-wl_cfgp2p_tx_action_frame(struct wl_priv *wl, struct net_device *dev,
+wl_cfgp2p_tx_action_frame(struct wl_priv *wl, struct wireless_dev *dev,
 	wl_af_params_t *af_params, s32 bssidx)
 {
 	s32 ret = BCME_OK;
@@ -1525,7 +1525,7 @@ wl_cfg80211_change_ifaddr(u8* buf, struct ether_addr *p2p_int_addr, u8 element_i
  * override the common implementation if necessary.
  */
 bool
-wl_cfgp2p_bss_isup(struct net_device *ndev, int bsscfg_idx)
+wl_cfgp2p_bss_isup(struct wireless_dev *ndev, int bsscfg_idx)
 {
 	s32 result, val;
 	bool isup = false;
@@ -1551,7 +1551,7 @@ wl_cfgp2p_bss_isup(struct net_device *ndev, int bsscfg_idx)
 
 /* Bring up or down a BSS */
 s32
-wl_cfgp2p_bss(struct wl_priv *wl, struct net_device *ndev, s32 bsscfg_idx, s32 up)
+wl_cfgp2p_bss(struct wl_priv *wl, struct wireless_dev *ndev, s32 bsscfg_idx, s32 up)
 {
 	s32 ret = BCME_OK;
 	s32 val = up ? 1 : 0;
@@ -1576,7 +1576,7 @@ wl_cfgp2p_bss(struct wl_priv *wl, struct net_device *ndev, s32 bsscfg_idx, s32 u
 
 /* Check if 'p2p' is supported in the driver */
 s32
-wl_cfgp2p_supported(struct wl_priv *wl, struct net_device *ndev)
+wl_cfgp2p_supported(struct wl_priv *wl, struct wireless_dev *ndev)
 {
 	s32 ret = BCME_OK;
 	s32 p2p_supported = 0;
@@ -1608,7 +1608,7 @@ wl_cfgp2p_down(struct wl_priv *wl)
 }
 
 s32
-wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, int len)
+wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct wireless_dev *ndev, char* buf, int len)
 {
 	s32 ret = -1;
 	int count, start, duration;
@@ -1682,7 +1682,7 @@ wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, in
 }
 
 s32
-wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, int buf_len)
+wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct wireless_dev *ndev, char* buf, int buf_len)
 {
 	wifi_p2p_noa_desc_t *noa_desc;
 	int len = 0, i;
@@ -1725,7 +1725,7 @@ wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, in
 }
 
 s32
-wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct net_device *ndev, char* buf, int len)
+wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct wireless_dev *ndev, char* buf, int len)
 {
 	int ps, ctw;
 	int ret = -1;
@@ -1959,17 +1959,17 @@ wl_cfgp2p_unregister_ndev(struct wl_priv *wl)
 	return 0;
 }
 
-static int wl_cfgp2p_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+static int wl_cfgp2p_start_xmit(struct sk_buff *skb, struct wireless_dev *ndev)
 {
 	CFGP2P_DBG(("(%s) is not used for data operations. Droping the packet. \n", ndev->name));
 	return 0;
 }
 
-static int wl_cfgp2p_do_ioctl(struct net_device *net, struct ifreq *ifr, int cmd)
+static int wl_cfgp2p_do_ioctl(struct wireless_dev *net, struct ifreq *ifr, int cmd)
 {
 	int ret = 0;
 	struct wl_priv *wl = *(struct wl_priv **)netdev_priv(net);
-	struct net_device *ndev = wl_to_prmry_ndev(wl);
+	struct wireless_dev *ndev = wl_to_prmry_ndev(wl);
 
 	/* There is no ifidx corresponding to p2p0 in our firmware. So we should
 	 * not Handle any IOCTL cmds on p2p0 other than ANDROID PRIVATE CMDs.
@@ -1987,7 +1987,7 @@ static int wl_cfgp2p_do_ioctl(struct net_device *net, struct ifreq *ifr, int cmd
 	return ret;
 }
 
-static int wl_cfgp2p_if_open(struct net_device *net)
+static int wl_cfgp2p_if_open(struct wireless_dev *net)
 {
 	struct wireless_dev *wdev = net->ieee80211_ptr;
 
@@ -2008,7 +2008,7 @@ static int wl_cfgp2p_if_open(struct net_device *net)
 	return 0;
 }
 
-static int wl_cfgp2p_if_stop(struct net_device *net)
+static int wl_cfgp2p_if_stop(struct wireless_dev *net)
 {
 	struct wireless_dev *wdev = net->ieee80211_ptr;
 
