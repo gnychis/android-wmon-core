@@ -421,6 +421,26 @@ struct cfg80211_beacon_data {
 };
 
 /**
+ * struct beacon_parameters - beacon parameters
+ *
+ * Used to configure the beacon for an interface.
+ *
+ * @head: head portion of beacon (before TIM IE)
+ *     or %NULL if not changed
+ * @tail: tail portion of beacon (after TIM IE)
+ *     or %NULL if not changed
+ * @interval: beacon interval or zero if not changed
+ * @dtim_period: DTIM period or zero if not changed
+ * @head_len: length of @head
+ * @tail_len: length of @tail
+ */
+struct beacon_parameters {
+  u8 *head, *tail;
+  int interval, dtim_period;
+  int head_len, tail_len;
+};
+
+/**
  * struct cfg80211_ap_settings - AP configuration
  *
  * Used to configure an AP interface.
@@ -1658,6 +1678,13 @@ struct cfg80211_ops {
 				 struct cfg80211_beacon_data *info);
 	int	(*stop_ap)(struct wiphy *wiphy, struct net_device *dev);
 
+	int	(*add_beacon)(struct wiphy *wiphy, struct net_device *dev,
+			      struct beacon_parameters *info);
+	int	(*set_beacon)(struct wiphy *wiphy, struct net_device *dev,
+			      struct beacon_parameters *info);
+	int	(*del_beacon)(struct wiphy *wiphy, struct net_device *dev);
+
+
 
 	int	(*add_station)(struct wiphy *wiphy, struct net_device *dev,
 			       u8 *mac, struct station_parameters *params);
@@ -1706,6 +1733,10 @@ struct cfg80211_ops {
 	int	(*set_monitor_channel)(struct wiphy *wiphy,
 				       struct ieee80211_channel *chan,
 				       enum nl80211_channel_type channel_type);
+	
+  int	(*set_channel)(struct wiphy *wiphy, struct net_device *dev,
+			       struct ieee80211_channel *chan,
+			       enum nl80211_channel_type channel_type);
 
 	int	(*scan)(struct wiphy *wiphy,
 			struct cfg80211_scan_request *request);

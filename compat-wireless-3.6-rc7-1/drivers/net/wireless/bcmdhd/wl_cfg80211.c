@@ -3400,7 +3400,7 @@ wl_cfg80211_remain_on_channel(struct wiphy *wiphy, struct net_device *dev,
 	if (id == 0)
 		id = ++wl->last_roc_id;
 	*cookie = id;
-	cfg80211_ready_on_channel(dev, *cookie, channel,
+	cfg80211_ready_on_channel(wl->wdev, *cookie, channel,
 		channel_type, duration, GFP_KERNEL);
 	if (wl->p2p && !wl->p2p->on) {
 		get_primary_mac(wl, &primary_mac);
@@ -3613,7 +3613,7 @@ wl_cfg80211_mgmt_tx(struct wiphy *wiphy, struct net_device *ndev,
 					VNDR_IE_PRBRSP_FLAG,
 					(u8 *)wps_ie, wpsie_len + p2pie_len+ wfdie_len);
 			}
-			cfg80211_mgmt_tx_status(ndev, *cookie, buf, len, true, GFP_KERNEL);
+			cfg80211_mgmt_tx_status(wl->wdev, *cookie, buf, len, true, GFP_KERNEL);
 			goto exit;
 		} else if (ieee80211_is_disassoc(mgmt->frame_control) ||
 			ieee80211_is_deauth(mgmt->frame_control)) {
@@ -3629,7 +3629,7 @@ wl_cfg80211_mgmt_tx(struct wiphy *wiphy, struct net_device *ndev,
 			 * deauth frame if we delete the bss in firmware
 			 */
 			wl_delay(400);
-			cfg80211_mgmt_tx_status(ndev, *cookie, buf, len, true, GFP_KERNEL);
+			cfg80211_mgmt_tx_status(wl->wdev, *cookie, buf, len, true, GFP_KERNEL);
 			goto exit;
 
 		} else if (ieee80211_is_action(mgmt->frame_control)) {
@@ -3777,7 +3777,7 @@ wl_cfg80211_mgmt_tx(struct wiphy *wiphy, struct net_device *ndev,
 		}
 
 	}
-	cfg80211_mgmt_tx_status(ndev, *cookie, buf, len, ack, GFP_KERNEL);
+	cfg80211_mgmt_tx_status(wl->wdev, *cookie, buf, len, ack, GFP_KERNEL);
 	if (act_frm && act_frm->subtype == P2P_PAF_GON_CONF) {
 		wldev_iovar_setint(dev, "mpc", 1);
 	}
@@ -5762,7 +5762,7 @@ wl_notify_rx_mgmt_frame(struct wl_priv *wl, struct net_device *ndev,
 		mgmt_frame = (u8 *)((wl_event_rx_frame_data_t *)rxframe + 1);
 	}
 
-	cfg80211_rx_mgmt(ndev, freq, mgmt_frame, mgmt_frame_len, GFP_ATOMIC);
+	cfg80211_rx_mgmt(wl->wdev, freq, 0, mgmt_frame, mgmt_frame_len, GFP_ATOMIC);
 
 	WL_DBG(("%s: mgmt_frame_len (%d) , e->datalen (%d), channel (%d), freq (%d)\n", __func__,
 		mgmt_frame_len, ntoh32(e->datalen), channel, freq));
