@@ -130,7 +130,7 @@ typedef struct wl_iw {
 	dhd_pub_t * pub;
 } wl_iw_t;
 
-int	 wl_control_wl_start(struct wireless_dev *dev);
+int	 wl_control_wl_start(struct net_device *dev);
 #define WLC_IW_SS_CACHE_MAXLEN				2048
 #define WLC_IW_SS_CACHE_CTRL_FIELD_MAXLEN	32
 #define WLC_IW_BSS_INFO_MAXLEN 				\
@@ -196,19 +196,19 @@ struct mac_list_set {
 extern const struct iw_handler_def wl_iw_handler_def;
 #endif 
 
-extern int wl_iw_ioctl(struct wireless_dev *dev, struct ifreq *rq, int cmd);
-extern void wl_iw_event(struct wireless_dev *dev, wl_event_msg_t *e, void* data);
-extern int wl_iw_get_wireless_stats(struct wireless_dev *dev, struct iw_statistics *wstats);
-int wl_iw_attach(struct wireless_dev *dev, void * dhdp);
+extern int wl_iw_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
+extern void wl_iw_event(struct net_device *dev, wl_event_msg_t *e, void* data);
+extern int wl_iw_get_wireless_stats(struct net_device *dev, struct iw_statistics *wstats);
+int wl_iw_attach(struct net_device *dev, void * dhdp);
 void wl_iw_detach(void);
 
-extern int net_os_wake_lock(struct wireless_dev *dev);
-extern int net_os_wake_unlock(struct wireless_dev *dev);
-extern int net_os_wake_lock_timeout(struct wireless_dev *dev);
-extern int  net_os_wake_lock_ctrl_timeout_enable(struct wireless_dev *dev, int val);
-extern int net_os_set_suspend_disable(struct wireless_dev *dev, int val);
-extern int net_os_set_suspend(struct wireless_dev *dev, int val, int force);
-extern int net_os_set_dtim_skip(struct wireless_dev *dev, int val);
+extern int net_os_wake_lock(struct net_device *dev);
+extern int net_os_wake_unlock(struct net_device *dev);
+extern int net_os_wake_lock_timeout(struct net_device *dev);
+extern int  net_os_wake_lock_ctrl_timeout_enable(struct net_device *dev, int val);
+extern int net_os_set_suspend_disable(struct net_device *dev, int val);
+extern int net_os_set_suspend(struct net_device *dev, int val, int force);
+extern int net_os_set_dtim_skip(struct net_device *dev, int val);
 extern void get_customized_country_code(char *country_iso_code, wl_country_t *cspec);
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)
@@ -232,14 +232,14 @@ extern int dhd_pno_clean(dhd_pub_t *dhd);
 extern int dhd_pno_set(dhd_pub_t *dhd, wlc_ssid_t* ssids_local, int nssid,
                        ushort  scan_fr, int pno_repeat, int pno_freq_expo_max);
 extern int dhd_pno_get_status(dhd_pub_t *dhd);
-extern int dhd_dev_pno_reset(struct wireless_dev *dev);
-extern int dhd_dev_pno_set(struct wireless_dev *dev, wlc_ssid_t* ssids_local,
+extern int dhd_dev_pno_reset(struct net_device *dev);
+extern int dhd_dev_pno_set(struct net_device *dev, wlc_ssid_t* ssids_local,
                            int nssid, ushort  scan_fr, int pno_repeat, int pno_freq_expo_max);
-extern int dhd_dev_pno_enable(struct wireless_dev *dev,  int pfn_enabled);
-extern int dhd_dev_get_pno_status(struct wireless_dev *dev);
+extern int dhd_dev_pno_enable(struct net_device *dev,  int pfn_enabled);
+extern int dhd_dev_get_pno_status(struct net_device *dev);
 extern int dhd_get_dtim_skip(dhd_pub_t *dhd);
 
-void	dhd_bus_country_set(struct wireless_dev *dev, wl_country_t *cspec);
+void	dhd_bus_country_set(struct net_device *dev, wl_country_t *cspec);
 
 #define PNO_TLV_PREFIX			'S'
 #define PNO_TLV_VERSION			'1'

@@ -39,7 +39,7 @@ static int dhd_dongle_up = FALSE;
 #include <wlioctl.h>
 #include <dhd_cfg80211.h>
 
-static s32 wl_dongle_up(struct wireless_dev *ndev, u32 up);
+static s32 wl_dongle_up(struct net_device *ndev, u32 up);
 
 /**
  * Function implementations
@@ -123,7 +123,7 @@ s32 dhd_cfg80211_clean_p2p_info(struct wl_priv *wl)
 	return 0;
 }
 
-static s32 wl_dongle_up(struct wireless_dev *ndev, u32 up)
+static s32 wl_dongle_up(struct net_device *ndev, u32 up)
 {
 	s32 err = 0;
 
@@ -139,7 +139,7 @@ s32 dhd_config_dongle(struct wl_priv *wl, bool need_lock)
 #ifndef DHD_SDALIGN
 #define DHD_SDALIGN	32
 #endif
-	struct wireless_dev *ndev;
+	struct net_device *ndev;
 	s32 err = 0;
 
 	WL_TRACE(("In\n"));
@@ -194,7 +194,7 @@ enum wl_cfg80211_btcoex_status {
  * calling example: dev_wlc_intvar_get_reg(dev, "btc_params",66, &reg_value)
  */
 static int
-dev_wlc_intvar_get_reg(struct wireless_dev *dev, char *name,
+dev_wlc_intvar_get_reg(struct net_device *dev, char *name,
 	uint reg, int *retval)
 {
 	union {
@@ -212,7 +212,7 @@ dev_wlc_intvar_get_reg(struct wireless_dev *dev, char *name,
 }
 
 static int
-dev_wlc_bufvar_set(struct wireless_dev *dev, char *name, char *buf, int len)
+dev_wlc_bufvar_set(struct net_device *dev, char *name, char *buf, int len)
 {
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 31)
 	char ioctlbuf_local[1024];
@@ -229,7 +229,7 @@ get named driver variable to uint register value and return error indication
 calling example: dev_wlc_intvar_set_reg(dev, "btc_params",66, value)
 */
 static int
-dev_wlc_intvar_set_reg(struct wireless_dev *dev, char *name, char *addr, char * val)
+dev_wlc_intvar_set_reg(struct net_device *dev, char *name, char *addr, char * val)
 {
 	char reg_addr[8];
 
@@ -240,7 +240,7 @@ dev_wlc_intvar_set_reg(struct wireless_dev *dev, char *name, char *addr, char * 
 	return (dev_wlc_bufvar_set(dev, name, (char *)&reg_addr[0], sizeof(reg_addr)));
 }
 
-static bool btcoex_is_sco_active(struct wireless_dev *dev)
+static bool btcoex_is_sco_active(struct net_device *dev)
 {
 	int ioc_res = 0;
 	bool res = FALSE;
@@ -279,7 +279,7 @@ static bool btcoex_is_sco_active(struct wireless_dev *dev)
 
 #if defined(BT_DHCP_eSCO_FIX)
 /* Enhanced BT COEX settings for eSCO compatibility during DHCP window */
-static int set_btc_esco_params(struct wireless_dev *dev, bool trump_sco)
+static int set_btc_esco_params(struct net_device *dev, bool trump_sco)
 {
 	static bool saved_status = FALSE;
 
@@ -382,7 +382,7 @@ static int set_btc_esco_params(struct wireless_dev *dev, bool trump_sco)
 #endif /* BT_DHCP_eSCO_FIX */
 
 static void
-wl_cfg80211_bt_setflag(struct wireless_dev *dev, bool set)
+wl_cfg80211_bt_setflag(struct net_device *dev, bool set)
 {
 #if defined(BT_DHCP_USE_FLAGS)
 	char buf_flag7_dhcp_on[8] = { 7, 00, 00, 00, 0x1, 0x0, 0x00, 0x00 };
@@ -535,7 +535,7 @@ void wl_cfg80211_btcoex_deinit(struct wl_priv *wl)
 	wl->btcoex_info = NULL;
 }
 
-int wl_cfg80211_set_btcoex_dhcp(struct wireless_dev *dev, char *command)
+int wl_cfg80211_set_btcoex_dhcp(struct net_device *dev, char *command)
 {
 
 	struct wl_priv *wl = wlcfg_drv_priv;

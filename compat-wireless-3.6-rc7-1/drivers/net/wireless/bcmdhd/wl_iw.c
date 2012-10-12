@@ -56,6 +56,7 @@ typedef const struct si_pub  si_t;
 #define WL_WSEC(x)
 #define WL_SCAN(x)
 
+
 #ifdef PNO_SET_DEBUG
 #define WL_PNO(x)	printf x
 #else
@@ -102,13 +103,13 @@ bool g_set_essid_before_scan = TRUE;
 
 #if defined(SOFTAP)
 #define WL_SOFTAP(x)
-static struct wireless_dev *priv_dev;
+static struct net_device *priv_dev;
 extern bool ap_cfg_running;
 extern bool ap_fw_loaded;
-struct wireless_dev *ap_net_dev = NULL;
+struct net_device *ap_net_dev = NULL;
 tsk_ctl_t ap_eth_ctl;
-static int wl_iw_set_ap_security(struct wireless_dev *dev, struct ap_profile *ap);
-static int wl_iw_softap_deassoc_stations(struct wireless_dev *dev, u8 *mac);
+static int wl_iw_set_ap_security(struct net_device *dev, struct ap_profile *ap);
+static int wl_iw_softap_deassoc_stations(struct net_device *dev, u8 *mac);
 #endif 
 
 
@@ -146,8 +147,8 @@ static struct mutex	wl_softap_lock;
 
 #include <bcmsdbus.h>
 extern void dhd_customer_gpio_wlan_ctrl(int onoff);
-extern uint dhd_dev_reset(struct wireless_dev *dev, uint8 flag);
-extern int dhd_dev_init_ioctl(struct wireless_dev *dev);
+extern uint dhd_dev_reset(struct net_device *dev, uint8 flag);
+extern int dhd_dev_init_ioctl(struct net_device *dev);
 
 uint wl_msg_level = WL_ERROR_VAL;
 
@@ -161,8 +162,8 @@ uint wl_msg_level = WL_ERROR_VAL;
 #define htodchanspec(i) i
 #define dtohchanspec(i) i
 
-extern struct iw_statistics *dhd_get_wireless_stats(struct wireless_dev *dev);
-extern int dhd_wait_pend8021x(struct wireless_dev *dev);
+extern struct iw_statistics *dhd_get_wireless_stats(struct net_device *dev);
+extern int dhd_wait_pend8021x(struct net_device *dev);
 
 #if WIRELESS_EXT < 19
 #define IW_IOCTL_IDX(cmd)	((cmd) - SIOCIWFIRST)
@@ -180,7 +181,7 @@ static char *g_wps_probe_req_ie;
 static int g_wps_probe_req_ie_len;
 #endif
 
-bool btcoex_is_sco_active(struct wireless_dev *dev);  
+bool btcoex_is_sco_active(struct net_device *dev);  
 static wl_iw_ss_cache_ctrl_t g_ss_cache_ctrl;	
 #if defined(CONFIG_FIRST_SCAN)
 static volatile uint g_first_broadcast_scan;	
@@ -207,9 +208,9 @@ static void wl_iw_free_ss_cache(void);
 static int   wl_iw_run_ss_cache_timer(int kick_off);
 #endif 
 #if defined(CONFIG_FIRST_SCAN)
-int  wl_iw_iscan_set_scan_broadcast_prep(struct wireless_dev *dev, uint flag);
+int  wl_iw_iscan_set_scan_broadcast_prep(struct net_device *dev, uint flag);
 #endif 
-static int dev_wlc_bufvar_set(struct wireless_dev *dev, char *name, char *buf, int len);
+static int dev_wlc_bufvar_set(struct net_device *dev, char *name, char *buf, int len);
 #define ISCAN_STATE_IDLE   0
 #define ISCAN_STATE_SCANING 1
 
@@ -221,7 +222,7 @@ typedef struct iscan_buf {
 } iscan_buf_t;
 
 typedef struct iscan_info {
-	struct wireless_dev *dev;
+	struct net_device *dev;
 	struct timer_list timer;
 	uint32 timer_ms;
 	uint32 timer_on;
@@ -256,13 +257,13 @@ typedef struct iscan_info {
 
 
 static int wl_iw_set_btcoex_dhcp(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
 );
 
-static void wl_iw_bt_flag_set(struct wireless_dev *dev, bool set);
+static void wl_iw_bt_flag_set(struct net_device *dev, bool set);
 static void wl_iw_bt_release(void);
 
 typedef enum bt_coex_status {
@@ -274,7 +275,7 @@ typedef enum bt_coex_status {
 
 
 typedef struct bt_info {
-	struct wireless_dev *dev;
+	struct net_device *dev;
 	struct timer_list timer;
 	uint32 timer_ms;
 	uint32 timer_on;
@@ -294,14 +295,14 @@ static void wl_iw_bt_timerfunc(ulong data);
 iscan_info_t *g_iscan = NULL;
 void dhd_print_buf(void *pbuf, int len, int bytes_per_line);
 static void wl_iw_timerfunc(ulong data);
-static void wl_iw_set_event_mask(struct wireless_dev *dev);
+static void wl_iw_set_event_mask(struct net_device *dev);
 static int
 wl_iw_iscan(iscan_info_t *iscan, wlc_ssid_t *ssid, uint16 action);
 #endif 
 
 static int
 wl_iw_set_scan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -310,7 +311,7 @@ wl_iw_set_scan(
 #ifndef CSCAN
 static int
 wl_iw_get_scan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -355,7 +356,7 @@ swap_key_to_BE(
 
 static int
 dev_wlc_ioctl(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	int cmd,
 	void *arg,
 	int len
@@ -414,7 +415,7 @@ dev_wlc_ioctl(
 
 static int
 dev_wlc_intvar_get_reg(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *name,
 	uint  reg,
 	int *retval)
@@ -437,7 +438,7 @@ dev_wlc_intvar_get_reg(
 
 static int
 dev_wlc_intvar_set_reg(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *name,
 	char *addr,
 	char * val)
@@ -456,7 +457,7 @@ dev_wlc_intvar_set_reg(
 
 static int
 dev_wlc_intvar_set(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *name,
 	int val)
 {
@@ -473,7 +474,7 @@ dev_wlc_intvar_set(
 #if defined(WL_IW_USE_ISCAN)
 static int
 dev_iw_iovar_setbuf(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *iovar,
 	void *param,
 	int paramlen,
@@ -493,7 +494,7 @@ dev_iw_iovar_setbuf(
 
 static int
 dev_iw_iovar_getbuf(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *iovar,
 	void *param,
 	int paramlen,
@@ -513,7 +514,7 @@ dev_iw_iovar_getbuf(
 #if WIRELESS_EXT > 17
 static int
 dev_wlc_bufvar_set(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *name,
 	char *buf, int len)
 {
@@ -534,7 +535,7 @@ dev_wlc_bufvar_set(
 
 static int
 dev_wlc_bufvar_get(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *name,
 	char *buf, int buflen)
 {
@@ -559,7 +560,7 @@ dev_wlc_bufvar_get(
 
 static int
 dev_wlc_intvar_get(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *name,
 	int *retval)
 {
@@ -585,7 +586,7 @@ dev_wlc_intvar_get(
 #if WIRELESS_EXT > 12
 static int
 wl_iw_set_active_scan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -611,7 +612,7 @@ wl_iw_set_active_scan(
 
 static int
 wl_iw_set_passive_scan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -644,7 +645,7 @@ wl_iw_set_passive_scan(
 
 static int
 wl_iw_set_txpower(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -674,7 +675,7 @@ wl_iw_set_txpower(
 
 static int
 wl_iw_get_macaddr(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -701,7 +702,7 @@ wl_iw_get_macaddr(
 
 static int
 wl_iw_set_country(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -765,7 +766,7 @@ exit:
 
 static int
 wl_iw_set_power_mode(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -826,7 +827,7 @@ wl_iw_set_power_mode(
 }
 
 
-bool btcoex_is_sco_active(struct wireless_dev *dev)
+bool btcoex_is_sco_active(struct net_device *dev)
 {
 	int ioc_res = 0;
 	bool res = FALSE;
@@ -865,7 +866,7 @@ bool btcoex_is_sco_active(struct wireless_dev *dev)
 
 #if defined(BT_DHCP_eSCO_FIX)
 
-static int set_btc_esco_params(struct wireless_dev *dev, bool trump_sco)
+static int set_btc_esco_params(struct net_device *dev, bool trump_sco)
 {
 	static bool saved_status = FALSE;
 
@@ -960,7 +961,7 @@ static int set_btc_esco_params(struct wireless_dev *dev, bool trump_sco)
 
 static int
 wl_iw_get_power_mode(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -989,7 +990,7 @@ wl_iw_get_power_mode(
 
 static int
 wl_iw_set_btcoex_dhcp(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1119,7 +1120,7 @@ wl_iw_set_btcoex_dhcp(
 
 static int
 wl_iw_set_suspend_opt(
-struct wireless_dev *dev,
+struct net_device *dev,
 struct iw_request_info *info,
 union iwreq_data *wrqu,
 char *extra
@@ -1149,7 +1150,7 @@ char *extra
 
 static int
 wl_iw_set_suspend_mode(
-struct wireless_dev *dev,
+struct net_device *dev,
 struct iw_request_info *info,
 union iwreq_data *wrqu,
 char *extra
@@ -1199,7 +1200,7 @@ wl_format_ssid(char* ssid_buf, uint8* ssid, int ssid_len)
 
 static int
 wl_iw_get_link_speed(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1227,7 +1228,7 @@ wl_iw_get_link_speed(
 
 static int
 wl_iw_get_dtim_skip(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1261,7 +1262,7 @@ wl_iw_get_dtim_skip(
 
 static int
 wl_iw_set_dtim_skip(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1312,7 +1313,7 @@ exit:
 
 static int
 wl_iw_get_band(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1339,7 +1340,7 @@ wl_iw_get_band(
 
 static int
 wl_iw_set_band(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1383,7 +1384,7 @@ exit:
 
 static int
 wl_iw_set_pno_reset(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1415,7 +1416,7 @@ exit:
 
 static int
 wl_iw_set_pno_enable(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1450,7 +1451,7 @@ exit:
 
 static int
 wl_iw_set_pno_set(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1588,7 +1589,7 @@ exit_proc:
 
 static int
 wl_iw_set_pno_setadd(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1646,7 +1647,7 @@ exit_proc:
 
 static int
 wl_iw_get_rssi(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -1688,7 +1689,7 @@ wl_iw_get_rssi(
 
 int
 wl_iw_send_priv_event(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	char *flag
 )
 {
@@ -1712,7 +1713,7 @@ wl_iw_send_priv_event(
 
 
 int
-wl_control_wl_start(struct wireless_dev *dev)
+wl_control_wl_start(struct net_device *dev)
 {
 	wl_iw_t *iw;
 	int ret = 0;
@@ -1759,7 +1760,7 @@ wl_control_wl_start(struct wireless_dev *dev)
 
 static int
 wl_iw_control_wl_off(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info
 )
 {
@@ -1830,7 +1831,7 @@ wl_iw_control_wl_off(
 
 static int
 wl_iw_control_wl_on(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info
 )
 {
@@ -1857,9 +1858,9 @@ wl_iw_control_wl_on(
 
 #ifdef SOFTAP
 static struct ap_profile my_ap;
-static int set_ap_cfg(struct wireless_dev *dev, struct ap_profile *ap); 
-static int get_assoc_sta_list(struct wireless_dev *dev, char *buf, int len);
-static int set_ap_mac_list(struct wireless_dev *dev, void *buf);
+static int set_ap_cfg(struct net_device *dev, struct ap_profile *ap); 
+static int get_assoc_sta_list(struct net_device *dev, char *buf, int len);
+static int set_ap_mac_list(struct net_device *dev, void *buf);
 
 #define PTYPE_STRING 0
 #define PTYPE_INTDEC 1   
@@ -1957,7 +1958,7 @@ init_ap_profile_from_string(char *param_str, struct ap_profile *ap_cfg)
 
 #ifdef SOFTAP
 static int
-iwpriv_set_ap_config(struct wireless_dev *dev,
+iwpriv_set_ap_config(struct net_device *dev,
             struct iw_request_info *info,
             union iwreq_data *wrqu,
             char *ext)
@@ -2021,7 +2022,7 @@ iwpriv_set_ap_config(struct wireless_dev *dev,
 
 
 #ifdef SOFTAP
-static int iwpriv_get_assoc_list(struct wireless_dev *dev,
+static int iwpriv_get_assoc_list(struct net_device *dev,
         struct iw_request_info *info,
         union iwreq_data *p_iwrq,
         char *extra)
@@ -2131,7 +2132,7 @@ func_exit:
 #ifdef SOFTAP
 
 #define MAC_FILT_MAX 8
-static int iwpriv_set_mac_filters(struct wireless_dev *dev,
+static int iwpriv_set_mac_filters(struct net_device *dev,
         struct iw_request_info *info,
         union iwreq_data *wrqu,
         char *ext)
@@ -2227,7 +2228,7 @@ static int iwpriv_set_mac_filters(struct wireless_dev *dev,
 
 #ifdef SOFTAP
 
-static int iwpriv_set_ap_sta_disassoc(struct wireless_dev *dev,
+static int iwpriv_set_ap_sta_disassoc(struct net_device *dev,
         struct iw_request_info *info,
         union iwreq_data *wrqu,
         char *ext)
@@ -2269,7 +2270,7 @@ struct iw_request_info
 	__u16		flags;		
 };
 
-typedef int (*iw_handler)(struct wireless_dev *dev,
+typedef int (*iw_handler)(struct net_device *dev,
                 struct iw_request_info *info,
                 void *wrqu,
                 char *extra);
@@ -2277,7 +2278,7 @@ typedef int (*iw_handler)(struct wireless_dev *dev,
 
 static int
 wl_iw_config_commit(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	void *zwrq,
 	char *extra
@@ -2308,7 +2309,7 @@ wl_iw_config_commit(
 
 static int
 wl_iw_get_name(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	char *cwrq,
 	char *extra
@@ -2323,7 +2324,7 @@ wl_iw_get_name(
 
 static int
 wl_iw_set_freq(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_freq *fwrq,
 	char *extra
@@ -2376,7 +2377,7 @@ wl_iw_set_freq(
 
 static int
 wl_iw_get_freq(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_freq *fwrq,
 	char *extra
@@ -2398,7 +2399,7 @@ wl_iw_get_freq(
 
 static int
 wl_iw_set_mode(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	__u32 *uwrq,
 	char *extra
@@ -2434,7 +2435,7 @@ wl_iw_set_mode(
 
 static int
 wl_iw_get_mode(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	__u32 *uwrq,
 	char *extra
@@ -2457,7 +2458,7 @@ wl_iw_get_mode(
 
 static int
 wl_iw_get_range(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -2674,7 +2675,7 @@ rssi_to_qual(int rssi)
 
 static int
 wl_iw_set_spy(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -2699,7 +2700,7 @@ wl_iw_set_spy(
 
 static int
 wl_iw_get_spy(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -2765,7 +2766,7 @@ wl_iw_ch_to_chanspec(int ch, wl_join_params_t *join_params, int *join_params_siz
 
 static int
 wl_iw_set_wap(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct sockaddr *awrq,
 	char *extra
@@ -2824,7 +2825,7 @@ wl_iw_set_wap(
 
 static int
 wl_iw_get_wap(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct sockaddr *awrq,
 	char *extra
@@ -2844,7 +2845,7 @@ wl_iw_get_wap(
 #if WIRELESS_EXT > 17
 static int
 wl_iw_mlme(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct sockaddr *awrq,
 	char *extra
@@ -2886,7 +2887,7 @@ wl_iw_mlme(
 #ifndef WL_IW_USE_ISCAN
 static int
 wl_iw_get_aplist(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -2966,7 +2967,7 @@ wl_iw_get_aplist(
 #ifdef WL_IW_USE_ISCAN
 static int
 wl_iw_iscan_get_aplist(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -3107,7 +3108,7 @@ wl_iw_timerfunc(ulong data)
 }
 
 static void
-wl_iw_set_event_mask(struct wireless_dev *dev)
+wl_iw_set_event_mask(struct net_device *dev)
 {
 	char eventmask[WL_EVENTING_MASK_LEN];
 	char iovbuf[WL_EVENTING_MASK_LEN + 12];	
@@ -3591,7 +3592,7 @@ wl_iw_delete_bss_from_ss_cache(void *addr)
 
 static int
 wl_iw_set_scan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -3673,7 +3674,7 @@ wl_iw_set_scan(
 
 #ifdef WL_IW_USE_ISCAN
 int
-wl_iw_iscan_set_scan_broadcast_prep(struct wireless_dev *dev, uint flag)
+wl_iw_iscan_set_scan_broadcast_prep(struct net_device *dev, uint flag)
 {
 	wlc_ssid_t ssid;
 	iscan_info_t *iscan = g_iscan;
@@ -3723,7 +3724,7 @@ wl_iw_iscan_set_scan_broadcast_prep(struct wireless_dev *dev, uint flag)
 
 static int
 wl_iw_iscan_set_scan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -4035,7 +4036,7 @@ wl_iw_get_scan_prep(
 
 static int
 wl_iw_get_scan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -4222,7 +4223,7 @@ wl_iw_get_scan(
 #if defined(WL_IW_USE_ISCAN)
 static int
 wl_iw_iscan_get_scan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -4491,7 +4492,7 @@ check_prescan(wl_join_params_t *join_params, int *join_params_size)
 
 static int
 wl_iw_set_essid(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -4577,7 +4578,7 @@ wl_iw_set_essid(
 
 static int
 wl_iw_get_essid(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -4610,7 +4611,7 @@ wl_iw_get_essid(
 
 static int
 wl_iw_set_nick(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -4635,7 +4636,7 @@ wl_iw_set_nick(
 
 static int
 wl_iw_get_nick(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -4656,7 +4657,7 @@ wl_iw_get_nick(
 
 static int
 wl_iw_set_rate(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4717,7 +4718,7 @@ wl_iw_set_rate(
 
 static int
 wl_iw_get_rate(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4738,7 +4739,7 @@ wl_iw_get_rate(
 
 static int
 wl_iw_set_rts(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4763,7 +4764,7 @@ wl_iw_set_rts(
 
 static int
 wl_iw_get_rts(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4785,7 +4786,7 @@ wl_iw_get_rts(
 
 static int
 wl_iw_set_frag(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4810,7 +4811,7 @@ wl_iw_set_frag(
 
 static int
 wl_iw_get_frag(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4832,7 +4833,7 @@ wl_iw_get_frag(
 
 static int
 wl_iw_set_txpow(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4872,7 +4873,7 @@ wl_iw_set_txpow(
 
 static int
 wl_iw_get_txpow(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4900,7 +4901,7 @@ wl_iw_get_txpow(
 #if WIRELESS_EXT > 10
 static int
 wl_iw_set_retry(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4946,7 +4947,7 @@ wl_iw_set_retry(
 
 static int
 wl_iw_get_retry(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -4987,7 +4988,7 @@ wl_iw_get_retry(
 
 static int
 wl_iw_set_encode(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -5088,7 +5089,7 @@ wl_iw_set_encode(
 
 static int
 wl_iw_get_encode(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -5151,7 +5152,7 @@ wl_iw_get_encode(
 
 static int
 wl_iw_set_power(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -5172,7 +5173,7 @@ wl_iw_set_power(
 
 static int
 wl_iw_get_power(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -5195,7 +5196,7 @@ wl_iw_get_power(
 #if WIRELESS_EXT > 17
 static int
 wl_iw_set_wpaie(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *iwp,
 	char *extra
@@ -5223,7 +5224,7 @@ wl_iw_set_wpaie(
 
 static int
 wl_iw_get_wpaie(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *iwp,
 	char *extra
@@ -5237,7 +5238,7 @@ wl_iw_get_wpaie(
 
 static int
 wl_iw_set_encodeext(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *extra
@@ -5354,7 +5355,7 @@ struct {
 
 static int
 wl_iw_set_pmksa(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -5466,7 +5467,7 @@ wl_iw_set_pmksa(
 
 static int
 wl_iw_get_encodeext(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -5478,7 +5479,7 @@ wl_iw_get_encodeext(
 
 
 static uint32
-wl_iw_create_wpaauth_wsec(struct wireless_dev *dev)
+wl_iw_create_wpaauth_wsec(struct net_device *dev)
 {
 	wl_iw_t *iw = NETDEV_PRIV(dev);
 	uint32 wsec;
@@ -5512,7 +5513,7 @@ wl_iw_create_wpaauth_wsec(struct wireless_dev *dev)
 
 static int
 wl_iw_set_wpaauth(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -5690,7 +5691,7 @@ wl_iw_set_wpaauth(
 
 static int
 wl_iw_get_wpaauth(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_param *vwrq,
 	char *extra
@@ -5863,7 +5864,7 @@ pbkdf2_sha1(const char *passphrase, const char *ssid, size_t ssid_len,
 
 
 static int
-dev_iw_write_cfg1_bss_var(struct wireless_dev *dev, int val)
+dev_iw_write_cfg1_bss_var(struct net_device *dev, int val)
 {
 	struct {
 		int cfg;
@@ -5948,7 +5949,7 @@ wl_bssiovar_mkbuf(
 
 
 static int
-wl_iw_combined_scan_set(struct wireless_dev *dev, wlc_ssid_t* ssids_local, int nssid, int nchan)
+wl_iw_combined_scan_set(struct net_device *dev, wlc_ssid_t* ssids_local, int nssid, int nchan)
 {
 	int params_size = WL_SCAN_PARAMS_FIXED_SIZE + WL_NUMCHANNELS * sizeof(uint16);
 	int err = 0;
@@ -6054,7 +6055,7 @@ exit:
 
 
 static int
-iwpriv_set_cscan(struct wireless_dev *dev, struct iw_request_info *info,
+iwpriv_set_cscan(struct net_device *dev, struct iw_request_info *info,
                  union iwreq_data *wrqu, char *ext)
 {
 	int res;
@@ -6159,7 +6160,7 @@ exit_proc:
 
 static int
 wl_iw_set_cscan(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -6358,7 +6359,7 @@ exit_proc:
 #ifdef CONFIG_WPS2
 static int
 wl_iw_del_wps_probe_req_ie(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -6387,7 +6388,7 @@ wl_iw_del_wps_probe_req_ie(
 
 static int
 wl_iw_add_wps_probe_req_ie(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *extra
@@ -6488,7 +6489,7 @@ thr_wait_for_2nd_eth_dev(void *data)
 	unsigned long flags = 0;
 
 	tsk_ctl_t *tsk_ctl = (tsk_ctl_t *)data;
-	struct wireless_dev *dev = (struct wireless_dev *)tsk_ctl->parent;
+	struct net_device *dev = (struct net_device *)tsk_ctl->parent;
 	iw = *(wl_iw_t **)netdev_priv(dev);
 
 	DAEMONIZE("wl0_eth_wthread");
@@ -6554,7 +6555,7 @@ static int last_auto_channel = 6;
 #endif
 
 static int
-get_softap_auto_channel(struct wireless_dev *dev, struct ap_profile *ap)
+get_softap_auto_channel(struct net_device *dev, struct ap_profile *ap)
 {
 	int chosen = 0;
 	wl_uint32_list_t request;
@@ -6645,7 +6646,7 @@ fail :
 
 
 static int
-set_ap_cfg(struct wireless_dev *dev, struct ap_profile *ap)
+set_ap_cfg(struct net_device *dev, struct ap_profile *ap)
 {
 	int updown = 0;
 	int channel = 0;
@@ -6873,7 +6874,7 @@ fail:
 
 
 static int
-wl_iw_set_ap_security(struct wireless_dev *dev, struct ap_profile *ap)
+wl_iw_set_ap_security(struct net_device *dev, struct ap_profile *ap)
 {
 	int wsec = 0;
 	int wpa_auth = 0;
@@ -7129,7 +7130,7 @@ get_parameter_from_string(
 	}
 }
 
-static int wl_iw_softap_deassoc_stations(struct wireless_dev *dev, u8 *mac)
+static int wl_iw_softap_deassoc_stations(struct net_device *dev, u8 *mac)
 {
 	int i;
 	int res = 0;
@@ -7183,7 +7184,7 @@ static int wl_iw_softap_deassoc_stations(struct wireless_dev *dev, u8 *mac)
 
 
 static int
-iwpriv_softap_stop(struct wireless_dev *dev,
+iwpriv_softap_stop(struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *ext)
@@ -7227,7 +7228,7 @@ iwpriv_softap_stop(struct wireless_dev *dev,
 
 
 static int
-iwpriv_fw_reload(struct wireless_dev *dev,
+iwpriv_fw_reload(struct net_device *dev,
 	struct iw_request_info *info,
 	union iwreq_data *wrqu,
 	char *ext)
@@ -7283,7 +7284,7 @@ exit_proc:
 #ifdef SOFTAP
 
 static int
-iwpriv_wpasupp_loop_tst(struct wireless_dev *dev,
+iwpriv_wpasupp_loop_tst(struct net_device *dev,
             struct iw_request_info *info,
             union iwreq_data *wrqu,
             char *ext)
@@ -7325,7 +7326,7 @@ iwpriv_wpasupp_loop_tst(struct wireless_dev *dev,
 
 static int
 iwpriv_en_ap_bss(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	void *wrqu,
 	char *extra)
@@ -7366,7 +7367,7 @@ iwpriv_en_ap_bss(
 }
 
 static int
-get_assoc_sta_list(struct wireless_dev *dev, char *buf, int len)
+get_assoc_sta_list(struct net_device *dev, char *buf, int len)
 {
 	
 	WL_TRACE(("%s: dev_wlc_ioctl(dev:%p, cmd:%d, buf:%p, len:%d)\n",
@@ -7384,7 +7385,7 @@ void check_error(int res, const char *msg, const char *func, int line)
 }
 
 static int
-set_ap_mac_list(struct wireless_dev *dev, void *buf)
+set_ap_mac_list(struct net_device *dev, void *buf)
 {
 	struct mac_list_set *mac_list_set = (struct mac_list_set *)buf;
 	struct maclist *maclist = (struct maclist *)&mac_list_set->mac_list;
@@ -7490,7 +7491,7 @@ set_ap_mac_list(struct wireless_dev *dev, void *buf)
 
 static int
 wl_iw_process_private_ascii_cmd(
-			struct wireless_dev *dev,
+			struct net_device *dev,
 			struct iw_request_info *info,
 			union iwreq_data *dwrq,
 			char *cmd_str)
@@ -7557,7 +7558,7 @@ wl_iw_process_private_ascii_cmd(
 
 static int
 wl_iw_set_priv(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct iw_request_info *info,
 	struct iw_point *dwrq,
 	char *ext
@@ -7952,7 +7953,7 @@ const struct iw_handler_def wl_iw_handler_def =
 
 int
 wl_iw_ioctl(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	struct ifreq *rq,
 	int cmd
 )
@@ -8176,7 +8177,7 @@ wl_iw_check_conn_fail(wl_event_msg_t *e, char* stringBuf, uint buflen)
 #endif 
 
 void
-wl_iw_event(struct wireless_dev *dev, wl_event_msg_t *e, void* data)
+wl_iw_event(struct net_device *dev, wl_event_msg_t *e, void* data)
 {
 #if WIRELESS_EXT > 13
 	union iwreq_data wrqu;
@@ -8477,7 +8478,7 @@ wl_iw_event_end:
 }
 
 int
-wl_iw_get_wireless_stats(struct wireless_dev *dev, struct iw_statistics *wstats)
+wl_iw_get_wireless_stats(struct net_device *dev, struct iw_statistics *wstats)
 {
 	int res = 0;
 	wl_cnt_t cnt;
@@ -8563,7 +8564,7 @@ done:
 #if defined(COEX_DHCP)
 static void
 wl_iw_bt_flag_set(
-	struct wireless_dev *dev,
+	struct net_device *dev,
 	bool set)
 {
 #if defined(BT_DHCP_USE_FLAGS)
@@ -8712,7 +8713,7 @@ wl_iw_bt_release(void)
 }
 
 static int
-wl_iw_bt_init(struct wireless_dev *dev)
+wl_iw_bt_init(struct net_device *dev)
 {
 	bt_info_t *bt_dhcp = NULL;
 
@@ -8745,7 +8746,7 @@ wl_iw_bt_init(struct wireless_dev *dev)
 #endif 
 
 int
-wl_iw_attach(struct wireless_dev *dev, void * dhdp)
+wl_iw_attach(struct net_device *dev, void * dhdp)
 {
 #if defined(WL_IW_USE_ISCAN)
 	int params_size = 0;

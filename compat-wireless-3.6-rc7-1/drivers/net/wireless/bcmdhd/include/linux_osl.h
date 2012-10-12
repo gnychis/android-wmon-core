@@ -35,6 +35,7 @@ extern void * osl_os_open_image(char * filename);
 extern int osl_os_get_image_block(char * buf, int len, void * image);
 extern void osl_os_close_image(void * image);
 
+
 #ifdef BCMDRIVER
 
 

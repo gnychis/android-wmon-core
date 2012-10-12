@@ -239,7 +239,7 @@ extern void pci_unregister_driver(struct pci_driver *drv);
 #endif
 
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2, 3, 14))
-#define wireless_dev device
+#define net_device device
 #endif
 
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2, 3, 42))
@@ -306,7 +306,7 @@ static inline void pci_free_consistent(struct pci_dev *hwdev, size_t size,
 		do { clear_bit(0, &(dev)->tbusy); mark_bh(NET_BH); } while (0)
 #define netif_stop_queue(dev)	set_bit(0, &(dev)->tbusy)
 
-static inline void netif_start_queue(struct wireless_dev *dev)
+static inline void netif_start_queue(struct net_device *dev)
 {
 	dev->tbusy = 0;
 	dev->interrupt = 0;
