@@ -1228,7 +1228,7 @@ wl_cfgp2p_listen_complete(struct wl_priv *wl, struct net_device *ndev,
 		if (timer_pending(&wl->p2p->listen_timer)) {
 			del_timer_sync(&wl->p2p->listen_timer);
 		}
-		cfg80211_remain_on_channel_expired(ndev, wl->last_roc_id, &wl->remain_on_chan,
+		cfg80211_remain_on_channel_expired(wl->wdev, wl->last_roc_id, &wl->remain_on_chan,
 		    wl->remain_on_chan_type, GFP_KERNEL);
 	} else
 		wl_clr_p2p_status(wl, LISTEN_EXPIRED);
@@ -1273,7 +1273,7 @@ wl_cfgp2p_cancel_listen(struct wl_priv *wl, struct net_device *ndev,
 		del_timer_sync(&wl->p2p->listen_timer);
 
 		if (notify)
-			cfg80211_remain_on_channel_expired(ndev, wl->last_roc_id,
+			cfg80211_remain_on_channel_expired(wl->wdev, wl->last_roc_id,
 				&wl->remain_on_chan, wl->remain_on_chan_type, GFP_KERNEL);
 	}
 

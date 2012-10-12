@@ -149,10 +149,10 @@ static const struct ieee80211_regdomain brcm_regdom = {
 static s32 wl_frame_get_mgmt(u16 fc, const struct ether_addr *da,
 	const struct ether_addr *sa, const struct ether_addr *bssid,
 	u8 **pheader, u32 *body_len, u8 *pbody);
-static s32 __wl_cfg80211_scan(struct wiphy *wiphy, struct net_device *ndev,
+static s32 __wl_cfg80211_scan(struct wiphy *wiphy, struct wireless_dev *wdev,
 	struct cfg80211_scan_request *request,
 	struct cfg80211_ssid *this_ssid);
-static s32 wl_cfg80211_scan(struct wiphy *wiphy, struct net_device *ndev,
+static s32 wl_cfg80211_scan(struct wiphy *wiphy,
 	struct cfg80211_scan_request *request);
 static s32 wl_cfg80211_set_wiphy_params(struct wiphy *wiphy, u32 changed);
 static s32 wl_cfg80211_join_ibss(struct wiphy *wiphy, struct net_device *dev,
@@ -189,7 +189,7 @@ static s32 wl_cfg80211_config_default_mgmt_key(struct wiphy *wiphy,
 	struct net_device *dev,	u8 key_idx);
 static s32 wl_cfg80211_resume(struct wiphy *wiphy);
 static s32 wl_cfg80211_mgmt_tx_cancel_wait(struct wiphy *wiphy,
-	struct net_device *dev, u64 cookie);
+	struct wireless_dev *dev, u64 cookie);
 #if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39)
 static s32 wl_cfg80211_suspend(struct wiphy *wiphy, struct cfg80211_wowlan *wow);
 #else
@@ -731,7 +731,7 @@ static struct net_device* wl_cfg80211_add_monitor_if(char *name)
 	return ndev;
 }
 
-static struct net_device *
+static struct wireless_dev *
 wl_cfg80211_add_virtual_iface(struct wiphy *wiphy, char *name,
 	enum nl80211_iftype type, u32 *flags,
 	struct vif_params *params)
@@ -763,7 +763,8 @@ wl_cfg80211_add_virtual_iface(struct wiphy *wiphy, char *name,
 		mode = WL_MODE_IBSS;
 		return NULL;
 	case NL80211_IFTYPE_MONITOR:
-		return wl_cfg80211_add_monitor_if(name);
+		WL_ERR(("Unsupported interface type\n"));
+		return NULL;
 	case NL80211_IFTYPE_P2P_CLIENT:
 	case NL80211_IFTYPE_STATION:
 		wlif_type = WL_P2P_IF_CLIENT;
@@ -900,7 +901,7 @@ wl_cfg80211_add_virtual_iface(struct wiphy *wiphy, char *name,
 			/* put back the rtnl_lock again */
 			if (rollback_lock)
 				rtnl_lock();
-			return _ndev;
+			return wl->wdev;
 
 		} else {
 			wl_clr_p2p_status(wl, IF_ADD);
@@ -914,8 +915,9 @@ fail:
 }
 
 static s32
-wl_cfg80211_del_virtual_iface(struct wiphy *wiphy, struct net_device *dev)
+wl_cfg80211_del_virtual_iface(struct wiphy *wiphy, struct wireless_dev *wdev)
 {
+  struct net_device *dev = wdev->netdev;
 	struct ether_addr p2p_mac;
 	struct wl_priv *wl = wiphy_priv(wiphy);
 	s32 timeout = -1;
@@ -1545,10 +1547,11 @@ exit:
 }
 
 static s32
-__wl_cfg80211_scan(struct wiphy *wiphy, struct net_device *ndev,
+__wl_cfg80211_scan(struct wiphy *wiphy, struct wireless_dev *wdev,
 	struct cfg80211_scan_request *request,
 	struct cfg80211_ssid *this_ssid)
 {
+  struct net_device *ndev = wdev->netdev;
 	struct wl_priv *wl = wiphy_priv(wiphy);
 	struct cfg80211_ssid *ssids;
 	struct wl_scan_req *sr = wl_to_sr(wl);
@@ -1741,16 +1744,18 @@ scan_out:
 }
 
 static s32
-wl_cfg80211_scan(struct wiphy *wiphy, struct net_device *ndev,
+wl_cfg80211_scan(struct wiphy *wiphy,
 	struct cfg80211_scan_request *request)
 {
 	s32 err = 0;
+  struct wireless_dev *wdev = request->wdev;
+  struct net_device *ndev = wdev->netdev;
 	struct wl_priv *wl = wiphy_priv(wiphy);
 
 	WL_DBG(("Enter \n"));
 	CHECK_SYS_UP(wl);
 
-	err = __wl_cfg80211_scan(wiphy, ndev, request, NULL);
+	err = __wl_cfg80211_scan(wiphy, wdev, request, NULL);
 	if (unlikely(err)) {
 		WL_ERR(("scan error (%d)\n", err));
 		if (err == BCME_BUSY) {
@@ -3370,13 +3375,14 @@ wl_cfg80211_scan_alloc_params(int channel, int nprobes, int *out_params_size)
 }
 
 static s32
-wl_cfg80211_remain_on_channel(struct wiphy *wiphy, struct net_device *dev,
+wl_cfg80211_remain_on_channel(struct wiphy *wiphy, struct wireless_dev *wdev,
 	struct ieee80211_channel * channel,
 	enum nl80211_channel_type channel_type,
 	unsigned int duration, u64 *cookie)
 {
 	s32 target_channel;
 	u32 id;
+  struct net_device *dev = wdev->netdev;
 	struct ether_addr primary_mac;
 	struct net_device *ndev = NULL;
 
@@ -3426,11 +3432,11 @@ exit:
 }
 
 static s32
-wl_cfg80211_cancel_remain_on_channel(struct wiphy *wiphy, struct net_device *dev,
+wl_cfg80211_cancel_remain_on_channel(struct wiphy *wiphy, struct wireless_dev *wdev,
 	u64 cookie)
 {
 	s32 err = 0;
-	WL_DBG((" enter ) netdev_ifidx: %d \n", dev->ifindex));
+	WL_DBG((" enter ) netdev_ifidx: %d \n", wdev->netdev->ifindex));
 	return err;
 }
 
@@ -3522,16 +3528,16 @@ wl_cfg80211_send_at_common_channel(struct wl_priv *wl,
 }
 
 static s32
-wl_cfg80211_mgmt_tx(struct wiphy *wiphy, struct net_device *ndev,
+wl_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
 	struct ieee80211_channel *channel, bool offchan,
 	enum nl80211_channel_type channel_type,
 	bool channel_type_valid, unsigned int wait,
 	const u8* buf, size_t len,
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 2, 0)
 	bool no_cck,
-#endif
+  bool dont_wait_for_ack,
 	u64 *cookie)
 {
+  struct net_device* ndev = wdev->netdev;
 	wl_action_frame_t *action_frame;
 	wl_af_params_t *af_params;
 	wifi_p2p_ie_t *p2p_ie;
@@ -3788,7 +3794,7 @@ exit:
 
 
 static void
-wl_cfg80211_mgmt_frame_register(struct wiphy *wiphy, struct net_device *dev,
+wl_cfg80211_mgmt_frame_register(struct wiphy *wiphy, struct wireless_dev *dev,
 	u16 frame_type, bool reg)
 {
 
@@ -6349,10 +6355,10 @@ static s32 wl_notify_escan_complete(struct wl_priv *wl,
 		wl->scan_busy_count = 0;
 
 	if (wl->scan_request) {
-		if (wl->scan_request->dev == wl->p2p_net)
+		if (wl->scan_request->wdev->netdev == wl->p2p_net)
 			dev = wl_to_prmry_ndev(wl);
 		else
-			dev = wl->scan_request->dev;
+			dev = wl->scan_request->wdev->netdev;
 	}
 	else {
 		WL_ERR(("wl->scan_request is NULL may be internal scan."
@@ -7854,7 +7860,7 @@ void wl_cfg80211_enable_trace(int level)
 
 static s32
 wl_cfg80211_mgmt_tx_cancel_wait(struct wiphy *wiphy,
-	struct net_device *dev, u64 cookie)
+	struct wireless_dev *dev, u64 cookie)
 {
 	return 0;
 }
