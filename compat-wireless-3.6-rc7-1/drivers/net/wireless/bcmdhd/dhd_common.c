@@ -196,6 +196,7 @@ dhd_common_init(osl_t *osh)
 #ifdef CONFIG_BCMDHD_NVRAM_PATH
 	bcm_strncpy_s(nv_path, sizeof(nv_path), CONFIG_BCMDHD_NVRAM_PATH, MOD_PARAM_PATHLEN-1);
 #else /* CONFIG_BCMDHD_NVRAM_PATH */
+  sdofijsdfoijf
 	nv_path[0] = '\0';
 #endif /* CONFIG_BCMDHD_NVRAM_PATH */
 #ifdef SOFTAP

@@ -2,7 +2,7 @@
 #define COMPAT_AUTOCONF_INCLUDED
 /*
  * Automatically generated C config: don't edit
- * Fri Oct 12 12:18:51 PDT 2012 
+ * Sun Oct 14 12:10:29 PDT 2012 
  * compat-wireless-2.6: compat-wireless-v3.6-rc7-1
  * linux-2.6: v3.6-rc7
  */
@@ -707,6 +707,24 @@
 #ifndef CONFIG_BCMDHD
 #define CONFIG_BCMDHD 1
 #endif /* CONFIG_BCMDHD */ 
+#ifndef CONFIG_BCMDHD_FW_PATH
+#define CONFIG_BCMDHD_FW_PATH "/system/vendor/firmware/fw_bcmdhd.bin"
+#endif /* CONFIG_BCMDHD_FW_PATH */ 
+#ifndef CONFIG_BCMDHD_NVRAM_PATH
+#define CONFIG_BCMDHD_NVRAM_PATH "/system/etc/wifi/bcmdhd.cal"
+#endif /* CONFIG_BCMDHD_NVRAM_PATH */ 
+#ifndef CONFIG_DHD_ENABLE_P2P
+#define CONFIG_DHD_ENABLE_P2P 1
+#endif /* CONFIG_DHD_ENABLE_P2P */ 
+#ifndef CONFIG_RFKILL
+#define CONFIG_RFKILL 1
+#endif /* CONFIG_RFKILL */ 
+#ifndef CONFIG_RFKILL_PM
+#define CONFIG_RFKILL_PM 1
+#endif /* CONFIG_RFKILL_PM */ 
+#ifndef CONFIG_RFKILL_INPUT
+#define CONFIG_RFKILL_INPUT 1
+#endif /* CONFIG_RFKILL_INPUT */ 
 #ifndef CONFIG_RT2X00
 #define CONFIG_RT2X00 1
 #endif /* CONFIG_RT2X00 */ 

@@ -619,6 +619,12 @@ export CONFIG_RTL8192C_COMMON=m
 
 # Common bcmdhd requirements
 export CONFIG_BCMDHD=m
+export CONFIG_BCMDHD_FW_PATH=/system/vendor/firmware/fw_bcmdhd.bin
+export CONFIG_BCMDHD_NVRAM_PATH=/system/etc/wifi/bcmdhd.cal
+export CONFIG_DHD_ENABLE_P2P=y
+export CONFIG_RFKILL=y
+export CONFIG_RFKILL_PM=y
+export CONFIG_RFKILL_INPUT=y
 
 # Common rt2x00 requirements
 ifeq ($(NEED_RT2X00),y)

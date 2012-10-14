@@ -150,7 +150,7 @@ extern void dhd_customer_gpio_wlan_ctrl(int onoff);
 extern uint dhd_dev_reset(struct net_device *dev, uint8 flag);
 extern int dhd_dev_init_ioctl(struct net_device *dev);
 
-uint wl_msg_level = WL_ERROR_VAL;
+uint wl_msg_level = WL_ERROR_VAL | WL_TRACE_VAL;
 
 #define MAX_WLIW_IOCTL_LEN 1024
 
