@@ -6916,6 +6916,7 @@ static int wl_is_p2p_event(struct wl_event_q *e)
 
 static s32 wl_event_handler(void *data)
 {
+	WL_TRACE(("In\n"));
 	struct net_device *netdev;
 	struct wl_priv *wl = NULL;
 	struct wl_event_q *e;
