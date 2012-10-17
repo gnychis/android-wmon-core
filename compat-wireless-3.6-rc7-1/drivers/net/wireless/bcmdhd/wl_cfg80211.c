@@ -64,7 +64,7 @@ static struct device *cfg80211_parent_dev = NULL;
 static int vsdb_supported = 0;
 struct wl_priv *wlcfg_drv_priv = NULL;
 
-u32 wl_dbg_level = WL_DBG_ERR | WL_DBG_TRACE;
+u32 wl_dbg_level = WL_DBG_ERR | WL_DBG_TRACE | WL_DBG_DBG;
 
 #define MAC2STR(a) (a)[0], (a)[1], (a)[2], (a)[3], (a)[4], (a)[5]
 #define MACSTR "%02x:%02x:%02x:%02x:%02x:%02x"
@@ -736,6 +736,7 @@ wl_cfg80211_add_virtual_iface(struct wiphy *wiphy, char *name,
 	enum nl80211_iftype type, u32 *flags,
 	struct vif_params *params)
 {
+	WL_TRACE(("In\n"));
 	s32 err;
 	s32 timeout = -1;
 	s32 wlif_type = -1;
@@ -917,6 +918,7 @@ fail:
 static s32
 wl_cfg80211_del_virtual_iface(struct wiphy *wiphy, struct wireless_dev *wdev)
 {
+	WL_TRACE(("In\n"));
   struct net_device *dev = wdev->netdev;
 	struct ether_addr p2p_mac;
 	struct wl_priv *wl = wiphy_priv(wiphy);
@@ -1551,6 +1553,7 @@ __wl_cfg80211_scan(struct wiphy *wiphy, struct wireless_dev *wdev,
 	struct cfg80211_scan_request *request,
 	struct cfg80211_ssid *this_ssid)
 {
+	WL_TRACE(("In\n"));
   struct net_device *ndev = wdev->netdev;
 	struct wl_priv *wl = wiphy_priv(wiphy);
 	struct cfg80211_ssid *ssids;
@@ -3380,6 +3383,7 @@ wl_cfg80211_remain_on_channel(struct wiphy *wiphy, struct wireless_dev *wdev,
 	enum nl80211_channel_type channel_type,
 	unsigned int duration, u64 *cookie)
 {
+	WL_TRACE(("In\n"));
 	s32 target_channel;
 	u32 id;
   struct net_device *dev = wdev->netdev;
@@ -3435,6 +3439,7 @@ static s32
 wl_cfg80211_cancel_remain_on_channel(struct wiphy *wiphy, struct wireless_dev *wdev,
 	u64 cookie)
 {
+	WL_TRACE(("In\n"));
 	s32 err = 0;
 	WL_DBG((" enter ) netdev_ifidx: %d \n", wdev->netdev->ifindex));
 	return err;
@@ -3537,6 +3542,7 @@ wl_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
   bool dont_wait_for_ack,
 	u64 *cookie)
 {
+	WL_TRACE(("In\n"));
   struct net_device* ndev = wdev->netdev;
 	wl_action_frame_t *action_frame;
 	wl_af_params_t *af_params;
@@ -3798,6 +3804,7 @@ wl_cfg80211_mgmt_frame_register(struct wiphy *wiphy, struct wireless_dev *dev,
 	u16 frame_type, bool reg)
 {
 
+	WL_TRACE(("In\n"));
 	WL_DBG(("%s: frame_type: %x, reg: %d\n", __func__, frame_type, reg));
 
 	if (frame_type != (IEEE80211_FTYPE_MGMT | IEEE80211_STYPE_PROBE_REQ))
@@ -5666,6 +5673,7 @@ static s32
 wl_notify_rx_mgmt_frame(struct wl_priv *wl, struct net_device *ndev,
 	const wl_event_msg_t *e, void *data)
 {
+	WL_TRACE(("In\n"));
 	struct ieee80211_supported_band *band;
 	struct wiphy *wiphy = wl_to_wiphy(wl);
 	struct ether_addr da;
@@ -6414,6 +6422,7 @@ static s32 wl_escan_handler(struct wl_priv *wl,
 	struct net_device *ndev,
 	const wl_event_msg_t *e, void *data)
 {
+	WL_TRACE(("In\n"));
 	s32 err = BCME_OK;
 	s32 status = ntoh32(e->status);
 	wl_bss_info_t *bi;
@@ -7862,5 +7871,6 @@ static s32
 wl_cfg80211_mgmt_tx_cancel_wait(struct wiphy *wiphy,
 	struct wireless_dev *dev, u64 cookie)
 {
+	WL_TRACE(("In\n"));
 	return 0;
 }

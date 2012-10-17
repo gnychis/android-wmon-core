@@ -1433,7 +1433,6 @@ dhd_rx_frame(dhd_pub_t *dhdp, int ifidx, void *pktbuf, int numpkt, uint8 chan)
 	int tout_ctrl = 0;
 
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
-	printk("--------gnychis(dhd_rx_frame):  ifidx: %d\n", ifidx);
 
 	save_pktbuf = pktbuf;
 
@@ -4173,8 +4172,6 @@ dhd_wl_host_event(dhd_info_t *dhd, int *ifidx, void *pktdata,
 {
 	int bcmerror = 0;
 	ASSERT(dhd != NULL);
-
-	printk("--- gychis: ifidx: %d\n", ifidx);
 
 	bcmerror = wl_host_event(&dhd->pub, ifidx, pktdata, event, data);
 	if (bcmerror != BCME_OK)

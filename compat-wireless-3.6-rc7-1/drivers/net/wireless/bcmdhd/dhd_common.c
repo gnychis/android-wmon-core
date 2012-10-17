@@ -996,6 +996,9 @@ wl_host_event(dhd_pub_t *dhd_pub, int *ifidx, void *pktdata,
 	reason = ntoh32_ua((void *)&event->reason);
 	datalen = ntoh32_ua((void *)&event->datalen);
 	evlen = datalen + sizeof(bcm_event_t);
+	
+  printk("RX: event_type:%d flags:%d status:%d reason:%d \n",
+								type, flags, status, reason);
 
 	DHD_TRACE(("RX: event_type:%d flags:%d status:%d reason:%d \n",
 								type, flags, status, reason));
