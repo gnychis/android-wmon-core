@@ -625,6 +625,7 @@ export CONFIG_DHD_ENABLE_P2P=y
 export CONFIG_RFKILL=y
 export CONFIG_RFKILL_PM=y
 export CONFIG_RFKILL_INPUT=y
+export CONFIG_RFKILL_LEDS=y
 
 # Common rt2x00 requirements
 ifeq ($(NEED_RT2X00),y)

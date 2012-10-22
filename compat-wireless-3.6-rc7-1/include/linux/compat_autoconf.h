@@ -2,7 +2,7 @@
 #define COMPAT_AUTOCONF_INCLUDED
 /*
  * Automatically generated C config: don't edit
- * Sun Oct 21 20:22:59 PDT 2012 
+ * Mon Oct 22 15:10:48 PDT 2012 
  * compat-wireless-2.6: compat-wireless-v3.6-rc7-1
  * linux-2.6: v3.6-rc7
  */
@@ -725,6 +725,9 @@
 #ifndef CONFIG_RFKILL_INPUT
 #define CONFIG_RFKILL_INPUT 1
 #endif /* CONFIG_RFKILL_INPUT */ 
+#ifndef CONFIG_RFKILL_LEDS
+#define CONFIG_RFKILL_LEDS 1
+#endif /* CONFIG_RFKILL_LEDS */ 
 #ifndef CONFIG_RT2X00
 #define CONFIG_RT2X00 1
 #endif /* CONFIG_RT2X00 */ 
