@@ -1032,6 +1032,8 @@ int cfg80211_can_use_iftype_chan(struct cfg80211_registered_device *rdev,
 	if (rdev->wiphy.software_iftypes & BIT(iftype))
 		return 0;
 
+  return 0; // gnychis: meh
+
 	memset(num, 0, sizeof(num));
 	memset(used_channels, 0, sizeof(used_channels));
 
