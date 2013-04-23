@@ -55,6 +55,7 @@ void set_channel(uint8_t chan);
 extern uint8_t (*get_lqi)(void);
 extern uint16_t get_rssi(void);
 extern uint16_t get_ed(void);
+extern void set_ed(int enable);
 extern uint16_t get_ed_thresh(void);
 
 #define DEMOD_DCD 1 /* -96dBm, 22.2mA */
@@ -211,6 +212,8 @@ enum {
 #define MACA_KEY0       ((volatile uint32_t *) (MACA_BASE+0x164))
 #define MACA_OPTIONS    ((volatile uint32_t *) (MACA_BASE+0x180))
 
+#define MACA_ED_OFFSET 22
+#define MACA_ED_THRESH_OFFSET 14
 
 /******************************************************************************/
 /* everything under this comment is messy, needs cleaning, and will           */

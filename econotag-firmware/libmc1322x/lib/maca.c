@@ -1110,12 +1110,30 @@ uint16_t get_rssi(void)
 
 uint16_t get_ed(void)
 {
- return (*RX_AGC_CCA_ED & 0x400000); 
+ return ((*RX_AGC_CCA_ED & 0x400000)>>MACA_ED_OFFSET); 
+}
+
+void set_ed(int enable)
+{
+  /*
+  uint32_t curr = *RX_AGC_CCA_ED;
+	safe_irq_disable(MACA);
+  if(enable)
+    curr = curr | (1<<MACA_ED_OFFSET);
+  else
+    curr = curr & ~(1<<MACA_ED_OFFSET);
+  reg(RX_AGC_CCA_ED) = curr;
+	irq_restore();
+  */
+  if(enable)
+    *RX_AGC_CCA_ED = *RX_AGC_CCA_ED | (1<<MACA_ED_OFFSET);
+  else
+    *RX_AGC_CCA_ED = *RX_AGC_CCA_ED & ~(1<<MACA_ED_OFFSET);
 }
 
 uint16_t get_ed_thresh(void)
 {
- return (*RX_AGC_CCA_ED & 0x3f0000); 
+ return (*RX_AGC_CCA_ED & 0x3f0000)>>MACA_ED_THRESH_OFFSET; 
 }
 
 #define ROM_END 0x0013ffff

@@ -143,6 +143,7 @@ void main(void) {
 
 	enable_irq(TMR);
 
+
 	print_welcome("rftest-rx");
 	while(1) {		
 
@@ -168,6 +169,7 @@ void main(void) {
 //			chan++;
 //			if(chan >= 16) { chan = 0; }
 //			set_channel(chan);
+      set_ed((get_ed()+1)%2);
 			printf("RSSI: %u, ED: %u, ED_THRESH: %u\n\r", get_rssi(), get_ed(), get_ed_thresh());
 		}
 
