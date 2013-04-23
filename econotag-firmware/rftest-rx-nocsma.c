@@ -159,7 +159,7 @@ void main(void) {
 			val = val | (p->data[2] << 8*2);
 			val = val | (p->data[3] << 8*1);
 			val = val | (p->data[4]);
-			printf("Counter: %u RxTime: %u LQI: %u\n\r", val, (unsigned int)p->rx_time, p->lqi);
+			printf("Counter: %u RxTime: %u LQI: %u, RSSI: %u\n\r", val, (unsigned int)p->rx_time, p->lqi, p->rssi);
 			free_packet(p);
 		}
 
@@ -168,7 +168,7 @@ void main(void) {
 //			chan++;
 //			if(chan >= 16) { chan = 0; }
 //			set_channel(chan);
-			printf("\n");
+			printf("RSSI: %u, ED: %u, ED_THRESH: %u\n\r", get_rssi(), get_ed(), get_ed_thresh());
 		}
 
 	}

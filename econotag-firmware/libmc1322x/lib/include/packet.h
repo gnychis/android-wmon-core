@@ -52,6 +52,7 @@ struct packet {
 	/* On RX this should be 1 since the maca puts the length as the first byte*/
 	uint8_t offset; 	
 	uint8_t lqi;
+  uint16_t rssi;
 	uint8_t status;
 	uint32_t rx_time;
 	#if PACKET_STATS

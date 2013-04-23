@@ -617,6 +617,7 @@ void maca_isr(void) {
 		*MACA_CLRIRQ = (1 << maca_irq_di);
 		dma_rx->length = *MACA_GETRXLVL - 2; /* packet length does not include FCS */
 		dma_rx->lqi = get_lqi();
+    dma_rx->rssi = get_rssi();
 		dma_rx->rx_time = *MACA_TIMESTAMP;
 
 		/* check if received packet needs an ack */
@@ -1101,6 +1102,21 @@ void set_channel(uint8_t chan) {
 }
 
 uint8_t (*get_lqi)(void) = (void *) 0x0000e04d;
+
+uint16_t get_rssi(void)
+{
+ return (*RX_LNA_IFA_RSSI & 0x03ff);
+}
+
+uint16_t get_ed(void)
+{
+ return (*RX_AGC_CCA_ED & 0x400000); 
+}
+
+uint16_t get_ed_thresh(void)
+{
+ return (*RX_AGC_CCA_ED & 0x3f0000); 
+}
 
 #define ROM_END 0x0013ffff
 #define ENTRY_EOF 0x00000e0f

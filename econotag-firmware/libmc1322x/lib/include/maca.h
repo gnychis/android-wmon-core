@@ -53,6 +53,9 @@ void set_power(uint8_t power);
 void set_channel(uint8_t chan);
 
 extern uint8_t (*get_lqi)(void);
+extern uint16_t get_rssi(void);
+extern uint16_t get_ed(void);
+extern uint16_t get_ed_thresh(void);
 
 #define DEMOD_DCD 1 /* -96dBm, 22.2mA */
 #define DEMOD_NCD 0 /* -100dBm, 24.2mA */
@@ -90,6 +93,12 @@ void radio_init(void);
 uint32_t init_from_flash(uint32_t addr);
 
 #define MAX_PACKET_SIZE (MAX_PAYLOAD_SIZE + 2) /* packet includes 2 bytes of checksum */
+
+/*modem radio receiver function defines*/
+#define MODEM_RX_FUNC_BASE (0x80009400)
+#define RX_AGC_CCA_ED    ((volatile uint32_t *) (MODEM_RX_FUNC_BASE+0x60))
+#define RX_AGC_RSSI      ((volatile uint32_t *) (MODEM_RX_FUNC_BASE+0x64))
+#define RX_LNA_IFA_RSSI    ((volatile uint32_t *) (MODEM_RX_FUNC_BASE+0x94))//from David Kopfs research
 
 /* maca register and field defines */
 
