@@ -1115,16 +1115,6 @@ uint16_t get_ed(void)
 
 void set_ed(int enable)
 {
-  /*
-  uint32_t curr = *RX_AGC_CCA_ED;
-	safe_irq_disable(MACA);
-  if(enable)
-    curr = curr | (1<<MACA_ED_OFFSET);
-  else
-    curr = curr & ~(1<<MACA_ED_OFFSET);
-  reg(RX_AGC_CCA_ED) = curr;
-	irq_restore();
-  */
   if(enable)
     *RX_AGC_CCA_ED = *RX_AGC_CCA_ED | (1<<MACA_ED_OFFSET);
   else
@@ -1134,6 +1124,12 @@ void set_ed(int enable)
 uint16_t get_ed_thresh(void)
 {
  return (*RX_AGC_CCA_ED & 0x3f0000)>>MACA_ED_THRESH_OFFSET; 
+}
+
+void set_ed_thresh(uint8_t ed_thresh)
+{
+  *RX_AGC_CCA_ED = (*RX_AGC_CCA_ED & MACA_ED_THRESH_MASK);
+  *RX_AGC_CCA_ED = *RX_AGC_CCA_ED | (ed_thresh<<MACA_ED_THRESH_OFFSET);
 }
 
 #define ROM_END 0x0013ffff

@@ -57,6 +57,7 @@ extern uint16_t get_rssi(void);
 extern uint16_t get_ed(void);
 extern void set_ed(int enable);
 extern uint16_t get_ed_thresh(void);
+extern void set_ed_thresh(uint8_t ed_thresh);
 
 #define DEMOD_DCD 1 /* -96dBm, 22.2mA */
 #define DEMOD_NCD 0 /* -100dBm, 24.2mA */
@@ -214,6 +215,7 @@ enum {
 
 #define MACA_ED_OFFSET 22
 #define MACA_ED_THRESH_OFFSET 14
+#define MACA_ED_THRESH_MASK 0xFFC03FFF
 
 /******************************************************************************/
 /* everything under this comment is messy, needs cleaning, and will           */
