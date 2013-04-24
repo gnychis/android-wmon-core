@@ -66,7 +66,7 @@ void fill_packet(volatile packet_t *p) {
 void main(void) {
 	volatile packet_t *p;
 	unsigned int cnt=0;
-  int i;
+  //int i;
 
 	/* trim the reference osc. to 24MHz */
 	trim_xtal();
@@ -107,13 +107,13 @@ void main(void) {
 			p->data[1] = (cnt >> 8*2) & 0xff;
 			p->data[0] = (cnt >> 8*3) & 0xff;
 			
-			printf("rftest-tx %u--- ", cnt);
-			print_packet(p);
+			//printf("rftest-tx %u--- ", cnt);
+			//print_packet(p);
 
 			tx_packet(p);
 			cnt++;
 			
-			for(i=0; i<DELAY; i++) { continue; }
+			//for(i=0; i<DELAY; i++) { continue; }
 		}
 		
 	}
