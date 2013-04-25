@@ -54,6 +54,7 @@ void set_channel(uint8_t chan);
 
 extern uint8_t (*get_lqi)(void);
 extern uint16_t get_rssi(void);
+extern uint16_t get_power(void);
 extern uint16_t get_ed(void);
 extern void set_ed(int enable);
 extern uint16_t get_ed_thresh(void);
@@ -101,6 +102,7 @@ uint32_t init_from_flash(uint32_t addr);
 #define RX_AGC_CCA_ED    ((volatile uint32_t *) (MODEM_RX_FUNC_BASE+0x60))
 #define RX_AGC_RSSI      ((volatile uint32_t *) (MODEM_RX_FUNC_BASE+0x64))
 #define RX_LNA_IFA_RSSI    ((volatile uint32_t *) (MODEM_RX_FUNC_BASE+0x94))//from David Kopfs research
+#define RX_LNA_IFA_POWER ((volatile uint32_t *) (MODEM_RX_FUNC_BASE+0x90))
 
 /* maca register and field defines */
 

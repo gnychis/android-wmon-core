@@ -1108,6 +1108,11 @@ uint16_t get_rssi(void)
  return (*RX_LNA_IFA_RSSI & 0x03ff);
 }
 
+uint16_t get_power(void)
+{
+ return (*RX_LNA_IFA_POWER & 0xff);
+}
+
 uint16_t get_ed(void)
 {
  return ((*RX_AGC_CCA_ED & 0x400000)>>MACA_ED_OFFSET); 

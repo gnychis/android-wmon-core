@@ -41,6 +41,14 @@
 #include "config.h"
 
 #define LED LED_GREEN
+#define COUNT_MODE 1      /* use rising edge of primary source */
+#define PRIME_SRC  0xf    /* Perip. clock with 128 prescale (for 24Mhz = 187500Hz)*/
+#define SEC_SRC    0      /* don't need this */
+#define ONCE       0      /* keep counting */
+#define LEN        1      /* count until compare then reload with value in LOAD */
+#define DIR        0      /* count up */
+#define CO_INIT    0      /* other counters cannot force a re-initialization of this counter */
+#define OUT_MODE   0      /* OFLAG is asserted while counter is active */
 
 #define DELAY 400000
 
@@ -78,7 +86,10 @@ int count=0;
 
 void tmr0_isr(void) {
 
-	if(count==10) {
+  if(count%100==0)
+    printf("clock tick\n\r");
+
+	if(count==24000000) {
 		toggle_led();
 		count=0;
 	}
@@ -89,7 +100,6 @@ void tmr0_isr(void) {
 
 void main(void) {
 	volatile packet_t *p;
-	volatile uint8_t chan;
 
 	gpio_data(0);
 	
@@ -100,34 +110,17 @@ void main(void) {
 
 	/* trim the reference osc. to 24MHz */
 	trim_xtal();
-
 	uart_init(INC, MOD, SAMP);
-
 	vreg_init();
-
 	maca_init();
 
-        /* sets up tx_on, should be a board specific item */
-	//       *GPIO_FUNC_SEL2 = (0x01 << ((44-16*2)*2));
 	gpio_pad_dir_set( 1ULL << 44 );
 
 	set_power(0x0f); /* 0dbm */
-	chan = 1;
-	set_channel(chan); /* channel 11 */
+	set_channel(1); /* channel 11 */
 	
 	/* pin direction */
 	led_init();
-
-	/* timer setup */
-	/* CTRL */
-#define COUNT_MODE 1      /* use rising edge of primary source */
-#define PRIME_SRC  0xf    /* Perip. clock with 128 prescale (for 24Mhz = 187500Hz)*/
-#define SEC_SRC    0      /* don't need this */
-#define ONCE       0      /* keep counting */
-#define LEN        1      /* count until compare then reload with value in LOAD */
-#define DIR        0      /* count up */
-#define CO_INIT    0      /* other counters cannot force a re-initialization of this counter */
-#define OUT_MODE   0      /* OFLAG is asserted while counter is active */
 
 	*TMR_ENBL     = 0;                    /* tmrs reset to enabled */
 	*TMR0_SCTRL   = 0;
@@ -138,40 +131,23 @@ void main(void) {
 	*TMR0_CNTR    = 0;                    /* reset count register */
 	*TMR0_CTRL    = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
 	*TMR_ENBL     = 0xf;                  /* enable all the timers --- why not? */
-
 	led_on();
-
 	enable_irq(TMR);
 
-
-	print_welcome("rftest-rx");
 	while(1) {		
 
-		/* call check_maca() periodically --- this works around */
-		/* a few lockup conditions */
-		check_maca();
+    /* call check_maca() periodically --- this works around */
+    /* a few lockup conditions */
+    check_maca();
 
-		if((p = rx_packet())) {
-			unsigned int val=0;
-			/* print and free the packet */
-			//printf("rftest-rx --- ");
-//			print_packet(p);
-			val = val | (p->data[1] << 8*3);
-			val = val | (p->data[2] << 8*2);
-			val = val | (p->data[3] << 8*1);
-			val = val | (p->data[4]);
-			printf("Counter: %u RxTime: %u LQI: %u, RSSI: %u\n\r", val, (unsigned int)p->rx_time, p->lqi, p->rssi);
-			free_packet(p);
-		}
-
-		if(uart1_can_get()) {
-			uart1_getc();
-//			chan++;
-//			if(chan >= 16) { chan = 0; }
-//			set_channel(chan);
-      set_ed((get_ed()+1)%2);
-			printf("RSSI: %u, ED: %u, ED_THRESH: %u\n\r", get_rssi(), get_ed(), get_ed_thresh());
-		}
-
-	}
+    if((p = rx_packet())) {
+      unsigned int val=0;
+      val = val | (p->data[1] << 8*3);
+      val = val | (p->data[2] << 8*2);
+      val = val | (p->data[3] << 8*1);
+      val = val | (p->data[4]);
+      //printf("Counter: %u RxTime: %u LQI: %u, RSSI: %u, POWER: %u, COUNT: %d\n\r", val, (unsigned int)p->rx_time, p->lqi, p->rssi, get_power(),count);
+      free_packet(p);
+	  }
+  }
 }
