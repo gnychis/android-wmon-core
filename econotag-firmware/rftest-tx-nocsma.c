@@ -96,16 +96,16 @@ void main(void) {
 	maca_init();
 	
   ///* Setup the timer */
-  //*TMR_ENBL     = 0;                    /* tmrs reset to enabled */
-	//*TMR0_SCTRL   = 0;
-	//*TMR0_CSCTRL  = 0x0040;
-	//*TMR0_LOAD    = 0;                    /* reload to zero */
-	//*TMR0_COMP_UP = 18750;                /* trigger a reload at the end */
-	//*TMR0_CMPLD1  = 18750;                /* compare 1 triggered reload level, 10HZ maybe? */
-	//*TMR0_CNTR    = 0;                    /* reset count register */
-	//*TMR0_CTRL    = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
-	//*TMR_ENBL     = 0xf;                  /* enable all the timers --- why not? */
-	//enable_irq(TMR);
+  *TMR_ENBL     = 0;                    /* tmrs reset to enabled */
+	*TMR0_SCTRL   = 0;
+	*TMR0_CSCTRL  = 0x0040;
+	*TMR0_LOAD    = 0;                    /* reload to zero */
+	*TMR0_COMP_UP = 18750;                /* trigger a reload at the end */
+	*TMR0_CMPLD1  = 18750;                /* compare 1 triggered reload level, 10HZ maybe? */
+	*TMR0_CNTR    = 0;                    /* reset count register */
+	*TMR0_CTRL    = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
+	*TMR_ENBL     = 0xf;                  /* enable all the timers --- why not? */
+	enable_irq(TMR);
 
 	set_channel(1); /* channel 11 */
 	set_power(0x12); /* 0x12 is the highest, not documented */
@@ -133,8 +133,8 @@ void main(void) {
 			p->data[1] = (pkt_cnt >> 8*2) & 0xff;
 			p->data[0] = (pkt_cnt >> 8*3) & 0xff;
 			
-			printf("rftest-tx %u--- ", pkt_cnt);
-			print_packet(p);
+			//printf("rftest-tx %u--- ", pkt_cnt);
+			//print_packet(p);
 
 			tx_packet(p);
 			pkt_cnt++;

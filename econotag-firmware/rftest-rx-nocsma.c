@@ -86,13 +86,11 @@ int count=0;
 
 void tmr0_isr(void) {
 
-  if(count%100==0)
+  if(count%100==0) {
     printf("clock tick\n\r");
-
-	if(count==24000000) {
 		toggle_led();
-		count=0;
 	}
+
 	*TMR0_SCTRL = 0;
 	*TMR0_CSCTRL = 0x0040; /* clear compare flag */
 	count++;
