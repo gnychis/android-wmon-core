@@ -80,68 +80,68 @@ void tmr0_isr(void) {
     pkt_cnt=0;
   }
 
-	*TMR0_SCTRL = 0;
-	*TMR0_CSCTRL = 0x0040; /* clear compare flag */
-	count++;
+  *TMR0_SCTRL = 0;
+  *TMR0_CSCTRL = 0x0040; /* clear compare flag */
+  count++;
 }
 
 void main(void) {
-	volatile packet_t *p;
+  volatile packet_t *p;
   int i;
 
-	/* trim the reference osc. to 24MHz */
-	trim_xtal();
-	uart_init(INC, MOD, SAMP);
-	vreg_init();
-	maca_init();
-	
+  /* trim the reference osc. to 24MHz */
+  trim_xtal();
+  uart_init(INC, MOD, SAMP);
+  vreg_init();
+  maca_init();
+
   ///* Setup the timer */
   *TMR_ENBL     = 0;                    /* tmrs reset to enabled */
-	*TMR0_SCTRL   = 0;
-	*TMR0_CSCTRL  = 0x0040;
-	*TMR0_LOAD    = 0;                    /* reload to zero */
-	*TMR0_COMP_UP = 18750;                /* trigger a reload at the end */
-	*TMR0_CMPLD1  = 18750;                /* compare 1 triggered reload level, 10HZ maybe? */
-	*TMR0_CNTR    = 0;                    /* reset count register */
-	*TMR0_CTRL    = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
-	*TMR_ENBL     = 0xf;                  /* enable all the timers --- why not? */
-	enable_irq(TMR);
+  *TMR0_SCTRL   = 0;
+  *TMR0_CSCTRL  = 0x0040;
+  *TMR0_LOAD    = 0;                    /* reload to zero */
+  *TMR0_COMP_UP = 18750;                /* trigger a reload at the end */
+  *TMR0_CMPLD1  = 18750;                /* compare 1 triggered reload level, 10HZ maybe? */
+  *TMR0_CNTR    = 0;                    /* reset count register */
+  *TMR0_CTRL    = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
+  *TMR_ENBL     = 0xf;                  /* enable all the timers --- why not? */
+  enable_irq(TMR);
 
-	set_channel(1); /* channel 11 */
-	set_power(0x12); /* 0x12 is the highest, not documented */
+  set_channel(1); /* channel 11 */
+  set_power(0x12); /* 0x12 is the highest, not documented */
 
   /* sets up tx_on, should be a board specific item */
   *GPIO_FUNC_SEL2 = (0x01 << ((44-16*2)*2));
-	gpio_pad_dir_set( 1ULL << 44 );
+  gpio_pad_dir_set( 1ULL << 44 );
 
-	while(1) {		
-	    		
-		/* call check_maca() periodically --- this works around */
-		/* a few lockup conditions */
-		check_maca();
+  while(1) {		
 
-		while((p = rx_packet())) {
-			if(p) free_packet(p);
-		}
+    /* call check_maca() periodically --- this works around */
+    /* a few lockup conditions */
+    check_maca();
 
-		p = get_free_packet();
-		if(p) {
-			fill_packet(p);
+    while((p = rx_packet())) {
+      if(p) free_packet(p);
+    }
 
-			p->data[3] = pkt_cnt & 0xff;
-			p->data[2] = (pkt_cnt >> 8*1) & 0xff;
-			p->data[1] = (pkt_cnt >> 8*2) & 0xff;
-			p->data[0] = (pkt_cnt >> 8*3) & 0xff;
-			
-			//printf("rftest-tx %u--- ", pkt_cnt);
-			//print_packet(p);
+    p = get_free_packet();
+    if(p) {
+      fill_packet(p);
 
-			tx_packet(p);
-			pkt_cnt++;
-			
-			for(i=0; i<DELAY; i++) { continue; }
-		}
-		
-	}
+      p->data[3] = pkt_cnt & 0xff;
+      p->data[2] = (pkt_cnt >> 8*1) & 0xff;
+      p->data[1] = (pkt_cnt >> 8*2) & 0xff;
+      p->data[0] = (pkt_cnt >> 8*3) & 0xff;
+
+      //printf("rftest-tx %u--- ", pkt_cnt);
+      //print_packet(p);
+
+      tx_packet(p);
+      pkt_cnt++;
+
+      for(i=0; i<DELAY; i++) { continue; }
+    }
+
+  }
 
 }
