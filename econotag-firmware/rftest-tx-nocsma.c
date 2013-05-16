@@ -75,13 +75,12 @@ unsigned int pkt_cnt=0;
 
 void tmr0_isr(void) {
 
-  if(count%100==0) {
+  if(count%10==0) {
     printf("Packets-per-second: %d\n\r",pkt_cnt*6);
     pkt_cnt=0;
   }
 
-  *TMR0_SCTRL = 0;
-  *TMR0_CSCTRL = 0x0040; /* clear compare flag */
+  *TMR0_SCTRL = 0; /*clear bit 15, and all the others --- should be ok, but clearly not "the right thing to do" */
   count++;
 }
 
@@ -96,16 +95,14 @@ void main(void) {
   maca_init();
 
   ///* Setup the timer */
-  *TMR_ENBL     = 0;                    /* tmrs reset to enabled */
-  *TMR0_SCTRL   = 0;
-  *TMR0_CSCTRL  = 0x0040;
-  *TMR0_LOAD    = 0;                    /* reload to zero */
-  *TMR0_COMP_UP = 18750;                /* trigger a reload at the end */
-  *TMR0_CMPLD1  = 18750;                /* compare 1 triggered reload level, 10HZ maybe? */
-  *TMR0_CNTR    = 0;                    /* reset count register */
-  *TMR0_CTRL    = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
-  *TMR_ENBL     = 0xf;                  /* enable all the timers --- why not? */
-  enable_irq(TMR);
+  *TMR_ENBL = 0;                     /* tmrs reset to enabled */
+  *TMR0_SCTRL = 0;
+  *TMR0_LOAD = 0;                    /* reload to zero */
+  *TMR0_COMP_UP = 18750;             /* trigger a reload at the end */
+  *TMR0_CMPLD1 = 18750;              /* compare 1 triggered reload level, 10HZ maybe? */
+  *TMR0_CNTR = 0;                    /* reset count register */
+  *TMR0_CTRL = (COUNT_MODE<<13) | (PRIME_SRC<<9) | (SEC_SRC<<7) | (ONCE<<6) | (LEN<<5) | (DIR<<4) | (CO_INIT<<3) | (OUT_MODE);
+  *TMR_ENBL = 0xf;                   /* enable all the timers --- why not? */
 
   set_channel(1); /* channel 11 */
   set_power(0x12); /* 0x12 is the highest, not documented */
@@ -116,6 +113,9 @@ void main(void) {
 
   while(1) {		
 
+    if((*TMR0_SCTRL >> 15) != 0) 
+      tmr0_isr();
+
     /* call check_maca() periodically --- this works around */
     /* a few lockup conditions */
     check_maca();
@@ -125,6 +125,7 @@ void main(void) {
     }
 
     p = get_free_packet();
+
     if(p) {
       fill_packet(p);
 
