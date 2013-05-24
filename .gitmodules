@@ -16,3 +16,6 @@
 [submodule "galaxynexus-cm10-kernel"]
 	path = galaxynexus-cm10-kernel
 	url = git@github.com:gnychis/android_kernel_samsung_tuna.git
+[submodule "econotag-firmware"]
+	path = econotag-firmware
+	url = git@github.com:gnychis/econotag-firmware.git
